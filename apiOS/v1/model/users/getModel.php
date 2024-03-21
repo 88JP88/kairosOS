@@ -56,7 +56,7 @@ if ($numRows > 0) {
                     $value=[
                         'placeId' => $row['placeId'],
                         'clientId' => $row['clientId'],
-                        'infoPlace' => $row['infoPlace']
+                        'infoPlace' => json_decode($row['infoPlace'], true)[0]
                     ];
                 
                     array_push($values, $value);
