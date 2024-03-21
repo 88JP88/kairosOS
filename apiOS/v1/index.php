@@ -33,8 +33,8 @@ Flight::route('POST /postPlace/@apk/@xapk', function ($apk,$xapk) {
 
                if ($response11 == 'true' ) {
 
-               $query= modelPost::postPlace($postData);  //DATA MODAL
-
+             //  $query= modelPost::postPlace($postData);  //DATA MODAL
+echo "entra";
            //JSON DECODE RESPPNSE
                $data = json_decode($query, true);
                $responseSQL=$data['response'][0]['response'];
