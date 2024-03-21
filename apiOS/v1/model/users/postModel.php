@@ -23,7 +23,7 @@ class modelPost {
                         
                     $gen_uuid = new generateUuid();
                     $myuuid = $gen_uuid->guidv4();
-                    $siteId = substr($myuuid, 0, 8);
+                    $placeId = substr($myuuid, 0, 8);
 
                     // Escapa los valores para prevenir inyección SQL
                     $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
@@ -56,7 +56,7 @@ class modelPost {
                     $query = mysqli_query($conectar, "INSERT INTO generalPlaces 
                     (placeId, clientId, infoPlace) 
                     VALUES
-                    ('$siteId', '$clientId', '$jsonInfoPlace')");
+                    ('$placeId', '$clientId', '$jsonInfoPlace')");
 
                     if($query){
                                 $filasAfectadas = mysqli_affected_rows($conectar);
