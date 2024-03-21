@@ -417,7 +417,7 @@ class modelPut{
                                   SET infoPlace = JSON_SET(infoPlace, '$[0].info.$param', '$value') 
                                   WHERE clientId = '$clientId' AND placeId = '$placeId'");
 
-            $apiMessage="¡Ubicación actualizado con éxito!";
+            $apiMessage="¡Ubicación actualizada con éxito!";
         }
 
        // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
@@ -428,7 +428,7 @@ class modelPut{
                 // Éxito: La actualización se realizó correctamente
             $response="true";
             $message="Actualización exitosa. Filas afectadas: $filasAfectadas";
-            $apiMessage="¡Repartidor actualizado con éxito!";
+            $apiMessage="¡Ubicación actualizada con éxito!";
      
                 $status="201";
             } else {
