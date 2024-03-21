@@ -54,7 +54,7 @@ class modelPost {
                    // echo $jsonInfoSite;
                     
                     $query = mysqli_query($conectar, "INSERT INTO generalPlaces 
-                    (siteId, clientId, infoSite) 
+                    (placeId, clientId, infoPlace) 
                     VALUES
                     ('$siteId', '$clientId', '$jsonInfoPlace')");
 
