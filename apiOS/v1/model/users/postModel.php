@@ -388,7 +388,7 @@ public static function postDelivery($dta) {
 
 class modelPut{
 
-        public static function putDelivery($dta) {
+        public static function putPlace($dta) {
             
         // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
     
@@ -406,14 +406,17 @@ class modelPut{
         $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
         $param = mysqli_real_escape_string($conectar, $dta['param']);
         $value = mysqli_real_escape_string($conectar, $dta['value']);
-        $deliveryId = mysqli_real_escape_string($conectar, $dta['deliveryId']);
+        $placeId = mysqli_real_escape_string($conectar, $dta['placeId']);
     
         //$dato_encriptado = $keyword;
         if($param=="del"){
-            $query = mysqli_query($conectar, "DELETE FROM generalDelivery where clientId='$clientId' and deliveryId='$deliveryId'");
+            $query = mysqli_query($conectar, "DELETE FROM generalPlaces where clientId='$clientId' and deliveryId='$deliveryId'");
             $apiMessage="¡Repartidor removido con éxito!";
         }  if($param!="del"){
-            $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
+            $query = mysqli_query($conectar, "UPDATE generalDelivery 
+                                  SET infoPlace = JSON_SET(infoPlace, '$.info.$param', '$value') 
+                                  WHERE clientId = '$clientId' AND placeId = '$placeId'");
+
             $apiMessage="¡Repartidor actualizado con éxito!";
         }
 
