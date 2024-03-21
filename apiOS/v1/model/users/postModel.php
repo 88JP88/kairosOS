@@ -56,7 +56,7 @@ class modelPost {
                     $query = mysqli_query($conectar, "INSERT INTO generalPlaces 
                     (placeId, clientId, infoPlace) 
                     VALUES
-                    ('$placeId', '$clientId', $jsonInfoPlace)");
+                    ('$placeId', '$clientId', '$jsonInfoPlace')");
 
                     if($query){
                                 $filasAfectadas = mysqli_affected_rows($conectar);
