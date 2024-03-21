@@ -38,7 +38,7 @@ class modelGet {
     
             
             
-        $query= mysqli_query($conectar,"SELECT placeId,clientId,infoPlace FROM generalPlaces where clientId='$clientId' and $param LIKE '%$value%'");
+        $query= mysqli_query($conectar,"SELECT placeId,clientId,infoPlace FROM generalPlaces where clientId='$clientId' and JSON_EXTRACT(infoPlace, '$.info.$param') LIKE '%$value%'");
               
     
     }
