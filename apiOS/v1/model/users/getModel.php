@@ -1,7 +1,7 @@
 <?php
     require_once 'database/db_users.php';
 class modelGet {
-    public static function getDelivery($dta) {
+    public static function getPlaces($dta) {
             
                 
 
@@ -30,7 +30,7 @@ class modelGet {
 
         
         
-                $query= mysqli_query($conectar,"SELECT deliveryId,deliveryName,deliveryLastName,clientId,isActive,distanceRules,deliveryMail,deliveryContact FROM generalDelivery where clientId='$clientId'");
+                $query= mysqli_query($conectar,"SELECT placeId,clientId,infoPlace FROM generalPlaces where clientId='$clientId'");
             }
             
         
@@ -38,7 +38,7 @@ class modelGet {
     
             
             
-        $query= mysqli_query($conectar,"SELECT deliveryId,deliveryName,deliveryLastName,clientId,isActive,distanceRules,deliveryMail,deliveryContact FROM generalDelivery where clientId='$clientId' and $param LIKE '%$value%'");
+        $query= mysqli_query($conectar,"SELECT placeId,clientId,infoPlace FROM generalPlaces where clientId='$clientId' and $param LIKE '%$value%'");
               
     
     }
@@ -54,14 +54,9 @@ if ($numRows > 0) {
 
                 while ($row = $query->fetch_assoc()) {
                     $value=[
-                        'deliveryId' => $row['deliveryId'],
+                        'placeId' => $row['placeId'],
                         'clientId' => $row['clientId'],
-                        'deliveryName' => $row['deliveryName'],
-                        'deliveryLastName' => $row['deliveryLastName'],
-                        'isActive' => $row['isActive'],
-                        'distanceRules' => $row['distanceRules'],
-                        'deliveryMail' => $row['deliveryMail'],
-                        'deliveryContact' => $row['deliveryContact']
+                        'infoPlace' => $row['infoPlace']
                     ];
                 
                     array_push($values, $value);
@@ -79,7 +74,7 @@ if ($numRows > 0) {
                         'status' => $status,
                         'sentData'=>$dta
                     ],
-                    'delivery' => $values
+                    'places' => $values
                 ];
                 
                 return json_encode($responseData);
@@ -101,7 +96,7 @@ if ($numRows > 0) {
                         'status' => $status,
                         'sentData'=>$dta
                     ],
-                    'delivery' => $values
+                    'places' => $values
                 ];
                 array_push($values,$value);
                 
@@ -130,7 +125,7 @@ if ($numRows > 0) {
                         'status' => $status,
                         'sentData'=>$dta
                     ],
-                    'delivery' => $values
+                    'places' => $values
                 ];
                 array_push($values,$value);
                 
