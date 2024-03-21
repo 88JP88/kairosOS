@@ -414,10 +414,10 @@ class modelPut{
             $apiMessage="¡Repartidor removido con éxito!";
         }  if($param!="del"){
             $query = mysqli_query($conectar, "UPDATE generalPlaces 
-                                  SET infoPlace = JSON_SET(infoPlace, '$.info.$param', '$value') 
+                                  SET infoPlace = JSON_SET(infoPlace, '$[0].info.$param', '$value') 
                                   WHERE clientId = '$clientId' AND placeId = '$placeId'");
 
-            $apiMessage="¡Repartidor actualizado con éxito!";
+            $apiMessage="¡Ubicación actualizado con éxito!";
         }
 
        // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
