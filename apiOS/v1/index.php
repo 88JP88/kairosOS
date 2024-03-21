@@ -18,7 +18,7 @@ require_once 'kronos/postLog.php';
 Flight::route('POST /postPlace/@apk/@xapk', function ($apk,$xapk) {
         
           
-    echo "entra1"; 
+                   
            header("Access-Control-Allow-Origin: *");
            // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
            if (!empty($apk) && !empty($xapk)) {    
@@ -33,8 +33,8 @@ Flight::route('POST /postPlace/@apk/@xapk', function ($apk,$xapk) {
 
                if ($response11 == 'true' ) {
 
-             //  $query= modelPost::postPlace($postData);  //DATA MODAL
-echo "entra";
+               $query= modelPost::postPlace($postData);  //DATA MODAL
+
            //JSON DECODE RESPPNSE
                $data = json_decode($query, true);
                $responseSQL=$data['response'][0]['response'];
@@ -59,9 +59,9 @@ echo "entra";
            }
 
        
-         //      kronos($responseSQL,$apiMessageSQL,$apiMessageSQL,Flight::request()->data->clientId,$dt,Flight::request()->url,'RECEIVED',Flight::request()->data->trackId);  //LOG FUNCTION  
+               kronos($responseSQL,$apiMessageSQL,$apiMessageSQL,Flight::request()->data->clientId,$dt,Flight::request()->url,'RECEIVED',Flight::request()->data->trackId);  //LOG FUNCTION  
        
-       //echo modelResponse::responsePost($responseSQL,$apiMessageSQL,$apiStatusSQL,$messageSQL);//RESPONSE FUNCTION
+       echo modelResponse::responsePost($responseSQL,$apiMessageSQL,$apiStatusSQL,$messageSQL);//RESPONSE FUNCTION
 
 });
 
