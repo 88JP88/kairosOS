@@ -413,7 +413,7 @@ class modelPut{
             $query = mysqli_query($conectar, "DELETE FROM generalPlaces where clientId='$clientId' and deliveryId='$deliveryId'");
             $apiMessage="¡Repartidor removido con éxito!";
         }  if($param!="del"){
-            $query = mysqli_query($conectar, "UPDATE generalDelivery 
+            $query = mysqli_query($conectar, "UPDATE generalPlaces 
                                   SET infoPlace = JSON_SET(infoPlace, '$.info.$param', '$value') 
                                   WHERE clientId = '$clientId' AND placeId = '$placeId'");
 
