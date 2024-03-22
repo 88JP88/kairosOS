@@ -195,7 +195,7 @@ if ($numRows > 0) {
                     'siteId' => $row['siteId'],
                     'clientId' => $row['clientId'],
                     'placeId' => $row['placeId'],
-                    'placeName' => $row['name'],
+                    'placeName' => json_decode($row['name']),
                     'infoSite' => json_decode($row['infoSite'], true)[0]
                 ];
             
