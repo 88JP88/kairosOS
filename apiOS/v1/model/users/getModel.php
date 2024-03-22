@@ -174,7 +174,7 @@ public static function getSites($dta) {
 if($filter=="filter"){
 
         if($param=="placeId"){
-            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN  generalPlaces p ON p.placeId=s.placeId WHERE s.clientId = '$clientId' AND s.placeId='$value'");
+            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN  generalPlaces p ON p.placeId=s.placeId WHERE s.clientId = '$clientId' AND s.placeId IN (SELECT name from generalPlaces where clientId ='$clientId' and name LIKE '%$value%' )");
 
         }
         else{
