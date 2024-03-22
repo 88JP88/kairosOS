@@ -341,10 +341,11 @@ if ($numRows > 0) {
                     'elementId' => $row['elementId'],
                     'clientId' => $row['clientId'],
                     'siteId' => $row['siteId'],
-                    'siteName' => json_decode($row['sname']),
-                    'placeName' => json_decode($row['pname']),
+                    'siteName' => $row['sname'],
+                    'placeName' => $row['pname'],
                     'infoElement' => json_decode($row['infoElement'], true)[0]
                 ];
+                
             
                 array_push($values, $value);
             }
