@@ -310,13 +310,20 @@ public static function getElements($dta) {
 
     
     
-            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS name FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId WHERE e.clientId = '$clientId'");
+            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS sname,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS pname FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE e.clientId = '$clientId'");
         }
         
     
 if($filter=="filter"){
 
-    
+        if($param=="placeId"){
+            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId IN (SELECT placeId FROM generalPlaces WHERE clientId = '$clientId' AND JSON_EXTRACT(infoPlace, '$[0].info.name') LIKE '%$value%')");
+
+        }
+        else{
+    $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN  generalPlaces p ON p.placeId=s.placeId WHERE s.clientId = '$clientId' AND JSON_EXTRACT(s.infoSite, '$[0].info.$param') LIKE '%$value%'");
+        }
+          
 
 }
         if($query){
@@ -334,7 +341,8 @@ if ($numRows > 0) {
                     'elementId' => $row['elementId'],
                     'clientId' => $row['clientId'],
                     'siteId' => $row['siteId'],
-                    'siteName' => json_decode($row['name']),
+                    'siteName' => json_decode($row['sname']),
+                    'placeName' => json_decode($row['pname']),
                     'infoElement' => json_decode($row['infoElement'], true)[0]
                 ];
             
