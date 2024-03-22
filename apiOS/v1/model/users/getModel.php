@@ -138,8 +138,7 @@ if ($numRows > 0) {
                                 
             
 }
-
-public static function getCustomers($dta) {
+public static function getSites($dta) {
             
                 
 
@@ -166,9 +165,9 @@ public static function getCustomers($dta) {
 
         if($filter=="all"){
 
-                
-                
-            $query= mysqli_query($conectar,"SELECT gc.customerId,gc.clientId,gc.customerName,gc.customerLastName,gc.customerMail,gc.customerPoints,gc.customerPhone,gc.customerStars,gc.customerType,gc.isActive,gr.pointsEq,gr.pointsValue FROM generalCustomers gc JOIN generalRules gr ON gr.clientId=gc.clientId where gc.clientId='$clientId'");
+    
+    
+            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoPlace, s.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN  generalPlaces p ON p.placeId=s.placeId WHERE s.clientId = '$clientId'");
         }
         
     
@@ -176,8 +175,9 @@ if($filter=="filter"){
 
         
         
-    $query= mysqli_query($conectar,"SELECT gc.customerId,gc.clientId,gc.customerName,gc.customerLastName,gc.customerMail,gc.customerPoints,gc.customerPhone,gc.customerStars,gc.customerType,gc.isActive,gr.pointsEq,gr.pointsValue FROM generalCustomers gc JOIN generalRules gr ON gr.clientId=gc.clientId where gc.clientId='$clientId' and gc.$param LIKE '%$value%'");
-   
+    $query = mysqli_query($conectar, "SELECT placeId, clientId, infoPlace FROM generalPlaces WHERE clientId='$clientId' AND JSON_EXTRACT(infoPlace, '$[0].info.$param') LIKE '%$value%'");
+
+          
 
 }
         if($query){
@@ -187,27 +187,17 @@ if ($numRows > 0) {
             $response="true";
             $message="Consulta exitosa";
             $status="202";
-            $apiMessage="¡Clientes seleccionados ($numRows)!";
+            $apiMessage="¡Repartidores seleccionados ($numRows)!";
             $values=[];
 
             while ($row = $query->fetch_assoc()) {
                 $value=[
-                    'customerId' => $row['customerId'],
+                    'placeId' => $row['placeId'],
                     'clientId' => $row['clientId'],
-                    'customerName' => $row['customerName'],
-                    'customerLastName' => $row['customerLastName'],
-                    'customerMail' => $row['customerMail'],
-                    'customerPoints' => $row['customerPoints'],
-                    'customerPhone' => $row['customerPhone'],
-                    
-                    'customerStars' => $row['customerStars'],
-                    'customerType' => $row['customerType'],
-                    'isActive' => $row['isActive'],
-                    'pointsEq' => $row['pointsEq'],
-                    'pointsValue' => $row['pointsValue']
+                    'infoPlace' => json_decode($row['infoPlace'], true)[0]
                 ];
-                
-                array_push($values,$value);
+            
+                array_push($values, $value);
             }
             
             $row = $query->fetch_assoc();
@@ -222,7 +212,7 @@ if ($numRows > 0) {
                     'status' => $status,
                     'sentData'=>$dta
                 ],
-                'customers' => $values
+                'sites' => $values
             ];
             
             return json_encode($responseData);
@@ -244,7 +234,7 @@ if ($numRows > 0) {
                     'status' => $status,
                     'sentData'=>$dta
                 ],
-                'customers' => $values
+                'sites' => $values
             ];
             array_push($values,$value);
             
@@ -259,7 +249,7 @@ if ($numRows > 0) {
             $response="false";
             $message="Error en la consulta: " . mysqli_error($conectar);
             $status="404";
-            $apiMessage="¡Clientes no seleccionados con éxito!";
+            $apiMessage="¡Repartidores no seleccionados con éxito!";
             $values=[];
 
             $value = [
@@ -273,7 +263,7 @@ if ($numRows > 0) {
                     'status' => $status,
                     'sentData'=>$dta
                 ],
-                'customers' => $values
+                'sites' => $values
             ];
             array_push($values,$value);
             
@@ -284,7 +274,7 @@ if ($numRows > 0) {
 
                             
         
-} 
+}
     public static function getOrders($dta) {
             
                 

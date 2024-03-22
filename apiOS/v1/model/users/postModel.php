@@ -104,285 +104,97 @@ class modelPost {
             }
 
 
-public static function postDelivery($dta) {
-    
-           
-
-
-        // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
-    
-        // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
-        $conectar = conn();
-
-        // Verifica si la conexión se realizó correctamente
-        if (!$conectar) {
-            return "Error de conexión a la base de datos";
-        }
-
-        
+            public static function postSite($dta) {
             
-        $gen_uuid = new generateUuid();
-        $myuuid = $gen_uuid->guidv4();
-        $deliveryId = substr($myuuid, 0, 8);
+                
+                // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
+                
+                    // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
+                    $conectar = conn();
+            
+                    // Verifica si la conexión se realizó correctamente
+                    if (!$conectar) {
+                        return "Error de conexión a la base de datos";
+                    }
+            
+                    
+                        
+                    $gen_uuid = new generateUuid();
+                    $myuuid = $gen_uuid->guidv4();
+                    $siteId = substr($myuuid, 0, 8);
 
-        // Escapa los valores para prevenir inyección SQL
-        $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
-        $deliveryName = mysqli_real_escape_string($conectar, $dta['deliveryName']);
-        $deliveryLastName = mysqli_real_escape_string($conectar, $dta['deliveryLastName']);
-        $deliveryMail = mysqli_real_escape_string($conectar, $dta['deliveryMail']);
-        $deliveryContact = mysqli_real_escape_string($conectar, $dta['deliveryContact']);
-        
+                    // Escapa los valores para prevenir inyección SQL
+                    $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
+                    $siteName = mysqli_real_escape_string($conectar, $dta['siteName']);
+                    $siteComments = mysqli_real_escape_string($conectar, $dta['siteComments']);
+                    $sitePlace = mysqli_real_escape_string($conectar, $dta['sitePlace']);
+                    //$dato_encriptado = $keyword;
+                    
+                    $infoSite = [
+                        [
+                            "info" => [
+                                "name" => $siteName,
+                                "comments" => $siteComments,
+                            ],
+                            "params" => [
+                                "isActive" => "1",
+                                "status" => "1"
+                            ]
+                        ]
+                    ];
+                    
+                    $jsonInfoSite = json_encode($infoSite);
+                   // echo $jsonInfoSite;
+                    
+                    $query = mysqli_query($conectar, "INSERT INTO generalSites 
+                    (siteId, clientId, infoPlace,placeId) 
+                    VALUES
+                    ('$siteId', '$clientId', '$jsonInfoSite','$sitePlace')");
 
-        $query = mysqli_query($conectar, "INSERT INTO generalDelivery 
-        (deliveryId, clientId, deliveryName, deliveryLastName,deliveryMail,deliveryContact) 
-        VALUES
-        ('$deliveryId', '$clientId', '$deliveryName', '$deliveryLastName', '$deliveryMail','$deliveryContact')");
+                    if($query){
+                                $filasAfectadas = mysqli_affected_rows($conectar);
+                                    if ($filasAfectadas > 0) 
+                                        {
+                                            // Éxito: La actualización se realizó correctamente
+                                            $response="true";
+                                            $message="Creación exitosa. Filas afectadas: $filasAfectadas";
+                                            $apiMessage="¡ creado con éxito!";
+                                            $status="201";
+                                        } 
+                                        else {
+                                            $response="false";
+                                            $message="Creación no exitosa. Filas afectadas: $filasAfectadas";
+                                            $status="500";
+                                            $apiMessage="¡Cliente no credo con éxito!";
+                                            }
+                            //  return "true";
+                            //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
+                    }
+                    else{
+                            $response="true";
+                            $message="Error en la actualización: " . mysqli_error($conectar);
+                            $status="404";
+                            $apiMessage="¡Cliente no creado con éxito!";
+                        
+                        }
 
-        if($query){
-            $filasAfectadas = mysqli_affected_rows($conectar);
-            if ($filasAfectadas > 0) {
-                // Éxito: La actualización se realizó correctamente
-            $response="true";
-            $message="Creación exitosa. Filas afectadas: $filasAfectadas";
-            $apiMessage="¡Repartidor creado con éxito!";
-                $status="201";
-            } else {
-                $response="false";
-            $message="Creación no exitosa. Filas afectadas: $filasAfectadas";
-                $status="500";
-                $apiMessage="¡Repartidor no credo con éxito!";
-            }
-        //  return "true";
-        //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
-        }else{
-            $response="true";
-            $message="Error en la actualización: " . mysqli_error($conectar);
-            $status="404";
-            $apiMessage="¡Repartidor no creado con éxito!";
-        
-                            }
+                        $values=[];
 
-                            $values=[];
-
-                            $value=[
-                                'response' => $response,
-                                'message' => $message,
-                                'apiMessage' => $apiMessage,
-                                'status' => $status
+                        $value=[
+                            'response' => $response,
+                            'message' => $message,
+                            'apiMessage' => $apiMessage,
+                            'status' => $status
+                            
+                        ];
+                        
+                        array_push($values,$value);
+                                            
                                 
-                            ];
-                            
-                            array_push($values,$value);
-                            
-                
-                    //echo json_encode($students) ;
-                    return json_encode(['response'=>$values]);
-        
-    }
-
-    public static function sendValidationEcmCode($dta) {
-            
-                
-        // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
-        
-            // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
-            $conectar = conn();
-    
-            // Verifica si la conexión se realizó correctamente
-            if (!$conectar) {
-                return "Error de conexión a la base de datos";
-            }
-    
-            
-                
-            $gen_uuid = new generateUuid();
-            $myuuid = $gen_uuid->guidv4();
-          
-
-            // Escapa los valores para prevenir inyección SQL
-            $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
-            $customerMail = mysqli_real_escape_string($conectar, $dta['customerMail']);
-           //$dato_encriptado = $keyword;
-            
-    
-         $query = mysqli_query($conectar, "SELECT customerId FROM generalCustomers WHERE customerMail='$customerMail' and clientId='$clientId'");
-
-            $num_rows = mysqli_num_rows($query);
-            if($query){
-                      //  $filasAfectadas = mysqli_affected_rows($conectar);
-                            if ($num_rows > 0) 
-                                {
-
-                                    $valCode = substr($myuuid, 0, 8);
-                                    sendMail::sendConfirmationOrderCodeMail('confirmation@lugma.tech',$customerMail,'Código de confirmación para compra','Tu Código de confirmación es: <strong>' . $valCode.'</strong>');
-                                    // Éxito: La actualización se realizó correctamente
-                                    $query = mysqli_query($conectar, "UPDATE generalCustomers SET ecmCode='$valCode' WHERE clientId='$clientId' AND customerMail='$customerMail'");
-
-                                   
-                                    $response="true";
-                                    $message="Envío exitoso.";
-                                    $apiMessage="¡Código enviado con éxito al correo $customerMail!|validMail";
-                                    $status="201";
-                                } 
-                                else {
-                                    $response="false";
-                                    $message="Envío no exitoso.";
-                                    $status="500";
-                                    $apiMessage="¡Debes registrarte como cliente!|invalidMail";
-                                    }
-                    //  return "true";
-                    //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
-            }
-            else{
-                    $response="true";
-                    $message="Error en la actualización: " . mysqli_error($conectar);
-                    $status="404";
-                    $apiMessage="¡Envío no exitoso!";
-                
-                }
-
-                $values=[];
-
-                $value=[
-                    'response' => $response,
-                    'message' => $message,
-                    'apiMessage' => $apiMessage,
-                    'status' => $status
+                                    //echo json_encode($students) ;
+                                    return json_encode(['response'=>$values]);
                     
-                ];
-                
-                array_push($values,$value);
-                                    
-                        
-                            //echo json_encode($students) ;
-                            return json_encode(['response'=>$values]);
-            
-    }
-    public static function validationEcmCode($dta) {
-            
-                
-        // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
-        
-            // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
-            $conectar = conn();
-    
-            // Verifica si la conexión se realizó correctamente
-            if (!$conectar) {
-                return "Error de conexión a la base de datos";
             }
-    
-            
-                
-            $gen_uuid = new generateUuid();
-            $myuuid = $gen_uuid->guidv4();
-          
-
-            // Escapa los valores para prevenir inyección SQL
-            $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
-            $customerMail = mysqli_real_escape_string($conectar, $dta['customerMail']);
-            $valCode = mysqli_real_escape_string($conectar, $dta['valCode']);
-           //$dato_encriptado = $keyword;
-            
-    
-           $query = mysqli_query($conectar, "SELECT customerId,codeAttemps from generalCustomers WHERE customerMail='$customerMail' AND clientId='$clientId' and ecmCode='$valCode'");
-            
-           // Verificar si la consulta fue exitosa
-           $fila = $query->fetch_assoc();
-
-               // Obtener la primera fila como un arreglo asociativo
-               $num_rows = mysqli_num_rows($query);
-            if($query){
-                      //  $filasAfectadas = mysqli_affected_rows($conectar);
-                            if ($num_rows > 0) 
-                                {
-                                    $attemps=$fila['codeAttemps'];
-                                    if($attemps<=3){
-                                        $query = mysqli_query($conectar, "UPDATE generalCustomers SET ecmCode='0',codeAttemps=0 where clientId='$clientId' and customerId IN (SELECT customerId WHERE customerMail='$customerMail' and clientId='$clientId')");
-
-                                       
-                                        sendMail::sendConfirmationOrderCodeMail('confirmation@lugma.tech',$customerMail,'Código de confirmación para compra','<strong>Tu compra ha sido validada.</strong>');
-                                        $response="true";
-                                        $message="Envío exitoso.";
-                                        $apiMessage="¡Código validado con éxito!";
-                                        $statusCode="validatedMail";
-                                        $status="202";
-                                    
-                                    }else{
-
-                                        $query = mysqli_query($conectar, "UPDATE generalCustomers SET codeAttemps=0 where clientId='$clientId' and customerMail='$customerMail'");
-                   
-                                        sendMail::sendConfirmationOrderCodeMail('confirmation@lugma.tech',$customerMail,'Código de confirmación para compra','Genera un nuevo código, exediste el número máximo de intentos.');
-
-                                        $response="false";
-                                        $message="Envío exitoso.";
-                                        $apiMessage="¡Exediste el número de intentos máximos!";
-                                        $statusCode="codeAttemps";
-                                        $status="501";
-                                    }
-
-                                  
-                                   
-                                } 
-                                else {
-
-
-                                    $query = mysqli_query($conectar, "UPDATE generalCustomers SET codeAttemps=(SELECT codeAttemps FROM generalCustomers WHERE customerMail='$customerMail' AND clientId='$clientId')+1 where clientId='$clientId' and customerMail='$customerMail'");
-                                    $query3 = mysqli_query($conectar, "SELECT customerId,codeAttemps from generalCustomers WHERE customerMail='$customerMail' AND clientId='$clientId'");
-                            
-                            // Verificar si la consulta fue exitosa
-                            $fila = $query3->fetch_assoc();
-                            $attemps=$fila['codeAttemps'];
-                            if($attemps>=3){
-
-                                $query = mysqli_query($conectar, "UPDATE generalCustomers SET codeAttemps=0 where clientId='$clientId' and customerMail='$customerMail'");
-                                sendMail::sendConfirmationOrderCodeMail('confirmation@lugma.tech',$customerMail,'Código de confirmación para compra','Genera un nuevo código, exediste el número máximo de intentos.');
-
-                                $response="false";
-                                $message="Envío no exitoso.";
-                                $status="501";
-                                $apiMessage="¡Exediste el número de intentos máximos!";
-                                $statusCode="codeAttemps";
-                            }else{
-                                sendMail::sendConfirmationOrderCodeMail('confirmation@lugma.tech',$customerMail,'Código de confirmación para compra','Código incorrecto.');
-
-                                    $response="false";
-                                    $message="Envío no exitoso.";
-                                    $status="501";
-                                    $apiMessage="¡Código o correo incorrecto!";
-                                    $statusCode="invalidMailCode";
-                            }
-
-                                    
-                                    }
-                    //  return "true";
-                    //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
-            }
-            else{
-                    $response="true";
-                    $message="Error en la actualización: " . mysqli_error($conectar);
-                    $status="404";
-                    $apiMessage="¡Envío no exitoso!";
-                
-                }
-
-                $values=[];
-
-                $value=[
-                    'response' => $response,
-                    'message' => $message,
-                    'apiMessage' => $apiMessage,
-                    'status' => $status,
-                    'statusCode'=>$statusCode
-                    
-                ];
-                
-                array_push($values,$value);
-                                    
-                        
-                            //echo json_encode($students) ;
-                            return json_encode(['response'=>$values]);
-            
-    }
     }
 
 
