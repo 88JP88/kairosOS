@@ -104,6 +104,101 @@ class modelPost {
             }
 
 
+
+            public static function postElement($dta) {
+            
+                
+                // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
+                
+                    // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
+                    $conectar = conn();
+            
+                    // Verifica si la conexión se realizó correctamente
+                    if (!$conectar) {
+                        return "Error de conexión a la base de datos";
+                    }
+            
+                    
+                        
+                    $gen_uuid = new generateUuid();
+                    $myuuid = $gen_uuid->guidv4();
+                    $elementId = substr($myuuid, 0, 8);
+
+                    // Escapa los valores para prevenir inyección SQL
+                    $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
+                    $elementName = mysqli_real_escape_string($conectar, $dta['elementName']);
+                    $elementComments = mysqli_real_escape_string($conectar, $dta['elementComments']);
+                    $elementType = mysqli_real_escape_string($conectar, $dta['elementType']);
+                    $elementSite = mysqli_real_escape_string($conectar, $dta['elementSite']);
+                    //$dato_encriptado = $keyword;
+                    
+                    $infoElement = [
+                        [
+                            "info" => [
+                                "name" => $elementName,
+                                "type" => $elementType,
+                                "comments" => $elementComments
+                            ],
+                            "params" => [
+                                "isActive" => "1",
+                                "status" => "1"
+                            ]
+                        ]
+                    ];
+                    
+                    $jsonInfoElement = json_encode($infoElement);
+                   // echo $jsonInfoSite;
+                    
+                    $query = mysqli_query($conectar, "INSERT INTO generalElements 
+                    (elementId, clientId,siteId, infoElement) 
+                    VALUES
+                    ('$elementId', '$clientId','$elementSite', '$jsonInfoElement')");
+
+                    if($query){
+                                $filasAfectadas = mysqli_affected_rows($conectar);
+                                    if ($filasAfectadas > 0) 
+                                        {
+                                            // Éxito: La actualización se realizó correctamente
+                                            $response="true";
+                                            $message="Creación exitosa. Filas afectadas: $filasAfectadas";
+                                            $apiMessage="¡ creado con éxito!";
+                                            $status="201";
+                                        } 
+                                        else {
+                                            $response="false";
+                                            $message="Creación no exitosa. Filas afectadas: $filasAfectadas";
+                                            $status="500";
+                                            $apiMessage="¡Cliente no credo con éxito!";
+                                            }
+                            //  return "true";
+                            //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
+                    }
+                    else{
+                            $response="true";
+                            $message="Error en la actualización: " . mysqli_error($conectar);
+                            $status="404";
+                            $apiMessage="¡Cliente no creado con éxito!";
+                        
+                        }
+
+                        $values=[];
+
+                        $value=[
+                            'response' => $response,
+                            'message' => $message,
+                            'apiMessage' => $apiMessage,
+                            'status' => $status
+                            
+                        ];
+                        
+                        array_push($values,$value);
+                                            
+                                
+                                    //echo json_encode($students) ;
+                                    return json_encode(['response'=>$values]);
+                    
+            }
+
             public static function postSite($dta) {
             
                 
