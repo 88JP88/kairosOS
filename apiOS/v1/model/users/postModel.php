@@ -276,7 +276,7 @@ class modelPut{
                     return json_encode(['response'=>$values]);
 
             }
-            public static function putCustomer($dta) {
+            public static function putSite($dta) {
             
                 // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
             
@@ -294,35 +294,49 @@ class modelPut{
                 $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
                 $param = mysqli_real_escape_string($conectar, $dta['param']);
                 $value = mysqli_real_escape_string($conectar, $dta['value']);
-                $customerId = mysqli_real_escape_string($conectar, $dta['customerId']);
+                $siteId = mysqli_real_escape_string($conectar, $dta['siteId']);
             
                 //$dato_encriptado = $keyword;
-                
+                if($param=="del"){
+                    $query = mysqli_query($conectar, "DELETE FROM generalPlaces where clientId='$clientId' and deliveryId='$deliveryId'");
+                    $apiMessage="¡Repartidor removido con éxito!";
+                }  if($param!="del"){
+                    if($param=="placeId"){
+                        $query = mysqli_query($conectar, "UPDATE generalSites 
+                        SET placeId = '$value'
+                        WHERE clientId = '$clientId' AND siteId = '$siteId'");
+                    }else{
+                    $query = mysqli_query($conectar, "UPDATE generalSites 
+                                          SET infoSite = JSON_SET(infoSite, '$[0].info.$param', '$value') 
+                                          WHERE clientId = '$clientId' AND siteId = '$siteId'");
+                    }
+                    $apiMessage="¡Ubicación actualizada con éxito!";
+                }
         
-                $query = mysqli_query($conectar, "UPDATE generalCustomers SET $param='$value' where clientId='$clientId' and customerId='$customerId'");
-
-                
+               // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
+            
                 if($query){
                     $filasAfectadas = mysqli_affected_rows($conectar);
                     if ($filasAfectadas > 0) {
                         // Éxito: La actualización se realizó correctamente
                     $response="true";
                     $message="Actualización exitosa. Filas afectadas: $filasAfectadas";
-                    $apiMessage="¡Cliente actualizado con éxito!";
+                    $apiMessage="¡Ubicación actualizada con éxito!";
+             
                         $status="201";
                     } else {
                         $response="false";
                     $message="Actualización no exitosa. Filas afectadas: $filasAfectadas";
                         $status="500";
-                        $apiMessage="¡Cliente no actualizado con éxito!";
+                        $apiMessage="¡Repartidor no actualizado con éxito!";
                     }
                 //  return "true";
                 //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
                 }else{
-                    $response="true";
+                    $response="false";
                     $message="Error en la actualización: " . mysqli_error($conectar);
                     $status="404";
-                    $apiMessage="¡Cliente67yhb no actualizado con éxito!";
+                    $apiMessage="¡Repartidor no actualizado con éxito!";
                 
                                     }
         
