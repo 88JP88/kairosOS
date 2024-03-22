@@ -325,7 +325,7 @@ if($filter=="filter"){
 
         }
         else{
-            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS sname,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS pname FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE e.clientId = '$clientId' AND JSON_EXTRACT(e.infoElement, '$[0].info.$param') LIKE '%$value%')");
+            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS sname,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS pname FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE e.clientId = '$clientId' AND JSON_EXTRACT(e.infoElement, '$[0].info.$param') LIKE '%$value%'");
         }
           
 
