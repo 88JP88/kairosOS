@@ -167,7 +167,7 @@ public static function getSites($dta) {
 
     
     
-            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoPlace, s.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN  generalPlaces p ON p.placeId=s.placeId WHERE s.clientId = '$clientId'");
+            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN  generalPlaces p ON p.placeId=s.placeId WHERE s.clientId = '$clientId'");
         }
         
     
@@ -192,9 +192,11 @@ if ($numRows > 0) {
 
             while ($row = $query->fetch_assoc()) {
                 $value=[
-                    'placeId' => $row['placeId'],
+                    'siteId' => $row['siteId'],
                     'clientId' => $row['clientId'],
-                    'infoPlace' => json_decode($row['infoPlace'], true)[0]
+                    'placeId' => $row['placeId'],
+                    'placeName' => $row['name'],
+                    'infoSite' => json_decode($row['infoSite'], true)[0]
                 ];
             
                 array_push($values, $value);
