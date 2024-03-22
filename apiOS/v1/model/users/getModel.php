@@ -310,7 +310,7 @@ public static function getElements($dta) {
 
     
     
-            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_UNQUOTE(JSON_EXTRACT(s.infoSite, '$[0].info.name')) AS sname, JSON_UNQUOTE(JSON_EXTRACT(p.infoPlace, '$[0].info.name')) AS pname FROM generalElements e JOIN generalSites s ON e.siteId = s.siteId JOIN generalPlaces p ON p.placeId = s.placeId WHERE e.clientId = '$clientId'");
+            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS sname FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId WHERE e.clientId = '$clientId'");
         }
         
     
@@ -341,11 +341,9 @@ if ($numRows > 0) {
                     'elementId' => $row['elementId'],
                     'clientId' => $row['clientId'],
                     'siteId' => $row['siteId'],
-                    'siteName' => $row['sname'],
-                    'placeName' => $row['pname'],
+                    'siteName' => json_decode($row['sname']),
                     'infoElement' => json_decode($row['infoElement'], true)[0]
                 ];
-                
             
                 array_push($values, $value);
             }
