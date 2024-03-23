@@ -290,6 +290,117 @@ class modelPost {
                                     return json_encode(['response'=>$values]);
                     
             }
+
+
+
+
+            public static function postProduct($dta) {
+            
+                
+                // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
+                
+                    // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
+                    $conectar = conn();
+            
+                    // Verifica si la conexión se realizó correctamente
+                    if (!$conectar) {
+                        return "Error de conexión a la base de datos";
+                    }
+            
+                    
+                        
+                    $gen_uuid = new generateUuid();
+                    $myuuid = $gen_uuid->guidv4();
+                    $productId = substr($myuuid, 0, 8);
+
+                    // Escapa los valores para prevenir inyección SQL
+                    $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
+                    $productName = mysqli_real_escape_string($conectar, $dta['productName']);
+                    $productComments = mysqli_real_escape_string($conectar, $dta['productComments']);
+                    $productCaracts = mysqli_real_escape_string($conectar, $dta['productCaracts']);
+                    $productImg = mysqli_real_escape_string($conectar, $dta['productImg']);
+                    $productType = mysqli_real_escape_string($conectar, $dta['productType']);
+                    $productValue = mysqli_real_escape_string($conectar, $dta['productValue']);
+                    $productUnit = mysqli_real_escape_string($conectar, $dta['productUnit']);
+                    $productUnitCaracts = mysqli_real_escape_string($conectar, $dta['productUnitCaracts']);
+                    $productByDiscount = mysqli_real_escape_string($conectar, $dta['productBydiscount']);
+                    $productStockByUnit = mysqli_real_escape_string($conectar, $dta['productStockByUnit']);
+                    //$dato_encriptado = $keyword;
+                    
+                    $infoProduct = [
+                        [
+                            "info" => [
+                                "name" => $productName,
+                                "type" => $productType,
+                                "comments" => $productComments,
+                                "caracts" => $productCaracts,
+                                "imgProduct" => $productImg,
+                                "value" => $productValue,
+                                "unit" => $productUnit,
+                                "unitCaracts" => $productUnitCaracts,
+                                "byDiscount" => $productByDiscount,
+                                "stockByUnit" => $productStockByUnit
+                            ],
+                            "params" => [
+                                "isActive" => "1",
+                                "status" => "1"
+                            ]
+                        ]
+                    ];
+                    
+                    $jsonInfoProduct = json_encode($infoProduct);
+                   // echo $jsonInfoSite;
+                    
+                    $query = mysqli_query($conectar, "INSERT INTO generalProdServ 
+                    (productId, clientId, infoProdServ) 
+                    VALUES
+                    ('$productId', '$clientId','$jsonInfoProduct')");
+
+                    if($query){
+                                $filasAfectadas = mysqli_affected_rows($conectar);
+                                    if ($filasAfectadas > 0) 
+                                        {
+                                            // Éxito: La actualización se realizó correctamente
+                                            $response="true";
+                                            $message="Creación exitosa. Filas afectadas: $filasAfectadas";
+                                            $apiMessage="¡ creado con éxito!";
+                                            $status="201";
+                                        } 
+                                        else {
+                                            $response="false";
+                                            $message="Creación no exitosa. Filas afectadas: $filasAfectadas";
+                                            $status="500";
+                                            $apiMessage="¡Cliente no credo con éxito!";
+                                            }
+                            //  return "true";
+                            //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
+                    }
+                    else{
+                            $response="true";
+                            $message="Error en la actualización: " . mysqli_error($conectar);
+                            $status="404";
+                            $apiMessage="¡Cliente no creado con éxito!";
+                        
+                        }
+
+                        $values=[];
+
+                        $value=[
+                            'response' => $response,
+                            'message' => $message,
+                            'apiMessage' => $apiMessage,
+                            'status' => $status
+                            
+                        ];
+                        
+                        array_push($values,$value);
+                                            
+                                
+                                    //echo json_encode($students) ;
+                                    return json_encode(['response'=>$values]);
+                    
+            }
+
     }
 
 
