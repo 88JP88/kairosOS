@@ -352,7 +352,7 @@ class modelPost {
                    // echo $jsonInfoSite;
                     
                     $query = mysqli_query($conectar, "INSERT INTO generalProdServ 
-                    (productId, clientId, infoProdServ) 
+                    (prodservId, clientId, infoProdServ) 
                     VALUES
                     ('$productId', '$clientId','$jsonInfoProduct')");
 
