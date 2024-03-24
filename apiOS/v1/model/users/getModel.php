@@ -483,7 +483,7 @@ if ($numRows > 0) {
 
             while ($row = $query->fetch_assoc()) {
                 $value=[
-                    'productId' => $row['productId'],
+                    'productId' => $row['prodservId'],
                     'clientId' => $row['clientId'],
                     'infoProduct' => json_decode($row['infoProdServ'], true)[0]
                 ];
