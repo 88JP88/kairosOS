@@ -325,6 +325,10 @@ class modelPost {
                     $productUnitCaracts = mysqli_real_escape_string($conectar, $dta['productUnitCaracts']);
                     $productByDiscount = mysqli_real_escape_string($conectar, $dta['productBydiscount']);
                     $productStockByUnit = mysqli_real_escape_string($conectar, $dta['productStockByUnit']);
+                    $productSku = mysqli_real_escape_string($conectar, $dta['productSku']);
+                    $productEan1 = mysqli_real_escape_string($conectar, $dta['productEan1']);
+                    $productEan2 = mysqli_real_escape_string($conectar, $dta['productEan2']);
+                    $keywords=$productName." ".$productComments." ".$productSku." ".$productCaracts;
                     //$dato_encriptado = $keyword;
                     
                     $infoProduct = [
@@ -339,7 +343,11 @@ class modelPost {
                                 "unit" => $productUnit,
                                 "unitCaracts" => $productUnitCaracts,
                                 "byDiscount" => $productByDiscount,
-                                "stockByUnit" => $productStockByUnit
+                                "stockByUnit" => $productStockByUnit,
+                                "sku" => $productSku,
+                                "ean1" => $productEan1,
+                                "ean2" => $productEan2,
+                                "keyWords" => $keywords
                             ],
                             "params" => [
                                 "isActive" => "1",
