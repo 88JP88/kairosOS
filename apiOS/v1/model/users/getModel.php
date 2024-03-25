@@ -603,7 +603,7 @@ public static function getCategories($dta) {
             c.categoryId, 
             c.clientId, 
             c.infoCategory as catinfo, 
-            c.parentId,
+            JSON_EXTRACT(c.infoCategory, '$[0].info.name') AS parentId,
             JSON_EXTRACT(c2.infoCategory, '$[0].info.name') AS parent 
         FROM 
             generalCategories c 
