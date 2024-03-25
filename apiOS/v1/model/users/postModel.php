@@ -409,6 +409,118 @@ class modelPost {
                     
             }
 
+
+
+            public static function postCategory($dta) {
+            
+                
+                // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
+                
+                    // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
+                    $conectar = conn();
+            
+                    // Verifica si la conexión se realizó correctamente
+                    if (!$conectar) {
+                        return "Error de conexión a la base de datos";
+                    }
+            
+                    
+                        
+                    $gen_uuid = new generateUuid();
+                    $myuuid = $gen_uuid->guidv4();
+                    $categoryId = substr($myuuid, 0, 8);
+
+                    // Escapa los valores para prevenir inyección SQL
+                    $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
+                    $categoryName = mysqli_real_escape_string($conectar, $dta['categoryName']);
+                    $categoryComments = mysqli_real_escape_string($conectar, $dta['categoryComments']);
+                   
+                    $categoryImg = mysqli_real_escape_string($conectar, $dta['categoryImg']);
+                    $categoryParent = mysqli_real_escape_string($conectar, $dta['categoryParent']);
+                    $keywords=$categoryName." ".$categoryComments." ".$categoryParent;
+                    //$dato_encriptado = $keyword;
+                    if($categoryParent=="main"){
+                        $categoryType="main";
+                        $parentId=$categoryId;
+                    }
+                    if($categoryParent!="main"){
+                        $categoryType="secondary";
+                        $parentId=$categoryParent;
+                    }
+
+                    $infoCategory = [
+                        [
+                            "info" => [
+                                "name" => $categoryName,
+                                "type" => $categoryType,
+                                "comments" => $categoryComments,
+                                
+                                "imgCategory" => $categoryImg,
+                                
+                                "parentId" => $parentId,
+                                "keyWords" => $keywords
+                            ],
+                            "params" => [
+                                "isActive" => "1",
+                                "status" => "1"
+                            ]
+                        ]
+                    ];
+                    
+                    $jsonInfoCategory = json_encode($infoCategory);
+                   // echo $jsonInfoSite;
+                    
+                    $query = mysqli_query($conectar, "INSERT INTO generalCategories 
+                    (categoryId, clientId, infoProdServ) 
+                    VALUES
+                    ('$categoryId', '$clientId','$jsonInfoCategory')");
+
+                    if($query){
+                                $filasAfectadas = mysqli_affected_rows($conectar);
+                                    if ($filasAfectadas > 0) 
+                                        {
+                                            // Éxito: La actualización se realizó correctamente
+                                            $response="true";
+                                            $message="Creación exitosa. Filas afectadas: $filasAfectadas";
+                                            $apiMessage="¡ creado con éxito!";
+                                            $status="201";
+                                        } 
+                                        else {
+                                            $response="false";
+                                            $message="Creación no exitosa. Filas afectadas: $filasAfectadas";
+                                            $status="500";
+                                            $apiMessage="¡Cliente no credo con éxito!";
+                                            }
+                            //  return "true";
+                            //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
+                    }
+                    else{
+                            $response="true";
+                            $message="Error en la actualización: " . mysqli_error($conectar);
+                            $status="404";
+                            $apiMessage="¡Cliente no creado con éxito!";
+                        
+                        }
+
+                        $values=[];
+
+                        $value=[
+                            'response' => $response,
+                            'message' => $message,
+                            'apiMessage' => $apiMessage,
+                            'status' => $status
+                            
+                        ];
+                        
+                        array_push($values,$value);
+                                            
+                                
+                                    //echo json_encode($students) ;
+                                    return json_encode(['response'=>$values]);
+                    
+            }
+
+
     }
 
 
