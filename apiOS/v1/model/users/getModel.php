@@ -602,7 +602,7 @@ public static function getCategories($dta) {
             $query= mysqli_query($conectar,"SELECT 
             c.categoryId, 
             c.clientId, 
-            c.infoCategory, 
+            c.infoCategory as catinfo, 
             c.parentId,
             JSON_EXTRACT(c2.infoCategory, '$[0].info.name') AS parent 
         FROM 
@@ -639,7 +639,7 @@ if ($numRows > 0) {
                     'clientId' => $row['clientId'],
                     'parentId' => $row['parentId'],
                     'parentName' => $row['parent'],
-                    'infoCategory' => json_decode($row['infoCategory'], true)[0]
+                    'infoCategory' => json_decode($row['catinfo'], true)[0]
                 ];
             
                 array_push($values, $value);
