@@ -635,7 +635,7 @@ if ($numRows > 0) {
 
             while ($row = $query->fetch_assoc()) {
                 $value=[
-                    'productId' => $row['prodservId'],
+                    'categoryId' => $row['categoryId'],
                     'clientId' => $row['clientId'],
                     'parentId' => $row['parentId'],
                     'parentName' => $row['parent'],
