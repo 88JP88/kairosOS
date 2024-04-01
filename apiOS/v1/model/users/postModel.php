@@ -457,7 +457,6 @@ class modelPost {
                                 
                                 "imgCategory" => $categoryImg,
                                 
-                                "parentId" => $parentId,
                                 "keyWords" => $keywords
                             ],
                             "params" => [
@@ -471,9 +470,9 @@ class modelPost {
                    // echo $jsonInfoSite;
                     
                     $query = mysqli_query($conectar, "INSERT INTO generalCategories 
-                    (categoryId, clientId, infoProdServ) 
+                    (categoryId, clientId, infoProdServ,parentId) 
                     VALUES
-                    ('$categoryId', '$clientId','$jsonInfoCategory')");
+                    ('$categoryId', '$clientId','$jsonInfoCategory','$parentId')");
 
                     if($query){
                                 $filasAfectadas = mysqli_affected_rows($conectar);
