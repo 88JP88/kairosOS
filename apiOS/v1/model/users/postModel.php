@@ -871,8 +871,14 @@ class modelPut{
                                         }  if($param!="del"){
 
                                             if($param=="type"){
+                                                if($value==$categoryId){
+                                                    $type="main";
+                                                }
+                                                if($value!=$categoryId){
+                                                    $type="secondary";
+                                                }
                                                 $query = mysqli_query($conectar, "UPDATE generalCategories 
-                                                SET parentId='$value'
+                                                SET parentId='$value',infoCategory = JSON_SET(infoCategory, '$[0].info.type', '$type'),
                                                 WHERE clientId = '$clientId' AND categoryId = '$categoryId'");
               
                                             }else{
