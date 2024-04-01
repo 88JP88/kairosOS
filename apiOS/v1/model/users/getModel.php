@@ -626,8 +626,26 @@ if($filter=="filter"){
 
         
         
-    $query = mysqli_query($conectar, "SELECT prodservId, clientId, infoProdServ FROM generalProdServ WHERE clientId='$clientId' AND JSON_EXTRACT(infoProdServ, '$[0].info.$param') LIKE '%$value%'");
-
+    $query= mysqli_query($conectar,"SELECT 
+    c.categoryId, 
+    c.clientId, 
+    c.infoCategory,
+    c.parentId,
+    JSON_UNQUOTE(JSON_EXTRACT(c.infoCategory, '$[0].info.name')) AS catName, 
+    (SELECT JSON_UNQUOTE(JSON_EXTRACT(gc.infoCategory, '$[0].info.name')) 
+     FROM generalCategories gc 
+     WHERE gc.categoryId =c.parentId
+     LIMIT 1
+    ) AS parentName,
+    (SELECT gc.infoCategory
+     FROM generalCategories gc 
+     WHERE gc.categoryId =c.parentId
+     LIMIT 1
+    ) AS parentInfo
+FROM 
+    generalCategories c 
+WHERE 
+    c.clientId = '$clientId' AND JSON_EXTRACT(c.infoCategory, '$[0].info.$param') LIKE '%$value%'");
           
 
 }
