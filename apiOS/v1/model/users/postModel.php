@@ -869,10 +869,18 @@ class modelPut{
                                             //$query = mysqli_query($conectar, "DELETE FROM generalPlaces where clientId='$clientId' and deliveryId='$deliveryId'");
                                             $apiMessage="¡Repartidor removido con éxito!";
                                         }  if($param!="del"){
+
+                                            if($param=="type"){
+                                                $query = mysqli_query($conectar, "UPDATE generalCategories 
+                                                SET parentId='$value'
+                                                WHERE clientId = '$clientId' AND categoryId = '$categoryId'");
+              
+                                            }else{
+
                                             $query = mysqli_query($conectar, "UPDATE generalCategories 
                                                                   SET infoCategory = JSON_SET(infoCategory, '$[0].info.$param', '$value') 
                                                                   WHERE clientId = '$clientId' AND categoryId = '$categoryId'");
-                                
+                                            }
                                             $apiMessage="¡Actualizada con éxito!";
                                         }
                                 
