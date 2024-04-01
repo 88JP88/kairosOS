@@ -665,7 +665,7 @@ if ($numRows > 0) {
                     'clientId' => $row['clientId'],
                     'parentId' => $row['parentId'],
                     'parentName' => $row['parentName'],
-                    'parentInfo' => json_decode($row['parentInfo'],true)[0],
+                    'parentInfo' => $row['parentInfo'],
                     'infoCategory' => json_decode($row['infoCategory'], true)[0]
                 ];
             
