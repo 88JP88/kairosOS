@@ -470,7 +470,7 @@ class modelPost {
                    // echo $jsonInfoSite;
                     
                     $query = mysqli_query($conectar, "INSERT INTO generalCategories 
-                    (categoryId, clientId, infoProdServ,parentId) 
+                    (categoryId, clientId, infoCategory,parentId) 
                     VALUES
                     ('$categoryId', '$clientId','$jsonInfoCategory','$parentId')");
 
