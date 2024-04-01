@@ -878,7 +878,7 @@ class modelPut{
                                                     $type="secondary";
                                                 }
                                                 $query = mysqli_query($conectar, "UPDATE generalCategories 
-                                                SET parentId='$value',infoCategory = JSON_SET(infoCategory, '$[0].info.type', '$type'),
+                                                SET parentId='$value',infoCategory = JSON_SET(infoCategory, '$[0].info.type', '$type')
                                                 WHERE clientId = '$clientId' AND categoryId = '$categoryId'");
               
                                             }else{
