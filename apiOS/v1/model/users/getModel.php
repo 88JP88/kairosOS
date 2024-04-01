@@ -602,13 +602,21 @@ public static function getCategories($dta) {
             $query= mysqli_query($conectar,"SELECT 
             c.categoryId, 
             c.clientId, 
-            c.infoCategory as catinfo, 
-            JSON_EXTRACT(c.infoCategory, '$[0].info.name') AS parentId,
-            JSON_EXTRACT(c2.infoCategory, '$[0].info.name') AS parent 
+            c.infoCategory,
+            c.parentId,
+            JSON_UNQUOTE(JSON_EXTRACT(c.infoCategory, '$[0].info.name')) AS catName, 
+            (SELECT JSON_UNQUOTE(JSON_EXTRACT(gc.infoCategory, '$[0].info.name')) 
+             FROM generalCategories gc 
+             WHERE gc.categoryId =c.parentId
+             LIMIT 1
+            ) AS parentName,
+            (SELECT gc.infoCategory
+             FROM generalCategories gc 
+             WHERE gc.categoryId =c.parentId
+             LIMIT 1
+            ) AS parentInfo
         FROM 
             generalCategories c 
-        JOIN 
-            generalCategories c2 ON JSON_EXTRACT(c.infoCategory, '$[0].info.parentId') = c2.categoryId 
         WHERE 
             c.clientId = '$clientId'");
         }
@@ -638,8 +646,9 @@ if ($numRows > 0) {
                     'categoryId' => $row['categoryId'],
                     'clientId' => $row['clientId'],
                     'parentId' => $row['parentId'],
-                    'parentName' => $row['parent'],
-                    'infoCategory' => json_decode($row['catinfo'], true)[0]
+                    'parentName' => $row['parentName'],
+                    'parentInfo' => $row['parentInfo'],
+                    'infoCategory' => json_decode($row['infoCategory'], true)[0]
                 ];
             
                 array_push($values, $value);
