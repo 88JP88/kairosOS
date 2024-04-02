@@ -649,7 +649,12 @@ if($filter=="filter"){
     ) AS parentInfo,
     (SELECT gcc.infoCategory
      FROM generalCategories gcc 
-     WHERE gcc.categoryId =gc.parentId
+     WHERE gcc.categoryId =
+     (SELECT gc.parentId
+     FROM generalCategories gc 
+     WHERE gc.categoryId =c.parentId
+     LIMIT 1
+    )
      LIMIT 1
     ) AS parentInfoParent
 FROM 
