@@ -614,17 +614,7 @@ public static function getCategories($dta) {
              FROM generalCategories gc 
              WHERE gc.categoryId =c.parentId
              LIMIT 1
-            ) AS parentInfo,
-    (SELECT gcc.infoCategory
-     FROM generalCategories gcc 
-     WHERE gcc.categoryId IN
-     (SELECT gc.parentId
-     FROM generalCategories gc 
-     WHERE gc.categoryId =c.parentId
-     LIMIT 1
-    )
-     LIMIT 1
-    ) AS parentInfoParent
+            ) AS parentInfo
         FROM 
             generalCategories c 
         WHERE 
@@ -651,17 +641,7 @@ if($filter=="filter"){
      FROM generalCategories gc 
      WHERE gc.categoryId =c.parentId
      LIMIT 1
-    ) AS parentInfo,
-    (SELECT gcc.infoCategory
-     FROM generalCategories gcc 
-     WHERE gcc.categoryId IN
-     (SELECT gc.parentId
-     FROM generalCategories gc 
-     WHERE gc.categoryId =c.parentId
-     LIMIT 1
-    )
-     LIMIT 1
-    ) AS parentInfoParent
+    ) AS parentInfo
 FROM 
     generalCategories c 
 WHERE 
@@ -686,7 +666,6 @@ if ($numRows > 0) {
                     'parentId' => $row['parentId'],
                     'parentName' => $row['parentName'],
                     'parentInfo' => json_decode($row['parentInfo'],true)[0],
-                    'parentInfoParent' => json_decode($row['parentInfoParent'],true)[0],
                   
                     'infoCategory' => json_decode($row['infoCategory'], true)[0]
                 ];
