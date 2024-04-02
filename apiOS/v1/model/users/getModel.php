@@ -614,12 +614,7 @@ public static function getCategories($dta) {
              FROM generalCategories gc 
              WHERE gc.categoryId =c.parentId
              LIMIT 1
-            ) AS parentInfo,
-    (SELECT gcc.infoCategory
-     FROM generalCategories gcc 
-     WHERE gcc.categoryId =gc.parentId
-     LIMIT 1
-    ) AS parentInfoParent
+            ) AS parentInfo
         FROM 
             generalCategories c 
         WHERE 
