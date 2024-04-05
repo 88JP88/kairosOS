@@ -11,9 +11,10 @@ require_once 'env/domain.php';
 require_once 'kronos/postLog.php';
 
 
+Flight::route('POST /pp', function () {
+echo "hello";
 
-
-
+});
 
 Flight::route('POST /postPlace/@apk/@xapk', function ($apk,$xapk) {
         
