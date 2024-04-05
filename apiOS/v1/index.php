@@ -281,7 +281,7 @@ Flight::route('GET /getProducts/@apiData', function ($apiData) {
         if ($response1 == 'true' ) {
            
           
-echo $apiData;
+echo "hi";
 //echo modelGet::getProducts($postData);
            
 
