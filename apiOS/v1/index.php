@@ -758,4 +758,3 @@ echo modelResponse::responsePost($responseSQL,$apiMessageSQL,$apiStatusSQL,$mess
 });
 
 Flight::start();
-?>
