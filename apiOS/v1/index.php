@@ -1,5 +1,6 @@
 <?php
 
+
 require 'flight/Flight.php';
 require_once 'database/db_users.php';
 require_once 'model/users/postModel.php';
@@ -10,8 +11,7 @@ require_once 'kronos/postLog.php';
 require_once 'model/users/getModel.php';
 
 
-
-Flight::route('POST /pp', function () {
+Flight::route('GET /pp/', function () {
 echo "hello";
 
 });
