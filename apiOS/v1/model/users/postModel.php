@@ -575,16 +575,16 @@ class modelPost {
                                 "comments" => $categoryComments,
                                 "gain"=>$gain,
                                 "price"=>$price,
-                                "type"=>$catalogType
-                                "stock"=>$stock
+                                "type"=>$catalogType,
+                                "stock"=>$stock,
                                 "comments"=>$catalogComments,
                                 "securityStock"=>$secStock,
-                                "isDiscount"=>$isDiscount
-                                "discount"=>$discount
-                                "isPromo"=>$isPromo
-                                "promo"=>$promo
-                                "isStocked"=>$isStocked
-                                "isInternal"=>$isInternal
+                                "isDiscount"=>$isDiscount,
+                                "discount"=>$discount,
+                                "isPromo"=>$isPromo,
+                                "promo"=>$promo,
+                                "isStocked"=>$isStocked,
+                                "isInternal"=>$isInternal,
                                 
                                 "keyWords" => $keywords
                             ],
