@@ -1,7 +1,7 @@
 <?php
 
 require 'flight/Flight.php';
-require_once 'database/db_users.php';
+
 require_once 'model/users/postModel.php';
 //require_once 'model/users/getModel.php';
 //require_once 'model/users/responses.php';
