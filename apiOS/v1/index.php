@@ -4,7 +4,7 @@ require 'flight/Flight.php';
 
 
 
-Flight::route('POST /pp', function () {
+Flight::route('GET /pp', function () {
 echo "hello";
 
 });
