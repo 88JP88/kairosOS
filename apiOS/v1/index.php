@@ -2,10 +2,11 @@
 
 
 require 'flight/Flight.php';
+require_once 'database/db_users.php';
 
 
 
-Flight::route('GET /pp/', function () {
+Flight::route('POST /pp/', function () {
 echo "hello";
 
 });
