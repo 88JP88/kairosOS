@@ -578,18 +578,18 @@ class modelPost {
                                 "price"=>floatval($price),
                                 "stock"=>floatval($stock),
                                 "securityStock"=>floatval($secStock),
-                                "isDiscount"=>$isDiscount,
+                                "isDiscount"=>filter_var($isDiscount, FILTER_VALIDATE_BOOLEAN),
                                 "discount"=>floatval($discount),
-                                "isPromo"=>$isPromo,
+                                "isPromo"=>filter_var($isPromo, FILTER_VALIDATE_BOOLEAN),
                                 "promo"=>$promo,
-                                "isStocked"=>$isStocked,
-                                "isInternal"=>$isInternal,
+                                "isStocked"=>filter_var($isStocked, FILTER_VALIDATE_BOOLEAN),
+                                "isInternal"=>filter_var($isInternal, FILTER_VALIDATE_BOOLEAN),
                                 
                                 "keyWords" => $keywords
                             ],
                             "params" => [
-                                "isActive" => "1",
-                                "status" => "1"
+                                "isActive" => true,
+                                "status" => true
                             ]
                         ]
                     ];
