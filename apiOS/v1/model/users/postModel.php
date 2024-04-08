@@ -571,13 +571,12 @@ class modelPost {
                         [
                             "info" => [
                                 
-                                "type" => $categoryType,
-                                "comments" => $categoryComments,
-                                "gain"=>$gain,
+                               
+                                "comments" => $catalogComments,
+                                "maxQty"=>$maxQty,
+                                "minQty"=>$minQty,
                                 "price"=>$price,
-                                "type"=>$catalogType,
                                 "stock"=>$stock,
-                                "comments"=>$catalogComments,
                                 "securityStock"=>$secStock,
                                 "isDiscount"=>$isDiscount,
                                 "discount"=>$discount,
