@@ -794,7 +794,7 @@ if($filter=="filter"){
     c.placeId,
     c.categoryId,
      c.infoCatalog,
-     p.infoPlace AS infoPlace,pr.infoProdserv AS productInfo,ct.infoCategory AS categoryInfo FROM generalCatalogs c JOIN  generalPlaces p ON c.placeId=p.placeId JOIN generalProducts pr ON c.productId=pr.productId JOIN generalCategories ct ON c.categoryId=ct.categoryId WHERE c.clientId = '$clientId'");
+     p.infoPlace AS infoPlace,pr.infoProdserv AS productInfo,ct.infoCategory AS categoryInfo FROM generalCatalogs c JOIN  generalPlaces p ON c.placeId=p.placeId JOIN generalProdServ pr ON c.productId=pr.productId JOIN generalCategories ct ON c.categoryId=ct.categoryId WHERE c.clientId = '$clientId'");
       
           
 
