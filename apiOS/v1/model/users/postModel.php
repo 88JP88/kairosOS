@@ -598,7 +598,7 @@ class modelPost {
                    // echo $jsonInfoSite;
                     
                     $query = mysqli_query($conectar, "INSERT INTO generalCatalogs 
-                    (catalogId, clientId, infoCatalog,'productId','categoryId','placeId') 
+                    (catalogId, clientId, infoCatalog,productId,categoryId,placeId) 
                     VALUES
                     ('$catalogId', '$clientId','$jsonInfoCatalog','$productId','$categoryId','$placeId')");
 
