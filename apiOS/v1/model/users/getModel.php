@@ -749,6 +749,157 @@ if ($numRows > 0) {
         
 }
        
+
+
+
+
+public static function getCatalogs($dta) {
+            
+                
+
+
+    // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
+    
+        // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
+        $conectar = conn();
+
+        // Verifica si la conexión se realizó correctamente
+        if (!$conectar) {
+            return "Error de conexión a la base de datos";
+        }
+
+        
+            
+
+        // Escapa los valores para prevenir inyección SQL
+        $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
+        $filter = mysqli_real_escape_string($conectar, $dta['filter']);
+        $param = mysqli_real_escape_string($conectar, $dta['param']);
+        $value = mysqli_real_escape_string($conectar, $dta['value']);
+       
+
+        if($filter=="all"){
+
+    
+    
+            $query = mysqli_query($conectar, "SELECT c.catalogId,c.clientId,c.productId,c.placeId,c.categoryId, c.infoCatalog,p.infoPlace AS infoPlce,pr.infoProdserv AS productInfo,ct.infoCategory AS categoryInfo FROM generalCatalogs c JOIN  generalPlaces p ON c.placeId=p.placeId JOIN generalProducts pr ON c.productId=pr.productId JOIN generalCategories ct ON c.categoryId=ct.categoryId WHERE c.clientId = '$clientId'");
+        }
+        
+    
+if($filter=="filter"){
+
+    $query = mysqli_query($conectar, "SELECT c.catalogId,
+    c.clientId,
+    c.productId,
+    c.placeId,
+    c.categoryId,
+     c.infoCatalog,
+     p.infoPlace AS infoPlace,pr.infoProdserv AS productInfo,ct.infoCategory AS categoryInfo FROM generalCatalogs c JOIN  generalPlaces p ON c.placeId=p.placeId JOIN generalProducts pr ON c.productId=pr.productId JOIN generalCategories ct ON c.categoryId=ct.categoryId WHERE c.clientId = '$clientId'");
+      
+          
+
+}
+        if($query){
+            $numRows = mysqli_num_rows($query);
+
+if ($numRows > 0) {
+            $response="true";
+            $message="Consulta exitosa";
+            $status="202";
+            $apiMessage="¡Repartidores seleccionados ($numRows)!";
+            $values=[];
+
+            while ($row = $query->fetch_assoc()) {
+                $value=[
+                    'catalogId' => $row['elementId'],
+                    'clientId' => $row['clientId'],
+                    'productId' => $row['siteId'],
+                    'placeId' => $row['siteId'],
+                    'infoPlace' => json_decode($row['infoPlace'], true)[0]
+                    'infoProduct' => json_decode($row['productInfo'], true)[0]
+                    'infoCategory' => json_decode($row['categoryInfo'], true)[0],
+                    'infoCatalog' => json_decode($row['infoCatalog'], true)[0]
+                ];
+            
+                array_push($values, $value);
+            }
+            
+            $row = $query->fetch_assoc();
+           // return json_encode(['products'=>$values]);
+            
+            // Crear un array separado para el objeto 'response'
+            $responseData = [
+                'response' => [
+                    'response' => $response,
+                    'message' => $message,
+                    'apiMessage' => $apiMessage,
+                    'status' => $status,
+                    'sentData'=>$dta
+                ],
+                'catalogs' => $values
+            ];
+            
+            return json_encode($responseData);
+        }else {
+            // La consulta no arrojó resultados
+            $response="false";
+            $message="Error en la consulta";
+            $status="204";
+            $apiMessage="¡La consulta no produjo resultados, filas seleccionadas ($numRows)!";
+            $values=[];
+            $value = [
+                
+            ];
+            $responseData = [
+                'response' => [
+                    'response' => $response,
+                    'message' => $message,
+                    'apiMessage' => $apiMessage,
+                    'status' => $status,
+                    'sentData'=>$dta
+                ],
+                'catalogs' => $values
+            ];
+            array_push($values,$value);
+            
+
+    //echo json_encode($students) ;
+    return json_encode($responseData);
+        }
+
+        //  return "true";
+        //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
+        }else{
+            $response="false";
+            $message="Error en la consulta: " . mysqli_error($conectar);
+            $status="404";
+            $apiMessage="¡Repartidores no seleccionados con éxito!";
+            $values=[];
+
+            $value = [
+                
+            ];
+            $responseData = [
+                'response' => [
+                    'response' => $response,
+                    'message' => $message,
+                    'apiMessage' => $apiMessage,
+                    'status' => $status,
+                    'sentData'=>$dta
+                ],
+                'catalogs' => $values
+            ];
+            array_push($values,$value);
+            
+
+    //echo json_encode($students) ;
+    return json_encode($responseData);
+                            }
+
+                            
+        
+}
+
     }
 
 
