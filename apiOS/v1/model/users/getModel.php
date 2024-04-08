@@ -811,10 +811,11 @@ if ($numRows > 0) {
 
             while ($row = $query->fetch_assoc()) {
                 $value=[
-                    'catalogId' => $row['elementId'],
+                    'catalogId' => $row['catalogId'],
                     'clientId' => $row['clientId'],
-                    'productId' => $row['siteId'],
-                    'placeId' => $row['siteId'],
+                    'productId' => $row['productId'],
+                    'placeId' => $row['placeId'],
+                    'categoryId' => $row['categoryId'],
                     'infoPlace' => json_decode($row['infoPlace'], true)[0],
                     'infoProduct' => json_decode($row['productInfo'], true)[0],
                     'infoCategory' => json_decode($row['categoryInfo'], true)[0],
