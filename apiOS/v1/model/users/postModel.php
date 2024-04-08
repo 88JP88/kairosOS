@@ -542,7 +542,7 @@ class modelPost {
                     // Escapa los valores para prevenir inyección SQL
                     $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
                     $productId = mysqli_real_escape_string($conectar, $dta['productId']);
-                    $catalogType = mysqli_real_escape_string($conectar, $dta['catalogType']);
+                   
                    
                     $stock = mysqli_real_escape_string($conectar, $dta['stock']);
                     $catalogComments = mysqli_real_escape_string($conectar, $dta['catalogComments']);
