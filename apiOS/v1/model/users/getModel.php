@@ -815,8 +815,8 @@ if ($numRows > 0) {
                     'clientId' => $row['clientId'],
                     'productId' => $row['siteId'],
                     'placeId' => $row['siteId'],
-                    'infoPlace' => json_decode($row['infoPlace'], true)[0]
-                    'infoProduct' => json_decode($row['productInfo'], true)[0]
+                    'infoPlace' => json_decode($row['infoPlace'], true)[0],
+                    'infoProduct' => json_decode($row['productInfo'], true)[0],
                     'infoCategory' => json_decode($row['categoryInfo'], true)[0],
                     'infoCatalog' => json_decode($row['infoCatalog'], true)[0]
                 ];
