@@ -1098,7 +1098,7 @@ class modelPut{
                                         $value=filter_var($value, FILTER_VALIDATE_BOOLEAN);
                                     }
                                     $query = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                                          SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', '$value') 
+                                                          SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', $value) 
                                                           WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
                         
                                     $apiMessage="¡Catálogo actualizado con éxito!";
