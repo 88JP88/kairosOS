@@ -1115,7 +1115,7 @@ class modelPut{
                                         WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
                         
                         
-                                    }else{
+                                    }if(is_string($value)){
                                         $query = mysqli_query($conectar, "UPDATE generalCatalogs 
                                         SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', '$value') 
                                         WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
