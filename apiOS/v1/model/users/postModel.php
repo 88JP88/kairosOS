@@ -1149,6 +1149,34 @@ class modelPut{
                         
                                     $apiMessage="¡Catálogo actualizado con éxito!";
                                 }
+                                if($param=="isActive"){
+
+                                    $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+                                    $value = (bool)$value;
+                                    if($value===false){
+                                        $query = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].params.$param', false) 
+                                        WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                         
+                                    }
+                                    if($value===true){
+                                        $query = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].params.$param', true) 
+                                        WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                         
+                                    }
+                                    $apiMessage="¡Catálogo actualizado con éxito!";
+                                }
+
+                                if($param=="del"){
+
+                                   
+                                        $query = mysqli_query($conectar, "DELETE FROM generalCatalogs 
+                                        WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                         
+                                   
+                                    $apiMessage="¡Catálogo removido con éxito!";
+                                }
                                // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
                             
                                 if($query){
