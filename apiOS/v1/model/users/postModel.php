@@ -1177,6 +1177,17 @@ class modelPut{
                                    
                                     $apiMessage="¡Catálogo removido con éxito!";
                                 }
+
+                                if($param=="delStatus"){
+
+                                   
+                                    $query = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].params.status', false) 
+                                        WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                         
+                               
+                                $apiMessage="¡Catálogo oculto con éxito!";
+                            }
                                // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
                             
                                 if($query){
