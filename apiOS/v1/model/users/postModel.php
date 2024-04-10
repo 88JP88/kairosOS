@@ -1096,13 +1096,13 @@ class modelPut{
                                         $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
                                         if($value===false){
                                             $query = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                            SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', 0) 
+                                            SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', false) 
                                             WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
                              
                                         }
                                         if($value===true){
                                             $query = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                            SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', 1) 
+                                            SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', true) 
                                             WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
                              
                                         }
