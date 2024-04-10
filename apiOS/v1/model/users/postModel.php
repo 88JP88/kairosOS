@@ -1094,10 +1094,21 @@ class modelPut{
                                     }
                                     if($param=="isStocked" || $param=="isPromo" || $param=="isDiscount" || $param=="isInternal"){
                                         $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-
+                                        if($value==false){
+                                            $query = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                            SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', 0) 
+                                            WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                             
+                                        }
+                                        if($value==true){
+                                            $query = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                            SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', 1) 
+                                            WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                             
+                                        }
                                     }
 
-                                    if (is_bool($value)|| is_numeric($value) || is_float($value)) {
+                                    if (is_numeric($value) || is_float($value)) {
                                         $query = mysqli_query($conectar, "UPDATE generalCatalogs 
                                         SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', $value) 
                                         WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
