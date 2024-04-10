@@ -1093,13 +1093,13 @@ class modelPut{
                                 }  
                                 if($param=="comments" || $param == "maxQty" || $param == "minQty" || $param == "price" || $param == "stock" || $param == "securityStock" || $param == "keyWords" || $param == "isDiscount" || $param == "discount" || $param == "isPromo" || $param == "promo" || $param == "isStocked" || $param == "isInternal"){
                                     if($param=="maxQty" || $param=="minQty" || $param=="price" || $param=="stock" || $param=="securityStock" || $param=="discount"){
-                                        $value1=floatval($value);
+                                        $value=floatval($value);
                                     }
                                     if($param=="isStocked" || $param=="isPromo" || $param=="isDiscount" || $param=="isInternal"){
-                                        $value1=filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                                        $value=filter_var($value, FILTER_VALIDATE_BOOLEAN);
                                     }
                                     $query = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                                          SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', $value1) 
+                                                          SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', '$value') 
                                                           WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
                         
                                     $apiMessage="¡Catálogo actualizado con éxito!";
