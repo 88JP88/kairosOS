@@ -1087,10 +1087,7 @@ class modelPut{
                                 $catalogId = mysqli_real_escape_string($conectar, $dta['catalogId']);
                             
                                 //$dato_encriptado = $keyword;
-                                if($param=="del"){
-                                    //$query = mysqli_query($conectar, "DELETE FROM generalPlaces where clientId='$clientId' and deliveryId='$deliveryId'");
-                                    $apiMessage="¡Repartidor removido con éxito!";
-                                }  
+                               
                                 if($param=="comments" || $param == "maxQty" || $param == "minQty" || $param == "price" || $param == "stock" || $param == "securityStock" || $param == "keyWords" || $param == "isDiscount" || $param == "discount" || $param == "isPromo" || $param == "promo" || $param == "isStocked" || $param == "isInternal"){
                                     if($param=="maxQty" || $param=="minQty" || $param=="price" || $param=="stock" || $param=="securityStock" || $param=="discount"){
                                         $value=floatval($value);
@@ -1098,10 +1095,20 @@ class modelPut{
                                     if($param=="isStocked" || $param=="isPromo" || $param=="isDiscount" || $param=="isInternal"){
                                         $value=filter_var($value, FILTER_VALIDATE_BOOLEAN);
                                     }
-                                    $query = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                                          SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', '$value') 
+
+                                    if (is_bool($value)|| is_numeric($value) || is_float($value)) {
+                                        $query = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                                          SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', $value) 
                                                           WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
                         
+                                    }else{
+                                        $query = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', '$value') 
+                                        WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+      
+
+                                    }
+                                    
                                     $apiMessage="¡Catálogo actualizado con éxito!";
                                 }
                                 if($param=="categoryId"){
