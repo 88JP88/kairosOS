@@ -1090,15 +1090,16 @@ class modelPut{
                                 if($param=="del"){
                                     //$query = mysqli_query($conectar, "DELETE FROM generalPlaces where clientId='$clientId' and deliveryId='$deliveryId'");
                                     $apiMessage="¡Repartidor removido con éxito!";
-                                }  if($param=="comments" || $param == "maxQty" || $param == "minQty" || $param == "price" || $param == "stock" || $param == "securityStock" || $param == "keyWords" || $param == "isDiscount" || $param == "discount" || $param == "isPromo" || $param == "promo" || $param == "isStocked" || $param == "isInternal"){
+                                }  
+                                if($param=="comments" || $param == "maxQty" || $param == "minQty" || $param == "price" || $param == "stock" || $param == "securityStock" || $param == "keyWords" || $param == "isDiscount" || $param == "discount" || $param == "isPromo" || $param == "promo" || $param == "isStocked" || $param == "isInternal"){
                                     if($param=="maxQty" || $param=="minQty" || $param=="price" || $param=="stock" || $param=="securityStock" || $param=="discount"){
-                                        $value=floatval($value);
+                                        $value1=floatval($value);
                                     }
                                     if($param=="isStocked" || $param=="isPromo" || $param=="isDiscount" || $param=="isInternal"){
-                                        $value=filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                                        $value1=filter_var($value, FILTER_VALIDATE_BOOLEAN);
                                     }
                                     $query = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                                          SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', $value) 
+                                                          SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', $value1) 
                                                           WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
                         
                                     $apiMessage="¡Catálogo actualizado con éxito!";
