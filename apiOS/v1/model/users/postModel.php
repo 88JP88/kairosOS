@@ -1094,6 +1094,7 @@ class modelPut{
                                     }
                                     if($param=="isStocked" || $param=="isPromo" || $param=="isDiscount" || $param=="isInternal"){
                                         $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+                                        $value = (bool)$value;
                                         if($value===false){
                                             $query = mysqli_query($conectar, "UPDATE generalCatalogs 
                                             SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', false) 
