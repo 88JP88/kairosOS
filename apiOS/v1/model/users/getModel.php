@@ -794,7 +794,7 @@ if($filter=="catalogs"){
 
 }
  
-if($filter=="catalogs"){
+if($filter=="products"){
 
     $query = mysqli_query($conectar, "SELECT c.catalogId,c.clientId,c.productId,c.placeId,c.categoryId, c.infoCatalog,p.infoPlace AS infoPlace,pr.infoProdserv AS productInfo,ct.infoCategory AS categoryInfo FROM generalCatalogs c JOIN  generalPlaces p ON c.placeId=p.placeId JOIN generalProdServ pr ON c.productId=pr.prodservId JOIN generalCategories ct ON c.categoryId=ct.categoryId WHERE c.clientId = '$clientId' AND JSON_EXTRACT(pr.infoProdserv, '$[0].info.$param') LIKE '%$value%'");
 
