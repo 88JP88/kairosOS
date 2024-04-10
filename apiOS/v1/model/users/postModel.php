@@ -1093,7 +1093,8 @@ class modelPut{
                                         $value=floatval($value);
                                     }
                                     if($param=="isStocked" || $param=="isPromo" || $param=="isDiscount" || $param=="isInternal"){
-                                        $value=filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+
                                     }
 
                                     if (is_bool($value)|| is_numeric($value) || is_float($value)) {
