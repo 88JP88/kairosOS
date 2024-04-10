@@ -1099,8 +1099,9 @@ class modelPut{
 
                                     if (is_bool($value)|| is_numeric($value) || is_float($value)) {
                                         $query = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                                          SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', $value) 
-                                                          WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', $value) 
+                                        WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                        
                         
                                     }else{
                                         $query = mysqli_query($conectar, "UPDATE generalCatalogs 
