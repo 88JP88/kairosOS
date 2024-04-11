@@ -232,8 +232,11 @@ class modelPost {
                                 "comments" => $siteComments,
                             ],
                             "params" => [
-                                "isActive" => "1",
-                                "status" => "1"
+                                "isActive" => true,
+                                "status" => true,
+                                "isBussy" => false,
+                                "isOrder" => false,
+                                "isOutService" => false
                             ]
                         ]
                     ];
