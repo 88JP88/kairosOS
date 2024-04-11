@@ -761,10 +761,17 @@ class modelPut{
                         $query = mysqli_query($conectar, "UPDATE generalSites 
                         SET placeId = '$value'
                         WHERE clientId = '$clientId' AND siteId = '$siteId'");
-                    }else{
+                    }if($param=="name" || $param=="comments"){
                     $query = mysqli_query($conectar, "UPDATE generalSites 
                                           SET infoSite = JSON_SET(infoSite, '$[0].info.$param', '$value') 
                                           WHERE clientId = '$clientId' AND siteId = '$siteId'");
+                    }
+                    else{
+                        $value= (bool)$value;
+                        $query = mysqli_query($conectar, "UPDATE generalSites 
+                                          SET infoSite = JSON_SET(infoSite, '$[0].params.$param', $value) 
+                                          WHERE clientId = '$clientId' AND siteId = '$siteId'");
+               
                     }
                     $apiMessage="¡Ubicación actualizada con éxito!";
                 }
@@ -1122,7 +1129,7 @@ class modelPut{
                                         $query = mysqli_query($conectar, "UPDATE generalCatalogs 
                                         SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.$param', '$value') 
                                         WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
-      
+       
 
                                     }
                                     
