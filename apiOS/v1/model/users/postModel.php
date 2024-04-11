@@ -767,11 +767,22 @@ class modelPut{
                                           WHERE clientId = '$clientId' AND siteId = '$siteId'");
                     }
                     else{
-                        $value= (bool)$value;
-                        $query = mysqli_query($conectar, "UPDATE generalSites 
-                                          SET infoSite = JSON_SET(infoSite, '$[0].params.$param', $value) 
+                        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+                        $value = (bool)$value;
+                        if($value===false){
+                            $query = mysqli_query($conectar, "UPDATE generalSites 
+                            SET infoSite = JSON_SET(infoSite, '$[0].params.$param', false) 
+                            WHERE clientId = '$clientId' AND siteId = '$siteId'");
+ 
+                        }
+                        if($value===true){
+                            $query = mysqli_query($conectar, "UPDATE generalSites 
+                                          SET infoSite = JSON_SET(infoSite, '$[0].params.$param', true) 
                                           WHERE clientId = '$clientId' AND siteId = '$siteId'");
                
+                        }
+                        $value= (bool)$value;
+                      
                     }
                     $apiMessage="¡Ubicación actualizada con éxito!";
                 }
