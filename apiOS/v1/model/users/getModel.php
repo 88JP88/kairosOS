@@ -177,6 +177,10 @@ if($filter=="filter"){
             $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId IN (SELECT placeId FROM generalPlaces WHERE clientId = '$clientId' AND JSON_EXTRACT(infoPlace, '$[0].info.name') LIKE '%$value%')");
 
         }
+        if($param=="placeIdCar"){
+            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId IN (SELECT placeId FROM generalPlaces WHERE clientId = '$clientId' AND placeId = '$value'");
+
+        }
         else{
     $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN  generalPlaces p ON p.placeId=s.placeId WHERE s.clientId = '$clientId' AND JSON_EXTRACT(s.infoSite, '$[0].info.$param') LIKE '%$value%'");
         }
