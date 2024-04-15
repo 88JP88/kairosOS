@@ -708,7 +708,6 @@ class modelPost {
                             ]
                         ]
                     ];
-                    $infoOrder['info']['infoPayload']['infoPayment']['backTotal']="hola";
                     $jsonInfoOrder = json_encode($infoOrder);
                    // echo $jsonInfoSite;
                     
