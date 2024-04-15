@@ -681,7 +681,7 @@ class modelPost {
                         [
                             "info" => [
                                 "infoProducts" => $infoProductsArray,
-                                "infoPayload" => $dta['payload']
+                                "infoPayload" => json_decode(stripslashes($infoPayload), true);
                             ],
                             "params" => [
                                 "isActive" => true,
