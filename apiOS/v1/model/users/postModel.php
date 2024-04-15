@@ -679,16 +679,15 @@ class modelPost {
 
                     $infoProductsArray = json_decode(stripslashes($infoProducts), true);
                     $totalCatalogPrice = 0;
-    
+                    $infoPayloadArray = json_decode(stripslashes($infoPayload), true);
+
                     // Iterar sobre cada elemento del array
                     foreach ($infoProductsArray as $item) {
                         // Verificar si el elemento tiene la estructura esperada
                         if (isset($item['product']['catalogPrice'])) {
                             // Sumar el valor de catalogPrice al total
                             $totalCatalogPrice += $item['product']['catalogPrice'];
-                            $infoPayloadArray = json_decode(stripslashes($infoPayload), true);
-                            $infoPayloadArray['infoPayment']['backTotal'] = $totalCatalogPrice;
-                        }
+                            $infoPayloadArray['infoPayment']['backTotal'] = $totalCatalogPrice;                        }
                     }
                     
                     $infoOrder = [
