@@ -691,7 +691,7 @@ class modelPost {
                     }
                     $backPayload={
                         "total"=>$totalCatalogPrice;
-                    }
+                    };
                     
                     $infoOrder = [
                         [
