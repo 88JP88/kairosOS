@@ -689,12 +689,16 @@ class modelPost {
                             $totalCatalogPrice += $item['product']['catalogPrice'];
                             $infoPayloadArray['infoPayment']['backTotal'] = "h";                        }
                     }
+                    $backPayload={
+                        "total"=>$totalCatalogPrice;
+                    }
                     
                     $infoOrder = [
                         [
                             "info" => [
                                 "infoProducts" => json_decode(stripslashes($infoProducts), true),
                                 "infoPayload" => json_decode(stripslashes($infoPayload), true),
+                                "backPayload"=>$backPayload,
                                 "infoOrder" => json_decode(stripslashes($infoOrders), true)
                             ],
                             "params" => [
