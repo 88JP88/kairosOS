@@ -681,7 +681,7 @@ class modelPost {
                         [
                             "info" => [
                                 "infoProducts" =>$dta['products'],
-                                "infoPayload" => $infoPayload
+                                "infoPayload" => $dta['payload']
                             ],
                             "params" => [
                                 "isActive" => true,
