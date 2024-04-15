@@ -672,7 +672,7 @@ class modelPost {
                     // Escapa los valores para prevenir inyección SQL
                     $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
                     $siteId = mysqli_real_escape_string($conectar, $dta['siteId']);
-                    $infoProducts = mysqli_real_escape_string($conectar, $dta['products']['product']);
+                    $infoProducts = mysqli_real_escape_string($conectar, $dta['products']);
                     $infoPayload = mysqli_real_escape_string($conectar, $dta['payload']);
                     
                     //$dato_encriptado = $keyword;
@@ -680,7 +680,7 @@ class modelPost {
                     $infoOrder = [
                         [
                             "info" => [
-                                "infoProducts" => $infoProducts,
+                                "infoProducts" => $dta['products'],
                                 "infoPayload" => $infoPayload
                             ],
                             "params" => [
