@@ -676,6 +676,7 @@ class modelPost {
                     $infoPayload = mysqli_real_escape_string($conectar, $dta['payload']);
                     $infoOrders = mysqli_real_escape_string($conectar, $dta['order']);
                     //$dato_encriptado = $keyword;
+                    $infopaymentArray = json_decode(stripslashes($infoPayload), true);
 
                     $infoProductsArray = json_decode(stripslashes($infoProducts), true);
                     $totalCatalogPrice = 0;
@@ -687,10 +688,14 @@ class modelPost {
                         if (isset($item['product']['catalogPrice'])) {
                             // Sumar el valor de catalogPrice al total
                             $totalCatalogPrice += $item['product']['catalogPrice'];
-                            $infoPayloadArray['infoPayment']['backTotal'] = "h";                        }
+                            $infoPayloadArray['infoPayment']['backTotal'] = "h";     
+                        $subtotalCatalogPrice=$totalCatalogPrice- $infopaymentArray['infoPayment']['saver'];
+                        }
                     }
                     $backPayload = [
-                        "total" => $totalCatalogPrice
+                        "total" => $subtotalCatalogPrice,
+                        "subTotal" => $totalCatalogPrice,
+                        "saver" => $infopaymentArray['infoPayment']['saver']
                     ];
                     
                     
