@@ -696,7 +696,7 @@ class modelPost {
                     $query = mysqli_query($conectar, "INSERT INTO generalOrders 
                     (orderId, clientId,siteId, infoOrder) 
                     VALUES
-                    ('$orderId', '$clientId','$siteId' '$jsonInfoOrder')");
+                    ('$orderId', '$clientId','$siteId', '$jsonInfoOrder')");
 
                     if($query){
                                 $filasAfectadas = mysqli_affected_rows($conectar);
