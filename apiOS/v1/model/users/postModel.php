@@ -689,9 +689,9 @@ class modelPost {
                             $totalCatalogPrice += $item['product']['catalogPrice'];
                             $infoPayloadArray['infoPayment']['backTotal'] = "h";                        }
                     }
-                    $backPayload={
+                    $backPayload=[
                         "total"=>$totalCatalogPrice;
-                    };
+                    ];
                     
                     $infoOrder = [
                         [
