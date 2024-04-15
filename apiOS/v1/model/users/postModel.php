@@ -676,11 +676,11 @@ class modelPost {
                     $infoPayload = mysqli_real_escape_string($conectar, $dta['payload']);
                     
                     //$dato_encriptado = $keyword;
-
+                    $infoProductsArray = json_decode($infoProducts, true);
                     $infoOrder = [
                         [
                             "info" => [
-                                "infoProducts" => $infoProducts,
+                                "infoProducts" => $infoProductsArray,
                                 "infoPayload" => $dta['payload']
                             ],
                             "params" => [
