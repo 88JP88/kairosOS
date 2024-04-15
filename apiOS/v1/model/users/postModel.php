@@ -687,7 +687,7 @@ class modelPost {
                             // Sumar el valor de catalogPrice al total
                             $totalCatalogPrice += $item['product']['catalogPrice'];
                             $infoPayloadArray = json_decode(stripslashes($infoPayload), true);
-                            $infoPayloadArray['infoPayment']['backTotal'] = $totalCatalogPrice
+                            $infoPayloadArray['infoPayment']['backTotal'] = $totalCatalogPrice;
                         }
                     }
                     
