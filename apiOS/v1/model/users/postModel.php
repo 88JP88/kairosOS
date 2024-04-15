@@ -674,14 +674,14 @@ class modelPost {
                     $siteId = mysqli_real_escape_string($conectar, $dta['siteId']);
                     $infoProducts = mysqli_real_escape_string($conectar, $dta['products']);
                     $infoPayload = mysqli_real_escape_string($conectar, $dta['payload']);
-                    
+                    $infoOrders = mysqli_real_escape_string($conectar, $dta['order']);
                     //$dato_encriptado = $keyword;
-                    $infoProductsArray = json_decode(stripslashes($infoProducts), true);
                     $infoOrder = [
                         [
                             "info" => [
-                                "infoProducts" => $infoProductsArray,
-                                "infoPayload" => json_decode(stripslashes($infoPayload), true)
+                                "infoProducts" => json_decode(stripslashes($infoProducts), true),
+                                "infoPayload" => json_decode(stripslashes($infoPayload), true),
+                                "infoOrder" => json_decode(stripslashes($infoOrders), true)
                             ],
                             "params" => [
                                 "isActive" => true,
