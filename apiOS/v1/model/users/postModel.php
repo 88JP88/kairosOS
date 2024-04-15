@@ -677,7 +677,7 @@ class modelPost {
                     
                     //$dato_encriptado = $keyword;
                     $infoProducts = [];
-foreach ($dta['products'] as $product) {
+foreach (json_decode($dta['products'],true) as $product) {
     $infoProducts[] = [
         "product" => $product
     ];
