@@ -687,7 +687,7 @@ class modelPost {
                         if (isset($item['product']['catalogPrice'])) {
                             // Sumar el valor de catalogPrice al total
                             $totalCatalogPrice += $item['product']['catalogPrice'];
-                            $infoPayloadArray['infoPayment']['backTotal'] = $totalCatalogPrice;                        }
+                            $infoPayloadArray['infoPayment']['backTotal'] = "h";                        }
                     }
                     
                     $infoOrder = [
@@ -703,7 +703,7 @@ class modelPost {
                             ]
                         ]
                     ];
-                    
+                    $infoOrder['info']['infoPayload']['infoPayment']['backTotal']="hola";
                     $jsonInfoOrder = json_encode($infoOrder);
                    // echo $jsonInfoSite;
                     
