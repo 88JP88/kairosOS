@@ -693,7 +693,7 @@ class modelPost {
                     $jsonInfoOrder = json_encode($infoOrder);
                    // echo $jsonInfoSite;
                     
-                    $query = mysqli_query($conectar, "INSERT INTO generalOrder 
+                    $query = mysqli_query($conectar, "INSERT INTO generalOrders 
                     (orderId, clientId,siteId, infoOrder) 
                     VALUES
                     ('$orderId', '$clientId','$siteId' '$jsonInfoOrder')");
