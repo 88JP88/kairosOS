@@ -680,7 +680,7 @@ class modelPost {
                     $infoOrder = [
                         [
                             "info" => [
-                                "infoProducts" =>$infoProducts,
+                                "infoProducts" =>json_encode($infoProducts),
                                 "infoPayload" => $dta['payload']
                             ],
                             "params" => [
