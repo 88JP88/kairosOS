@@ -692,10 +692,31 @@ class modelPost {
                         $subtotalCatalogPrice=$totalCatalogPrice- $infopaymentArray['infoPayment']['saver'];
                         }
                     }
+                    $infototal = json_decode(stripslashes($infoPayload), true);
+            
+if($infototal['infoPayment']['total']===$subtotalCatalogPrice ){
+$isEqTotal=true;
+}else{
+    $isEqTotal=false;
+}
+if($infototal['infoPayment']['subTotal']===$totalCatalogPrice ){
+    $isEqSubTotal=true;
+    }else{
+        $isEqSubTotal=false;
+    }
+    $saver1=$infototal['infoPayment']['subTotal']-$infototal['infoPayment']['total'];
+    if($infototal['infoPayment']['saver']===$saver1 ){
+        $isEqSaver=true;
+        }else{
+            $isEqSaver=false;
+        }
                     $backPayload = [
                         "total" => $subtotalCatalogPrice,
                         "subTotal" => $totalCatalogPrice,
-                        "saver" => $infopaymentArray['infoPayment']['saver']
+                        "saver" => $saver1,
+                        "isEqTotalToFront"=>$isEqTotal,
+                        "isEqSubTotalToFront"=>$isEqSubTotal,
+                        "isEqSaverToFront"=>$isEqSaver
                     ];
                     
                     
