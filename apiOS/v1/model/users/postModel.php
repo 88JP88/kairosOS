@@ -719,7 +719,12 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                         "isEqSaverToFront"=>$isEqSaver
                     ];
                     
-                    
+                    date_default_timezone_set('America/Bogota');
+
+                    // Obtener la fecha y hora actual
+                    $fecha_actual = date('Y-m-d H:i:s');
+                                        $infoOrders['infoOrder']['orderStatus']['timeStamp']=$fecha_actual;
+                                      
                     $infoOrder = [
                         [
                             "info" => [
