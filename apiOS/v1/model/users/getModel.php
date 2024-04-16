@@ -959,7 +959,7 @@ public static function getOrders($dta) {
 
     
     
-            $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId'");
+            $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName FROM generalOrders o JOIN generalSites ON o.siteId=s.siteId WHERE o.clientId = '$clientId'");
         }
         
     
@@ -985,6 +985,7 @@ if ($numRows > 0) {
                     'orderId' => $row['orderId'],
                     'siteId' => $row['siteId'],
                     'clientId' => $row['clientId'],
+                    'siteName'=>json_decode($row['siteName'], true)[0],
                     'infoOrder' => json_decode($row['infoOrder'], true)[0]
                 ];
             
