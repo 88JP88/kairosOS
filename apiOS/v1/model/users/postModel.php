@@ -711,23 +711,23 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
             $isEqSaver=false;
         }
                     $backPayload = [
-                        "total" => $subtotalCatalogPrice,
+                       "infoPayment"=>{ "total" => $subtotalCatalogPrice,
                         "subTotal" => $totalCatalogPrice,
                         "saver" => $saver1,
                         "isEqTotalToFront"=>$isEqTotal,
                         "isEqSubTotalToFront"=>$isEqSubTotal,
-                        "isEqSaverToFront"=>$isEqSaver
+                        "isEqSaverToFront"=>$isEqSaver}
                     ];
                     
                     date_default_timezone_set('America/Bogota');
 
                     // Obtener la fecha y hora actual
                     $fecha_actual = date('Y-m-d H:i:s');
-                                        $infoOrders['infoOrder']['orderStatus']['timeStamp']=$fecha_actual;
-                                      
+               
                     $infoOrder = [
                         [
                             "info" => [
+                                "timeStamp"=>$fecha_actual
                                 "infoProducts" => json_decode(stripslashes($infoProducts), true),
                                 "infoPayload" => json_decode(stripslashes($infoPayload), true),
                                 "backPayload"=>$backPayload,
