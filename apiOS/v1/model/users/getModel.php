@@ -985,7 +985,7 @@ if ($numRows > 0) {
                     'orderId' => $row['orderId'],
                     'siteId' => $row['siteId'],
                     'clientId' => $row['clientId'],
-                    'siteName'=>json_decode($row['siteName'], true)[0],
+                    'siteName'=>json_decode($row['siteName']),
                     'infoOrder' => json_decode($row['infoOrder'], true)[0]
                 ];
             
