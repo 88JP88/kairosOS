@@ -711,12 +711,13 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
             $isEqSaver=false;
         }
                     $backPayload = [
+                        "infoPayment"=>{
                         "total" => $subtotalCatalogPrice,
                         "subTotal" => $totalCatalogPrice,
                         "saver" => $saver1,
                         "isEqTotalToFront"=>$isEqTotal,
                         "isEqSubTotalToFront"=>$isEqSubTotal,
-                        "isEqSaverToFront"=>$isEqSaver
+                        "isEqSaverToFront"=>$isEqSaver}
                     ];
                     
                     date_default_timezone_set('America/Bogota');
@@ -727,7 +728,7 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                     $infoOrder = [
                         [
                             "info" => [
-                                "timeStamp"=>$fecha_actual
+                                "timeStamp"=>$fecha_actual,
                                 "infoProducts" => json_decode(stripslashes($infoProducts), true),
                                 "infoPayload" => json_decode(stripslashes($infoPayload), true),
                                 "backPayload"=>$backPayload,
