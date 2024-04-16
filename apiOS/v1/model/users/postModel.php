@@ -711,13 +711,13 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
             $isEqSaver=false;
         }
                     $backPayload = [
-                        "infoPayment"=>{
+                        
                         "total" => $subtotalCatalogPrice,
                         "subTotal" => $totalCatalogPrice,
                         "saver" => $saver1,
                         "isEqTotalToFront"=>$isEqTotal,
                         "isEqSubTotalToFront"=>$isEqSubTotal,
-                        "isEqSaverToFront"=>$isEqSaver}
+                        "isEqSaverToFront"=>$isEqSaver
                     ];
                     
                     date_default_timezone_set('America/Bogota');
