@@ -719,6 +719,13 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                         "isEqSubTotalToFront"=>$isEqSubTotal,
                         "isEqSaverToFront"=>$isEqSaver]
                     ];
+                    $accouuntStatus = [
+                        "accouuntStatus"=>[
+                        "paymentType" => "",
+                        "paymentMethod" => "",
+                        "paymentCompany" => "",
+                        "transactionCode"=>""]
+                    ];
                     
                     date_default_timezone_set('America/Bogota');
 
@@ -732,6 +739,7 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                                 "infoProducts" => json_decode(stripslashes($infoProducts), true),
                                 "infoPayload" => json_decode(stripslashes($infoPayload), true),
                                 "backPayload"=>$backPayload,
+                                "infoAccount"=>$accouuntStatus,
                                 "infoOrder" => json_decode(stripslashes($infoOrders), true)
                             ],
                             "params" => [

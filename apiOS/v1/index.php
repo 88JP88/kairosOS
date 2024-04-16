@@ -957,4 +957,50 @@ echo modelResponse::responsePost($responseSQL,$apiMessageSQL,$apiStatusSQL,$mess
 
 });
 
+
+
+Flight::route('GET /getOrders/@apiData', function ($apiData) {
+    header("Access-Control-Allow-Origin: *");
+    // Leer los encabezados
+    $headers = getallheaders();
+   
+    $postData = json_decode($apiData, true);
+
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (isset($headers['Api-Key']) ) {
+        // Leer los datos de la solicitud
+       
+        // Acceder a los encabezados
+        $apiKey = $headers['Api-Key'];
+        $xApiKey = $headers['x-api-Key'];
+
+        $response1=modelAuth::authModel($apiKey,$xApiKey);//AUTH MODULE
+
+        if ($response1 == 'true' ) {
+           
+          
+//echo $apiData;
+echo modelGet::getOrders($postData);
+           
+
+}else { 
+    
+    $responseSQL="false";
+    $apiMessageSQL="¡Autenticación fallida!";
+    $apiStatusSQL="401";
+    $messageSQL="¡Autenticación fallida!";
+    echo modelResponse::responsePost($responseSQL,$apiMessageSQL,$apiStatusSQL,$messageSQL);//RESPONSE FUNCTION
+
+}
+} else {
+
+$responseSQL="false";
+$apiMessageSQL="¡Encabezados faltantes!";
+$apiStatusSQL="403";
+$messageSQL="¡Encabezados faltantes!";
+echo modelResponse::responsePost($responseSQL,$apiMessageSQL,$apiStatusSQL,$messageSQL);//RESPONSE FUNCTION
+
+}
+});
+
 Flight::start();
