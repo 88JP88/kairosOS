@@ -1147,6 +1147,154 @@ if ($numRows > 0) {
         
 }
 
+
+
+public static function getEmployees($dta) {
+            
+                
+
+
+    // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
+    
+        // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
+        $conectar = conn();
+
+        // Verifica si la conexión se realizó correctamente
+        if (!$conectar) {
+            return "Error de conexión a la base de datos";
+        }
+
+        
+            
+
+        // Escapa los valores para prevenir inyección SQL
+        $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
+        $filter = mysqli_real_escape_string($conectar, $dta['filter']);
+        $param = mysqli_real_escape_string($conectar, $dta['param']);
+        $value = mysqli_real_escape_string($conectar, $dta['value']);
+       
+
+        if($filter=="all"){
+
+    
+    
+            $query = mysqli_query($conectar, "SELECT e.employeeId, e.clientId, e.infoEmployee, e.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalEmployees e JOIN  generalPlaces p ON e.placeId=p.placeId WHERE e.clientId = '$clientId'");
+        }
+        
+    
+if($filter=="filter"){
+
+        if($param=="placeId"){
+            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS sname,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS pname FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE e.clientId = '$clientId' AND s.placeId IN (SELECT placeId FROM generalPlaces WHERE clientId = '$clientId' AND JSON_EXTRACT(infoPlace, '$[0].info.name') LIKE '%$value%')");
+
+        }
+        if($param=="siteId"){
+            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS sname,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS pname FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE e.clientId = '$clientId' AND s.siteId  IN (SELECT siteId FROM generalSites WHERE clientId = '$clientId' AND JSON_EXTRACT(infoSite, '$[0].info.name') LIKE '%$value%')");
+
+        }
+        else{
+            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS sname,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS pname FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE e.clientId = '$clientId' AND JSON_EXTRACT(e.infoElement, '$[0].info.$param') LIKE '%$value%'");
+        }
+          
+
+}
+        if($query){
+            $numRows = mysqli_num_rows($query);
+
+if ($numRows > 0) {
+            $response="true";
+            $message="Consulta exitosa";
+            $status="202";
+            $apiMessage="¡Repartidores seleccionados ($numRows)!";
+            $values=[];
+
+            while ($row = $query->fetch_assoc()) {
+                $value=[
+                    'employeeId' => $row['employeeId'],
+                    'clientId' => $row['clientId'],
+                    'placeId' => $row['placeId'],
+                    'placeName' => json_decode($row['placeName']),
+                    'infoEmployee' => json_decode($row['infoEmployee'], true)[0]
+                ];
+            
+                array_push($values, $value);
+            }
+            
+            $row = $query->fetch_assoc();
+           // return json_encode(['products'=>$values]);
+            
+            // Crear un array separado para el objeto 'response'
+            $responseData = [
+                'response' => [
+                    'response' => $response,
+                    'message' => $message,
+                    'apiMessage' => $apiMessage,
+                    'status' => $status,
+                    'sentData'=>$dta
+                ],
+                'employees' => $values
+            ];
+            
+            return json_encode($responseData);
+        }else {
+            // La consulta no arrojó resultados
+            $response="false";
+            $message="Error en la consulta";
+            $status="204";
+            $apiMessage="¡La consulta no produjo resultados, filas seleccionadas ($numRows)!";
+            $values=[];
+            $value = [
+                
+            ];
+            $responseData = [
+                'response' => [
+                    'response' => $response,
+                    'message' => $message,
+                    'apiMessage' => $apiMessage,
+                    'status' => $status,
+                    'sentData'=>$dta
+                ],
+                'employees' => $values
+            ];
+            array_push($values,$value);
+            
+
+    //echo json_encode($students) ;
+    return json_encode($responseData);
+        }
+
+        //  return "true";
+        //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
+        }else{
+            $response="false";
+            $message="Error en la consulta: " . mysqli_error($conectar);
+            $status="404";
+            $apiMessage="¡Repartidores no seleccionados con éxito!";
+            $values=[];
+
+            $value = [
+                
+            ];
+            $responseData = [
+                'response' => [
+                    'response' => $response,
+                    'message' => $message,
+                    'apiMessage' => $apiMessage,
+                    'status' => $status,
+                    'sentData'=>$dta
+                ],
+                'employees' => $values
+            ];
+            array_push($values,$value);
+            
+
+    //echo json_encode($students) ;
+    return json_encode($responseData);
+                            }
+
+                            
+        
+}
     }
 
 
