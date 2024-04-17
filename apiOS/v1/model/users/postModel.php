@@ -802,6 +802,112 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
             }
 
 
+            
+        public static function postEmployee($dta) {
+            
+                
+            // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
+            
+                // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
+                $conectar = conn();
+        
+                // Verifica si la conexión se realizó correctamente
+                if (!$conectar) {
+                    return "Error de conexión a la base de datos";
+                }
+        
+                
+                    
+                $gen_uuid = new generateUuid();
+                $myuuid = $gen_uuid->guidv4();
+                $employeeId = substr($myuuid, 0, 8);
+
+                // Escapa los valores para prevenir inyección SQL
+                $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
+                $employeeName = mysqli_real_escape_string($conectar, $dta['employeeName']);
+                $employeeComments = mysqli_real_escape_string($conectar, $dta['employeeComments']);
+                $employeeContact = mysqli_real_escape_string($conectar, $dta['employeeContact']);
+                $employeeMail = mysqli_real_escape_string($conectar, $dta['employeeMail']);
+                $employeePlace = mysqli_real_escape_string($conectar, $dta['employeePlace']);
+               
+                $employeeRol = mysqli_real_escape_string($conectar, $dta['employeeRol']);
+
+                $employeeLevel = mysqli_real_escape_string($conectar, $dta['employeeLevel']);
+                $employeeImg = mysqli_real_escape_string($conectar, $dta['employeeImg']);
+
+                //$dato_encriptado = $keyword;
+                
+                $infoEmployee = [
+                    [
+                        "info" => [
+                            "name" => $placeName,
+                            "rol" => $placeAddress,
+                            "comments" => $placeComments,
+                            "contact" => $placeContact,
+                            "email" => $placeMail,
+                            "level" => $placeMail,
+                            "img" => $placeMail
+                        ],
+                        "params" => [
+                            "isActive" => true,
+                            "status" => true
+                        ]
+                    ]
+                ];
+                
+                $jsonInfoEmployee = json_encode($infoEmployee);
+               // echo $jsonInfoSite;
+                
+                $query = mysqli_query($conectar, "INSERT INTO generalEmployees 
+                (employeeId, clientId, infoEmployee,placeId) 
+                VALUES
+                ('$placeId', '$clientId', '$jsonInfoEmployee','$employeePlace')");
+
+                if($query){
+                            $filasAfectadas = mysqli_affected_rows($conectar);
+                                if ($filasAfectadas > 0) 
+                                    {
+                                        // Éxito: La actualización se realizó correctamente
+                                        $response="true";
+                                        $message="Creación exitosa. Filas afectadas: $filasAfectadas";
+                                        $apiMessage="¡ creado con éxito!";
+                                        $status="201";
+                                    } 
+                                    else {
+                                        $response="false";
+                                        $message="Creación no exitosa. Filas afectadas: $filasAfectadas";
+                                        $status="500";
+                                        $apiMessage="¡Cliente no credo con éxito!";
+                                        }
+                        //  return "true";
+                        //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
+                }
+                else{
+                        $response="true";
+                        $message="Error en la actualización: " . mysqli_error($conectar);
+                        $status="404";
+                        $apiMessage="¡Cliente no creado con éxito!";
+                    
+                    }
+
+                    $values=[];
+
+                    $value=[
+                        'response' => $response,
+                        'message' => $message,
+                        'apiMessage' => $apiMessage,
+                        'status' => $status
+                        
+                    ];
+                    
+                    array_push($values,$value);
+                                        
+                            
+                                //echo json_encode($students) ;
+                                return json_encode(['response'=>$values]);
+                
+        }
+
 
     }
 
