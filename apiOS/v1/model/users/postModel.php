@@ -840,13 +840,13 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                 $infoEmployee = [
                     [
                         "info" => [
-                            "name" => $placeName,
-                            "rol" => $placeAddress,
-                            "comments" => $placeComments,
-                            "contact" => $placeContact,
-                            "email" => $placeMail,
-                            "level" => $placeMail,
-                            "img" => $placeMail
+                            "name" => $employeeName,
+                            "rol" => $employeeRol,
+                            "comments" => $employeeComments,
+                            "contact" => $employeeContact,
+                            "email" => $employeeMail,
+                            "level" => $employeeLevel,
+                            "img" => $employeeImg
                         ],
                         "params" => [
                             "isActive" => true,
