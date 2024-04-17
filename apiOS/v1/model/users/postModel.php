@@ -720,7 +720,7 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                         "isEqSaverToFront"=>$isEqSaver]
                     ];
                     $accouuntStatus = [
-                        "accouuntStatus"=>[
+                        "accountStatus"=>[
                         "paymentType" => "",
                         "paymentMethod" => "",
                         "paymentCompany" => "",

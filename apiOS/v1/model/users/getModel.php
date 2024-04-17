@@ -966,7 +966,13 @@ public static function getOrders($dta) {
 if($filter=="orderStatus"){
 
     $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName,p.placeId,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName FROM generalOrders o JOIN  generalPlaces p ON p.placeId=s.placeId JOIN generalSites s ON s.siteId=o.sisteId WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.status') = '$value'");
-    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId'");
+
+          
+
+}
+if($filter=="orderStatusExcludeOne"){
+
+    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName,p.placeId,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName FROM generalOrders o JOIN  generalPlaces p ON p.placeId=s.placeId JOIN generalSites s ON s.siteId=o.sisteId WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.status') != '$value'");
 
           
 
@@ -993,12 +999,55 @@ if($filter=="byPlace"){
     $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND p.paceId= '$value'");
 
 }
+if($filter=="byPlaceOrderStatus"){
+
+    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' and s.placeId='$value' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.status') = '$param'");
+
+}
+if($filter=="byPlaceOrderStatusExcludeOne"){
+
+    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' and s.placeId='$value' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.status') != '$param'");
+
+}
 
 if($filter=="byOwner"){
 
     $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.ownerStatus.ownerId') = '$value'");
 
 }
+if($filter=="byOwnerOrderStatus"){
+
+    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' and JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.ownerStatus.ownerId') = '$value' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.status') = '$param'");
+
+}
+if($filter=="byOwnerOrderStatusExcludeOne"){
+
+    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' and JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.ownerStatus.ownerId') = '$value' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.status') != '$param'");
+
+}
+if($filter=="paymentStatus"){
+
+    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName,p.placeId,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName FROM generalOrders o JOIN  generalPlaces p ON p.placeId=s.placeId JOIN generalSites s ON s.siteId=o.sisteId WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.paymentStatus.status') = '$value'");
+
+          
+
+}
+if($filter=="paymentStatusExcludeOne"){
+
+    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName,p.placeId,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName FROM generalOrders o JOIN  generalPlaces p ON p.placeId=s.placeId JOIN generalSites s ON s.siteId=o.sisteId WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.paymentStatus.status') != '$value'");
+
+          
+
+}
+if($filter=="accountStatus"){
+
+    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName,p.placeId,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName FROM generalOrders o JOIN  generalPlaces p ON p.placeId=s.placeId JOIN generalSites s ON s.siteId=o.sisteId WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoAccount.accountStatus.$param') = '$value'");
+
+          
+
+}
+
+
         if($query){
             $numRows = mysqli_num_rows($query);
 
