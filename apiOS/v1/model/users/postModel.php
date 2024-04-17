@@ -861,7 +861,7 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                 $query = mysqli_query($conectar, "INSERT INTO generalEmployees 
                 (employeeId, clientId, infoEmployee,placeId) 
                 VALUES
-                ('$placeId', '$clientId', '$jsonInfoEmployee','$employeePlace')");
+                ('$employeeId', '$clientId', '$jsonInfoEmployee','$employeePlace')");
 
                 if($query){
                             $filasAfectadas = mysqli_affected_rows($conectar);
