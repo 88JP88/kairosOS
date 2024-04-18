@@ -1631,7 +1631,7 @@ class modelPut{
 
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                             $row2 = $query->fetch_assoc();
-                            $infostatus = json_decode($row2['infoOrder'], true);
+                            $infostatus = json_decode($row2['infoOrder'], true)[0];
                             $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
                            
                            
@@ -1656,6 +1656,8 @@ class modelPut{
                                     // ...
                                 }
                             }
+                            $apiMessage=$infoStatusOrder;
+
                         }
                             
                         }
@@ -1664,7 +1666,7 @@ class modelPut{
 
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                             $row2 = $query->fetch_assoc();
-                            $infostatus = json_decode($row2['infoOrder'], true);
+                            $infostatus = json_decode($row2['infoOrder'], true)[0];
                             $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
                            
                            
@@ -1696,7 +1698,6 @@ class modelPut{
                     
                     }
                                           
-                                            $apiMessage="¡Actualizado con éxito!";
                                         }
                                 
                                        // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
