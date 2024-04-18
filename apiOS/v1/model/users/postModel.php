@@ -1627,40 +1627,30 @@ class modelPut{
                                                 $query = mysqli_query($conectar, "UPDATE generalOrders 
                                                 SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', '$value') 
                                                 WHERE clientId = '$clientId' AND orderId = '$orderId'");
-                      if ($value == "ready") {
-                        $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
-                        while ($row = $query->fetch_assoc()) {
-                            $infoOrders = json_decode($row['infoOrder'], true);
-                            $infoProducts = $infoOrders['info']['infoProducts'];
-                    
-                            // Preparar una consulta para actualizar el stock de los productos
-                            $updateQuery = "UPDATE generalCatalogs SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.stock', ?) WHERE clientId = ? AND catalogId = ?";
-                            $updateStatement = mysqli_prepare($conectar, $updateQuery);
-                            mysqli_stmt_bind_param($updateStatement, 'isi', $stock, $clientId, $catalogId);
-                    
-                            // Iterar sobre cada producto
-                            foreach ($infoProducts as $product) {
-                                $catalogId = $product['product']['catalogId'];
-                                $qty = $product['product']['qty'];
-                    
-                                // Obtener la información del catálogo
-                                $catalogQuery = mysqli_query($conectar, "SELECT infoCatalog FROM generalCatalogs WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
-                                if ($catalogRow = $catalogQuery->fetch_assoc()) {
-                                    $infoCatalogs = json_decode($catalogRow['infoCatalog'], true);
-                                    $infoCatag = $infoCatalogs['info'];
-                    
-                                    // Iterar sobre cada entrada del catálogo
-                                    foreach ($infoCatag as &$catag) {
-                                        $stock = $catag['stock'] - $qty;
-                                        mysqli_stmt_execute($updateStatement);
-                                    }
-                                }
+                        if($value=="ready"){
+
+                            $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
+                            while ($row = $query->fetch_assoc()) {
+
+                              $infoOrders = json_decode($row['infoOrder'], true);
+                              $infoProducts = $infoOrders['info']['infoProducts'];
+
+                              // Iterar sobre cada producto
+                              foreach ($infoProducts as $product) {
+                                  // Acceder a los valores de cada producto
+                                  $catalogId = $product['product']['catalogId'];
+                                  $qty = $product['product']['qty'];
+                                 
+                          
+                                  $query1 = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                  SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.stock', (SELECT JSON_EXTRACT(infoCatalog, '$[0].info.stock') from generalCatalogs where catalogId= '$catalogId')-$qty)
+                                  WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+     
+                                  // Aquí puedes realizar cualquier otra operación o acceso a los datos del producto
+                                  // ...
+                              }
                             }
-                    
-                            mysqli_stmt_close($updateStatement);
                         }
-                    }
-                    
                     
                     
                     }
