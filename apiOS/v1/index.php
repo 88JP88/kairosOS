@@ -1152,4 +1152,53 @@ echo modelResponse::responsePost($responseSQL,$apiMessageSQL,$apiStatusSQL,$mess
 
 });
 
+Flight::route('POST /putOrder/@apk/@xapk', function ($apk,$xapk) {
+        
+          
+                   
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+    
+
+
+        $response11=modelAuth::authModel($apk,$xapk);//AUTH MODULE
+
+        $postData = Flight::request()->data->getData();
+        $dt=json_encode($postData);
+
+
+        if ($response11 == 'true' ) {
+
+        $query= modelPut::putOrder($postData);  //DATA MODAL
+
+    //JSON DECODE RESPPNSE
+        $data = json_decode($query, true);
+        $responseSQL=$data['response'][0]['response'];
+        $messageSQL=$data['response'][0]['message'];
+        $apiMessageSQL=$data['response'][0]['apiMessage'];
+        $apiStatusSQL=$data['response'][0]['status'];
+        //JSON DECODE**
+
+        } else {
+            $responseSQL="false";
+            $apiMessageSQL="¡Autenticación fallida!";
+            $apiStatusSQL="401";
+            $messageSQL="¡Autenticación fallida!";
+
+        }
+    } else {
+
+        $responseSQL="false";
+        $apiMessageSQL="¡Encabezados faltantes!";
+        $apiStatusSQL="403";
+        $messageSQL="¡Encabezados faltantes!";
+    }
+
+
+        kronos($responseSQL,$apiMessageSQL,$apiMessageSQL,Flight::request()->data->clientId,$dt,Flight::request()->url,'RECEIVED',Flight::request()->data->trackId);  //LOG FUNCTION  
+
+echo modelResponse::responsePost($responseSQL,$apiMessageSQL,$apiStatusSQL,$messageSQL);//RESPONSE FUNCTION
+
+});
 Flight::start();
