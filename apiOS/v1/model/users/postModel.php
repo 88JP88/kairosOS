@@ -1640,11 +1640,14 @@ class modelPut{
                                     $catalogId = $product['product']['catalogId'];
                                     $qty = $product['product']['qty'];
                             
+                                    // $query1 = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                    //     SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.stock', 
+                                    //         JSON_EXTRACT(infoCatalog, '$[0].info.stock') - $qty)
+                                    //     WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
                                     $query1 = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.stock', 
-                                            JSON_EXTRACT(infoCatalog, '$[0].info.stock') - $qty)
-                                        WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
-                            
+                                    SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.stock', $qty)
+                                    WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                        
                                     // Aquí puedes realizar cualquier otra operación o acceso a los datos del producto
                                     // ...
                                 }
