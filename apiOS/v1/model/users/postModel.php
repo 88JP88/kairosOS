@@ -687,7 +687,7 @@ class modelPost {
                         // Verificar si el elemento tiene la estructura esperada
                         if (isset($item['product']['catalogPrice'])) {
                             // Sumar el valor de catalogPrice al total
-                            $totalCatalogPrice += $item['product']['catalogPrice'];
+                            $totalCatalogPrice += $item['product']['catalogPrice']*$item['product']['qty'];
                             $infoPayloadArray['infoPayment']['backTotal'] = "h";     
                         $subtotalCatalogPrice=$totalCatalogPrice- $infopaymentArray['infoPayment']['saver'];
                         }
