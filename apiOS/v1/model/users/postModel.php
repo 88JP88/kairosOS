@@ -1631,7 +1631,7 @@ class modelPut{
 
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                             while ($row = $query->fetch_assoc()) {
-                                $infoOrders = json_decode($row['infoOrder'], true);
+                                $infoOrders = json_decode($row['infoOrder'], true)[0];
                                 $infoProducts = $infoOrders['info']['infoProducts'];
                             
                                 // Iterar sobre cada producto
