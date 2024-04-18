@@ -1631,7 +1631,7 @@ class modelPut{
 
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                             $row2 = $query->fetch_assoc();
-                            $infostatus = json_decode($row2['infoOrder'], true)[0];
+                            $infostatus = json_decode($row2['infoOrder'], true);
                             $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
                            
                            
@@ -1664,7 +1664,7 @@ class modelPut{
 
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                             $row2 = $query->fetch_assoc();
-                            $infostatus = json_decode($row2['infoOrder'], true)[0];
+                            $infostatus = json_decode($row2['infoOrder'], true);
                             $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
                            
                            
