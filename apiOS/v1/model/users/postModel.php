@@ -1665,8 +1665,7 @@ class modelPut{
                         }
                     
                     
-                    }else{
-                                               }
+                    }
                                           
                                             $apiMessage="¡Actualizado con éxito!";
                                         }
