@@ -1632,7 +1632,7 @@ class modelPut{
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                             $row2 = $query->fetch_assoc();
                             $infostatus = json_decode($row2['infoOrder'], true)[0];
-                            $infoStatusOrder = $infoOrders['info']['infoOrder']['orderStatus']['status'];
+                            $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
                            
                            
                             if($infoStatusOrder=="inProgress"){
@@ -1665,7 +1665,7 @@ class modelPut{
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                             $row2 = $query->fetch_assoc();
                             $infostatus = json_decode($row2['infoOrder'], true)[0];
-                            $infoStatusOrder = $infoOrders['info']['infoOrder']['orderStatus']['status'];
+                            $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
                            
                            
                             if($infoStatusOrder=="ready"){
