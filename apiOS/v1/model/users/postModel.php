@@ -1655,10 +1655,10 @@ class modelPut{
                                     // ...
                                 }
                             }
-                            $apiMessage=$infoStatusOrder;
+                          
 
                         } 
-                        $query = mysqli_query($conectar, "UPDATE generalOrders 
+                        $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                         SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', '$value') 
                         WHERE clientId = '$clientId' AND orderId = '$orderId'");
 
@@ -1695,7 +1695,7 @@ class modelPut{
                                 }
                             }
                         }
-                        $query = mysqli_query($conectar, "UPDATE generalOrders 
+                        $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                         SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', '$value') 
                         WHERE clientId = '$clientId' AND orderId = '$orderId'");
 
