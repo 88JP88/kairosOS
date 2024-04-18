@@ -1627,7 +1627,45 @@ class modelPut{
                                                 $query = mysqli_query($conectar, "UPDATE generalOrders 
                                                 SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', '$value') 
                                                 WHERE clientId = '$clientId' AND orderId = '$orderId'");
-                          }else{
+                        if($value=="ready"){
+
+                            $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
+                            while ($row = $query->fetch_assoc()) {
+
+                              $infoOrders  json_decode($row['infoOrder'], true);
+                              $infoProducts = $infoOrders['info']['infoProducts'];
+
+                              // Iterar sobre cada producto
+                              foreach ($infoProducts as $product) {
+                                  // Acceder a los valores de cada producto
+                                  $catalogId = $product['product']['catalogId'];
+                                  $qty = $product['product']['qty'];
+                                 
+                                  $query = mysqli_query($conectar, "SELECT infoCatalog FROM generalCatalogs WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+                                  while ($row = $query->fetch_assoc()) {
+      
+                                    $infoCatalogs=  json_decode($row['infoCatalog'], true);
+                                    $infoCatag = $infoCatalogs['info'];
+      
+                                    // Iterar sobre cada producto
+                                    foreach ($infoCatag as $catag) {
+                                        // Acceder a los valores de cada producto
+                                        $stock = $catag['stock']-$qty;
+                                        $query = mysqli_query($conectar, "UPDATE generalCatalogs 
+                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.stock', $stock) 
+                                        WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
+               
+                                    }
+                                  }
+                          
+                                  // Aquí puedes realizar cualquier otra operación o acceso a los datos del producto
+                                  // ...
+                              }
+                            }
+                        }
+                    
+                    
+                    }else{
                                                }
                                           
                                             $apiMessage="¡Actualizado con éxito!";
