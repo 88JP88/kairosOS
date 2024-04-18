@@ -1511,6 +1511,90 @@ class modelPut{
                                             return json_encode(['response'=>$values]);
                         
                                     }
+
+
+                                    public static function putEmployee($dta) {
+            
+                                        // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
+                                    
+                                        // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
+                                        $conectar = conn();
+                                
+                                        // Verifica si la conexión se realizó correctamente
+                                        if (!$conectar) {
+                                            return "Error de conexión a la base de datos";
+                                        }
+                                
+                                        
+                                
+                                        // Escapa los valores para prevenir inyección SQL
+                                        $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
+                                        $param = mysqli_real_escape_string($conectar, $dta['param']);
+                                        $value = mysqli_real_escape_string($conectar, $dta['value']);
+                                        $employeeId = mysqli_real_escape_string($conectar, $dta['employeeId']);
+                                    
+                                        //$dato_encriptado = $keyword;
+                                        if($param=="del"){
+                                           // $query = mysqli_query($conectar, "DELETE FROM generalPlaces where clientId='$clientId' and deliveryId='$deliveryId'");
+                                            $apiMessage="¡Repartidor removido con éxito!";
+                                        }  if($param!="del"){
+                                            if($param=="placeId"){
+                                                $query = mysqli_query($conectar, "UPDATE generalEmployees 
+                                                SET placeId = '$value'
+                                                WHERE clientId = '$clientId' AND employeeId = '$employeeId'");
+                                            }else{
+                                            $query = mysqli_query($conectar, "UPDATE generalEmployees 
+                                                                  SET infoEmployee = JSON_SET(infoEmployee, '$[0].info.$param', '$value') 
+                                                                  WHERE clientId = '$clientId' AND employeeId = '$employeeId'");
+                                            }
+                                          
+                                            $apiMessage="¡Actualizado con éxito!";
+                                        }
+                                
+                                       // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
+                                    
+                                        if($query){
+                                            $filasAfectadas = mysqli_affected_rows($conectar);
+                                            if ($filasAfectadas > 0) {
+                                                // Éxito: La actualización se realizó correctamente
+                                            $response="true";
+                                            $message="Actualización exitosa. Filas afectadas: $filasAfectadas";
+                                            $apiMessage="¡Ubicación actualizada con éxito!";
+                                     
+                                                $status="201";
+                                            } else {
+                                                $response="false";
+                                            $message="Actualización no exitosa. Filas afectadas: $filasAfectadas";
+                                                $status="500";
+                                                $apiMessage="¡Repartidor no actualizado con éxito!";
+                                            }
+                                        //  return "true";
+                                        //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
+                                        }else{
+                                            $response="false";
+                                            $message="Error en la actualización: " . mysqli_error($conectar);
+                                            $status="404";
+                                            $apiMessage="¡Repartidor no actualizado con éxito!";
+                                        
+                                                            }
+                                
+                                                            $values=[];
+                                
+                                                            $value=[
+                                                                'response' => $response,
+                                                                'message' => $message,
+                                                                'apiMessage' => $apiMessage,
+                                                                'status' => $status
+                                                                
+                                                            ];
+                                                            
+                                                            array_push($values,$value);
+                                                            
+                                                
+                                                    //echo json_encode($students) ;
+                                                    return json_encode(['response'=>$values]);
+                                
+                                            }
     }
     
 ?>
