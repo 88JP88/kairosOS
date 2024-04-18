@@ -1652,7 +1652,7 @@ class modelPut{
                                         // Acceder a los valores de cada producto
                                         $stock = $catag['stock']-$qty;
                                         $query = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.stock', $stock) 
+                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.stock', '$stock') 
                                         WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
                
                                     }
