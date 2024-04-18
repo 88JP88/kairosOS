@@ -1708,7 +1708,7 @@ class modelPut{
                                                 // Éxito: La actualización se realizó correctamente
                                             $response="true";
                                             $message="Actualización exitosa. Filas afectadas: $filasAfectadas";
-                                            $apiMessage=$apiMessage;
+                                            $apiMessage=$infoStatusOrder;
                                      
                                                 $status="201";
                                             } else {
