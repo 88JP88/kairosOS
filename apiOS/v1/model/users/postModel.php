@@ -1625,8 +1625,9 @@ class modelPut{
                                         }  if($param!="del"){
                                             if($param=="orderStatus"){
 
-
-                                            if($value=="ready"){
+                                                switch ($value) {
+                                          
+                                                    case "ready":
                                                
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                             $row2 = $query->fetch_assoc();
@@ -1661,9 +1662,9 @@ class modelPut{
                         } 
                        
                             
-                        }
+                        break;
 
-                        if($value=="inProgress"){
+                        case "inProgress":
 
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                             $row2 = $query->fetch_assoc();
@@ -1694,7 +1695,10 @@ class modelPut{
                                 }
                             }
                         }
+                        break;
                         
+                        default:
+
                         }
                         $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                         SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', '$value') 
