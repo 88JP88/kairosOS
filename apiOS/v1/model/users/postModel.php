@@ -941,7 +941,8 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                 $customerContact = mysqli_real_escape_string($conectar, $dta['customerContact']);
                 $customerMail = mysqli_real_escape_string($conectar, $dta['customerMail']);
                 $customerPlace = mysqli_real_escape_string($conectar, $dta['customerPlace']);
-               
+                $customerAddres = mysqli_real_escape_string($conectar, $dta['customerAddres']);
+
                $customerImg = mysqli_real_escape_string($conectar, $dta['customerImg']);
 
                 //$dato_encriptado = $keyword;
@@ -955,7 +956,9 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                             "contact" => $customerContact,
                             "email" => $customerMail,
                            
-                            "img" => $customerImg
+                            "img" => $customerImg,
+                            "points"=>0,
+                            "addres"=>$customerAddres
                         ],
                         "params" => [
                             "isActive" => true,
