@@ -1074,6 +1074,12 @@ class modelPut{
                             WHERE clientId = '$clientId' AND placeId = '$placeId'");
             
                         }
+                    }else{
+                        $value=(float)$value;
+                        $query = mysqli_query($conectar, "UPDATE generalPlaces 
+                        SET infoPlace = JSON_SET(infoPlace, '$[0].params.$param', $value) 
+                        WHERE clientId = '$clientId' AND placeId = '$placeId'");
+        
                     }
                 
             }else{
