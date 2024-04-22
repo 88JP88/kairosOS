@@ -949,13 +949,13 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                 $infoCustomer = [
                     [
                         "info" => [
-                            "name" => $employeeName,
+                            "name" => $customerName,
                            
-                            "comments" => $employeeComments,
-                            "contact" => $employeeContact,
-                            "email" => $employeeMail,
+                            "comments" => $customerComments,
+                            "contact" => $customerContact,
+                            "email" => $customerMail,
                            
-                            "img" => $employeeImg
+                            "img" => $customerImg
                         ],
                         "params" => [
                             "isActive" => true,
