@@ -1382,7 +1382,7 @@ if ($numRows > 0) {
                     'status' => $status,
                     'sentData'=>$dta
                 ],
-                'employees' => $values
+                'customers' => $values
             ];
             
             return json_encode($responseData);
@@ -1404,7 +1404,7 @@ if ($numRows > 0) {
                     'status' => $status,
                     'sentData'=>$dta
                 ],
-                'employees' => $values
+                'customers' => $values
             ];
             array_push($values,$value);
             
@@ -1433,7 +1433,7 @@ if ($numRows > 0) {
                     'status' => $status,
                     'sentData'=>$dta
                 ],
-                'employees' => $values
+                'customers' => $values
             ];
             array_push($values,$value);
             
