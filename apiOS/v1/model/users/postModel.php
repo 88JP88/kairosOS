@@ -958,7 +958,7 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                            
                             "img" => $customerImg,
                             "points"=>0,
-                            "addres"=>$customerAddres
+                            "address"=>$customerAddres
                         ],
                         "params" => [
                             "isActive" => true,
