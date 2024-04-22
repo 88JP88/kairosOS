@@ -1061,7 +1061,8 @@ class modelPut{
             if($param=="isPoint" || $param=="points" || $param=="pointsValue" || $param=="pointsOut"|| $param=="pointsAutoDiscount" || $param=="poinsDiscountTotal"){
                 if($param=="isPoint"){
                         $value=filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-                }
+                        $value = (bool)$value;
+                    }
                 $query = mysqli_query($conectar, "UPDATE generalPlaces 
                 SET infoPlace = JSON_SET(infoPlace, '$[0].params.$param', '$value') 
                 WHERE clientId = '$clientId' AND placeId = '$placeId'");
