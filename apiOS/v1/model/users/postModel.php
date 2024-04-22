@@ -32,6 +32,13 @@ class modelPost {
                     $placeComments = mysqli_real_escape_string($conectar, $dta['placeComments']);
                     $placeContact = mysqli_real_escape_string($conectar, $dta['placeContact']);
                     $placeMail = mysqli_real_escape_string($conectar, $dta['placeEmail']);
+                    $isPoint = mysqli_real_escape_string($conectar, $dta['isPoint']);
+                    $points = mysqli_real_escape_string($conectar, $dta['points']);
+                    $pointsValue = mysqli_real_escape_string($conectar, $dta['pointsValue']);
+                    $pointsOut = mysqli_real_escape_string($conectar, $dta['pointsOut']);
+                    $pointsAutoDiscount = mysqli_real_escape_string($conectar, $dta['pointsAutoDiscount']);
+                    $poinsDiscountTotal = mysqli_real_escape_string($conectar, $dta['poinsDiscountTotal']);
+
                     //$dato_encriptado = $keyword;
                     
                     $infoPlace = [
@@ -46,12 +53,12 @@ class modelPost {
                             "params" => [
                                 "isActive" => true,
                                 "status" => true,
-                                "isPoint" => false,//aplica puntos
-                                "points" => 0,//cantidad de puntos para aplicar
-                                "pointsValue" => 0,//por la compra de VALUE se le dan x puntos
-                                "pointsOut" => 0,// cantidad minima de puntos para poder redimir
-                                "pointsAutoDiscount" => false,// auto descontar puntos al momento de pagar
-                                "poinsDiscountTotal" => false//descontar el total de puntos al momento de pagar si es true descuenta todo si es false descuenta solo la cantidad de puntos minima pára redimir
+                                "isPoint" => filter_var($isPoint, FILTER_VALIDATE_BOOLEAN),//aplica puntos
+                                "points" => floatval($points),//cantidad de puntos para aplicar
+                                "pointsValue" => floatval($pointsValue),//por la compra de VALUE se le dan x puntos
+                                "pointsOut" => floatval($pointsOut),// cantidad minima de puntos para poder redimir
+                                "pointsAutoDiscount" => filter_var($pointsAutoDiscount, FILTER_VALIDATE_BOOLEAN),// auto descontar puntos al momento de pagar
+                                "poinsDiscountTotal" => filter_var($poinsDiscountTotal, FILTER_VALIDATE_BOOLEAN)//descontar el total de puntos al momento de pagar si es true descuenta todo si es false descuenta solo la cantidad de puntos minima pára redimir
                            
                             ]
                         ]
@@ -1050,10 +1057,17 @@ class modelPut{
            // $query = mysqli_query($conectar, "DELETE FROM generalPlaces where clientId='$clientId' and deliveryId='$deliveryId'");
             $apiMessage="¡Repartidor removido con éxito!";
         }  if($param!="del"){
+
+            if($param=="isPoint" || $param=="points" || $param=="pointsValue" || $param=="pointsOut"|| $param=="pointsAutoDiscount" || $param=="poinsDiscountTotal"){
+                $query = mysqli_query($conectar, "UPDATE generalPlaces 
+                SET infoPlace = JSON_SET(infoPlace, '$[0].params.$param', '$value') 
+                WHERE clientId = '$clientId' AND placeId = '$placeId'");
+
+            }else{
             $query = mysqli_query($conectar, "UPDATE generalPlaces 
                                   SET infoPlace = JSON_SET(infoPlace, '$[0].info.$param', '$value') 
                                   WHERE clientId = '$clientId' AND placeId = '$placeId'");
-
+            }
             $apiMessage="¡Ubicación actualizada con éxito!";
         }
 
