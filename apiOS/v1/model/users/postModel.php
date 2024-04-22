@@ -44,8 +44,15 @@ class modelPost {
                                 "email" => $placeMail
                             ],
                             "params" => [
-                                "isActive" => "1",
-                                "status" => "1"
+                                "isActive" => true,
+                                "status" => true,
+                                "isPoint" => false,//aplica puntos
+                                "points" => 0,//cantidad de puntos para aplicar
+                                "pointsValue" => 0,//por la compra de VALUE se le dan x puntos
+                                "pointsOut" => 0,// cantidad minima de puntos para poder redimir
+                                "pointsAutoDiscount" => false,// auto descontar puntos al momento de pagar
+                                "poinsDiscountTotal" => false//descontar el total de puntos al momento de pagar si es true descuenta todo si es false descuenta solo la cantidad de puntos minima pára redimir
+                           
                             ]
                         ]
                     ];
@@ -237,7 +244,7 @@ class modelPost {
                                 "isBussy" => false,
                                 "isOrder" => false,
                                 "isOutService" => false
-                            ]
+                                 ]
                         ]
                     ];
                     
@@ -908,6 +915,107 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                 
         }
 
+        public static function postCustomer($dta) {
+            
+                
+            // Asegúrate de proporcionar la ruta correcta al archivo de conexión a la base de datos
+            
+                // Realiza la conexión a la base de datos (reemplaza conn() con tu propia lógica de conexión)
+                $conectar = conn();
+        
+                // Verifica si la conexión se realizó correctamente
+                if (!$conectar) {
+                    return "Error de conexión a la base de datos";
+                }
+        
+                
+                    
+                $gen_uuid = new generateUuid();
+                $myuuid = $gen_uuid->guidv4();
+                $customerId = substr($myuuid, 0, 8);
+
+                // Escapa los valores para prevenir inyección SQL
+                $clientId = mysqli_real_escape_string($conectar, $dta['clientId']);
+                $customerName = mysqli_real_escape_string($conectar, $dta['customerName']);
+                $customerComments = mysqli_real_escape_string($conectar, $dta['customerComments']);
+                $customerContact = mysqli_real_escape_string($conectar, $dta['customerContact']);
+                $customerMail = mysqli_real_escape_string($conectar, $dta['customerMail']);
+                $customerPlace = mysqli_real_escape_string($conectar, $dta['customerPlace']);
+               
+               $customerImg = mysqli_real_escape_string($conectar, $dta['customerImg']);
+
+                //$dato_encriptado = $keyword;
+                
+                $infoCustomer = [
+                    [
+                        "info" => [
+                            "name" => $employeeName,
+                           
+                            "comments" => $employeeComments,
+                            "contact" => $employeeContact,
+                            "email" => $employeeMail,
+                           
+                            "img" => $employeeImg
+                        ],
+                        "params" => [
+                            "isActive" => true,
+                            "status" => true
+                        ]
+                    ]
+                ];
+                
+                $jsonInfoCustomer = json_encode($infoCustomer);
+               // echo $jsonInfoSite;
+                
+                $query = mysqli_query($conectar, "INSERT INTO generalCustomers 
+                (customerId, clientId, infoCustomer,placeId) 
+                VALUES
+                ('$customerId', '$clientId', '$jsonInfoCustomer','$customerPlace')");
+
+                if($query){
+                            $filasAfectadas = mysqli_affected_rows($conectar);
+                                if ($filasAfectadas > 0) 
+                                    {
+                                        // Éxito: La actualización se realizó correctamente
+                                        $response="true";
+                                        $message="Creación exitosa. Filas afectadas: $filasAfectadas";
+                                        $apiMessage="¡creado con éxito!";
+                                        $status="201";
+                                    } 
+                                    else {
+                                        $response="false";
+                                        $message="Creación no exitosa. Filas afectadas: $filasAfectadas";
+                                        $status="500";
+                                        $apiMessage="¡Cliente no credo con éxito!";
+                                        }
+                        //  return "true";
+                        //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
+                }
+                else{
+                        $response="true";
+                        $message="Error en la actualización: " . mysqli_error($conectar);
+                        $status="404";
+                        $apiMessage="¡Cliente no creado con éxito!";
+                    
+                    }
+
+                    $values=[];
+
+                    $value=[
+                        'response' => $response,
+                        'message' => $message,
+                        'apiMessage' => $apiMessage,
+                        'status' => $status
+                        
+                    ];
+                    
+                    array_push($values,$value);
+                                        
+                            
+                                //echo json_encode($students) ;
+                                return json_encode(['response'=>$values]);
+                
+        }
 
     }
 
