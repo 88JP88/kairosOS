@@ -1974,25 +1974,7 @@ class modelPut{
                                 default:
                                 }
                             
-                                while ($row = $query->fetch_assoc()) {
-                                $infoOrders = json_decode($row['infoOrder'], true)[0];
-                                $infoProducts = $infoOrders['info']['infoProducts'];
-                            
-                                // Iterar sobre cada producto
-                                foreach ($infoProducts as $product) {
-                                    // Acceder a los valores de cada producto
-                                    $catalogId = $product['product']['catalogId'];
-                                    $qty = $product['product']['qty'];
-                            
-                                    $query1 = mysqli_query($conectar, "UPDATE generalCatalogs 
-                                        SET infoCatalog = JSON_SET(infoCatalog, '$[0].info.stock', 
-                                            JSON_EXTRACT(infoCatalog, '$[0].info.stock') - $qty)
-                                        WHERE clientId = '$clientId' AND catalogId = '$catalogId'");
-                            
-                                    // Aquí puedes realizar cualquier otra operación o acceso a los datos del producto
-                                    // ...
-                                }
-                            }
+                               
                           
 
                         } 
