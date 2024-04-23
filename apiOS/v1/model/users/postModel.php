@@ -1887,27 +1887,29 @@ class modelPut{
 
                                             
                                                 if($infoStatusOrder=="delivered"){
-                                                    $query = mysqli_query($conectar, "SELECT JSON_EXTRACT(p.infoPlace, '$[0].params.isPoint') as isPoint,JSON_EXTRACT(p.infoPlace, '$[0].params.pointsOut') as pointsOut,JSON_EXTRACT(p.infoPlace, '$[0].params.points') as points,JSON_EXTRACT(p.infoPlace, '$[0].params.pointsValue') as pointsValue,JSON_EXTRACT(p.infoPlace, '$[0].params.pointsAutoDiscount') as pointsAutoDis,JSON_EXTRACT(p.infoPlace, '$[0].params.pointsDiscountTotal') as pointsDisTotal FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
+                                                    $query = mysqli_query($conectar, "SELECT p.infoPlace FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                                                     $row3 = $query->fetch_assoc();
+                                                    $placeInfo = json_decode($row3['infoPlace'], true)[0];
 
-                                                    $isPoint = json_decode($row3['isPoint'], true);
+                                                    $isPoint = $placeInfo['params']['isPoint'];
                                             if ($isPoint===true) {
 
                                                         
-                                                                $points = json_decode($row3['points'], true);
-                                                                $pointsValue = json_decode($row3['pointsValue'], true);
-                                                                $pointsAutoDiscount = json_decode($row3['pointsAutoDis'], true);
-                                                                $pointsToOut = json_decode($row3['pointsOut'], true);
+                                                                $points = $placeInfo['params']['points'];
+                                                                $pointsValue = $placeInfo['params']['pointsValue'];
+                                                                $pointsAutoDiscount = $placeInfo['params']['pointsAutoDiscount'];
+                                                                $pointsToOut = $placeInfo['params']['pointsOut'];
 
                                                                 if ($pointsAutoDiscount===true) {
                                                                                         
-                                                                                                $totalpointsAutoDiscount = json_decode($row3['pointsDisTotal'], true);
+                                                                                                $totalpointsAutoDiscount = $placeInfo['params']['poinsDiscountTotal'];
 
                                                                                                 if($totalpointsAutoDiscount===true){
-                                                                                                    $query = mysqli_query($conectar, "SELECT JSON_EXTRACT(c.infoCustomer, '$[0].info.points') as cusPoints FROM generalCustomers c WHERE c.clientId = '$clientId' AND c.customerId = '$customerIdInfo'");
+                                                                                                    $query = mysqli_query($conectar, "SELECT c.infoCustomer FROM generalCustomers c WHERE c.clientId = '$clientId' AND c.customerId = '$customerIdInfo'");
                                                                                                     $row4 = $query->fetch_assoc();
-                                                                    
-                                                                                                    $qtyPoints = json_decode($row4['cusPoints'], true);
+                                                                                                    $customerInfo = json_decode($row4['infoCustomer'], true)[0];
+
+                                                                                                    $qtyPoints = $customerInfo['info']['points'];
                                                                                                     if($qtyPoints>=$pointsToOut){
                                                                                                                     $query1 = mysqli_query($conectar, "UPDATE generalCustomers 
                                                                                                                     SET infoCustomer = JSON_SET(infoCustomer, '$[0].info.points',0)
