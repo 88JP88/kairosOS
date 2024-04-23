@@ -59,8 +59,8 @@ class modelPost {
                                 "pointsValue" => floatval($pointsValue),//por la compra de VALUE se le dan x puntos
                                 "pointsOut" => floatval($pointsOut),// cantidad minima de puntos para poder redimir
                                 "pointsAutoDiscount" => filter_var($pointsAutoDiscount, FILTER_VALIDATE_BOOLEAN),// auto descontar puntos al momento de pagar
-                                "poinsDiscountTotal" => filter_var($poinsDiscountTotal, FILTER_VALIDATE_BOOLEAN)//descontar el total de puntos al momento de pagar si es true descuenta todo si es false descuenta solo la cantidad de puntos minima pára redimir
-                                "pointPrice" => floatval($pointPrice),// valor de cada punto
+                                "poinsDiscountTotal" => filter_var($poinsDiscountTotal, FILTER_VALIDATE_BOOLEAN),//descontar el total de puntos al momento de pagar si es true descuenta todo si es false descuenta solo la cantidad de puntos minima pára redimir
+                                "pointPrice" => floatval($pointPrice)// valor de cada punto
 
                             ]
                         ]
