@@ -1890,7 +1890,7 @@ class modelPut{
                                                     $query = mysqli_query($conectar, "SELECT JSON_EXTRACT(p.infoPlace, '$[0].params.isPoint') as isPoint,JSON_EXTRACT(p.infoPlace, '$[0].params.pointsOut') as pointsOut,JSON_EXTRACT(p.infoPlace, '$[0].params.points') as points,JSON_EXTRACT(p.infoPlace, '$[0].params.pointsValue') as pointsValue,JSON_EXTRACT(p.infoPlace, '$[0].params.pointsAutoDiscount') as pointsAutoDis,JSON_EXTRACT(p.infoPlace, '$[0].params.pointsDiscountTotal') as pointsDisTotal FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                                                     $row3 = $query->fetch_assoc();
 
-                                                    $isPoint = json_decode($row3['isPoint'], true);
+                                                    $isPoint = json_decode($row3['isPoint'], true)[0];
                                             if ($isPoint===true) {
 
                                                         
