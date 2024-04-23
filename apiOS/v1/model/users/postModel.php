@@ -1769,7 +1769,7 @@ class modelPut{
                                         }  if($param!="del"){
                                             if($param=="orderStatus"){
 
-                                                switch ($value) {
+                 switch ($value) {
                                           
                                                     case "ready":
                                                
@@ -1971,16 +1971,16 @@ class modelPut{
                                 }
                             
                                
-                          
+                                break;
+                        
+                                default:
 
-                        } 
+            } 
                        
                             
-                        break;
                         
-                        default:
 
-                        }
+                        
                         $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                         SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', '$value') 
                         WHERE clientId = '$clientId' AND orderId = '$orderId'");
@@ -2034,6 +2034,7 @@ class modelPut{
                                                     return json_encode(['response'=>$values]);
                                 
                                             }
+                                        
     }
     
 ?>
