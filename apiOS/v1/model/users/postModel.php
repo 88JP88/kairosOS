@@ -1941,7 +1941,7 @@ class modelPut{
                                                                                                                 infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.customerPoints', $qtyPoints),
                                                                                                                 infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.maxPointsToRedem', $pointsToOut),
 
-                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints)  
+                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints),  
                                                                                                                 infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.withPointsTotal', $newTotal),
                                                                                                                 infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', true)    
                                                                                                                 WHERE clientId = '$clientId' AND orderId = '$orderId'");
