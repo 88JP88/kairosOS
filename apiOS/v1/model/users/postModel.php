@@ -2062,7 +2062,7 @@ class modelPut{
                   
                                        // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
                                     
-                                        if($query){
+                                        if($query5){
                                             $filasAfectadas = mysqli_affected_rows($conectar);
                                             if ($filasAfectadas > 0) {
                                                 // Éxito: La actualización se realizó correctamente
