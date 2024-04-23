@@ -1901,7 +1901,7 @@ class modelPut{
                                                                 $pointsValue = $placeInfo['params']['pointsValue'];
                                                                 $pointsAutoDiscount = $placeInfo['params']['pointsAutoDiscount'];
                                                                 $pointsToOut = $placeInfo['params']['pointsOut'];
-
+                                                                $pointPrice = $placeInfo['params']['pointPrice'];
                                                                 if ($pointsAutoDiscount===true) {
                                                                                         
                                                                                                 $totalpointsAutoDiscount = $placeInfo['params']['poinsDiscountTotal'];
@@ -1912,12 +1912,19 @@ class modelPut{
                                                                                                     $customerInfo = json_decode($row4['infoCustomer'], true)[0];
 
                                                                                                     $qtyPoints = $customerInfo['info']['points'];
-                                                                                                    if($qtyPoints>=$pointsToOut){
+                                                              
+                                                                                                                
                                                                                                                     $query1 = mysqli_query($conectar, "UPDATE generalCustomers 
                                                                                                                     SET infoCustomer = JSON_SET(infoCustomer, '$[0].info.points',0)
                                                                                                                     WHERE clientId = '$clientId' AND customerId = '$customerIdInfo'");
-                                                                                                                    $newTotalPoints= $qtyPoints*$pointsValue;
+                                                                                                                    $newTotalPoints= $qtyPoints*$pointPrice;
                                                                                                                     $newTotal= $orderBackTotal-$newTotalPoints;
+                                                                                                                    if($newTotalPoints>$orderBackTotal){
+                                                                                                                        $pointsResult=$newTotalPoints-$orderBackTotal;
+                                                                                                                        $newTotalPoints=$pointsResult;
+
+                                                                                                                        $newTotal=$newTotal+$pointsResult;
+                                                                                                                    }
 
                                                                                                                     $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                                                                                     SET infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.total', $newTotal),
@@ -1930,10 +1937,11 @@ class modelPut{
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.prevTotal', $orderBackTotal),
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', true)    
                                                                                                                     WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                                                                                
                                                                                             
                                                                                                     }
                                                                                                     if($qtyPoints<$pointsToOut){
-                                                                                                                $newTotalPoints= $qtyPoints*$pointsValue;
+                                                                                                                $newTotalPoints= $qtyPoints*$pointPrice;
                                                                                                                 $newTotal= $orderBackTotal-$newTotalPoints;
 
                                                                                                                 $query5 = mysqli_query($conectar, "UPDATE generalOrders 
@@ -1958,9 +1966,38 @@ class modelPut{
                                                                                                 
                                                                                                 if($totalpointsAutoDiscount===false){
                                                                                             
+                                                                                                    $newTotalPoints= $qtyPoints*$pointPrice;
+                                                                                                    $newTotal= $orderBackTotal-$newTotalPoints;
+
+                                                                                                    $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                                                                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.total', $orderBackTotal),
+                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isAutoDiscount', false) ,
+                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isPointsDiscount', false) ,
+                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.customerPoints', $qtyPoints),
+                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.maxPointsToRedem', $pointsToOut),
+
+                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints),  
+                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.withPointsTotal', $newTotal),
+                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', false)    
+                                                                                                    WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                                            
+                                                                                                    $cusQtyPoints=($orderBackTotal/$pointsValue)*$points;
+                                                                                                $query1 = mysqli_query($conectar, "UPDATE generalCustomers 
+                                                                                                SET infoCustomer = JSON_SET(infoCustomer, '$[0].info.points',$qtyPoints+$cusQtyPoints)
+                                                                                                WHERE clientId = '$clientId' AND customerId = '$customerIdInfo'");
+                                                                                       
+
+
                                                                                                 
                                                                                                 }
                                                                                
+                                                                }
+                                                                if ($isPoint===false) {
+                                                                   $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                                                                                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.total', $orderBackTotal),
+                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isPointsDiscount', false)
+                                                                                                                WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                                                        
                                                                 }
                                                              
                                                     
@@ -1968,27 +2005,62 @@ class modelPut{
 
 
                                                           
-                                                    }
+                                                    
                                                 
                                
                                 break;
                         
                                 default:
+                                                }
+                                                $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', '$value') 
+                                                WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                                $generalMessage="Orden actualizada exitosamente";
 
-            } 
+          
+                            } 
                        
-                            
+                            if($param=="paymentType" || $param=="paymentMethod" || $param=="paymentCompany" || $param=="transactionCode"){
+
+                               
+                                    $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoAccount.accountStatus.$param', '$value')
+                                    WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                    $generalMessage=$param." actualizado exitosamente";
+
+                                    
+                                   
+                            }
+                            if($param=="paymentStatus"){
+
+                               
+                                $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
+                                $row2 = $query->fetch_assoc();
+                                $infostatus = json_decode($row2['infoOrder'], true)[0];
+                                $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
+                                if($infoStatusOrder=="finished"){
+                                    $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.paymentStatus.status', '$value')
+                                    WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                        $generalMessage="Pago realizado exitosamente";
+                                }
+                                else{
+                                   
+                                        $generalMessage="No se ha finalizado la orden";
+                                }
+
+                               
+                                
+                               
+                        }
                         
 
                         
-                        $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                        SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', '$value') 
-                        WHERE clientId = '$clientId' AND orderId = '$orderId'");
-
+                       
                     
                     }
-                                          
-                                        }
+                             
+                }         
                                 
                                        // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
                                     
@@ -1998,14 +2070,14 @@ class modelPut{
                                                 // Éxito: La actualización se realizó correctamente
                                             $response="true";
                                             $message="Actualización exitosa. Filas afectadas: $filasAfectadas";
-                                            $apiMessage=$infoStatusOrder;
+                                            $apiMessage=$generalMessage;
                                      
                                                 $status="201";
                                             } else {
                                                 $response="false";
                                             $message="Actualización no exitosa. Filas afectadas: $filasAfectadas";
                                                 $status="500";
-                                                $apiMessage="¡Repartidor no actualizado con éxito!";
+                                                $apiMessage=$generalMessage;
                                             }
                                         //  return "true";
                                         //echo "ups! el id del repo está repetido , intenta nuevamente, gracias.";
@@ -2013,7 +2085,7 @@ class modelPut{
                                             $response="false";
                                             $message="Error en la actualización: " . mysqli_error($conectar);
                                             $status="404";
-                                            $apiMessage="¡Repartidor no actualizado con éxito!";
+                                            $apiMessage="¡no actualizado con éxito!";
                                         
                                                             }
                                 
