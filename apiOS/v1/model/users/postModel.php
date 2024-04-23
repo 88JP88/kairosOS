@@ -1888,7 +1888,7 @@ class modelPut{
                                                 $customerIdInfo = $infostatus['info']['infoOrder']['customerStatus']['customerId'];
 
                                             
-                                                if($infoStatusOrder=="delivered"){
+                                 if($infoStatusOrder=="delivered"){
                                                     $query = mysqli_query($conectar, "SELECT p.infoPlace FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
                                                     $row3 = $query->fetch_assoc();
                                                     $placeInfo = json_decode($row3['infoPlace'], true)[0];
@@ -1939,7 +1939,7 @@ class modelPut{
                                                                                                                     WHERE clientId = '$clientId' AND orderId = '$orderId'");
                                                                                                                 
                                                                                             
-                                                                                                    }
+                                                                                                    
                                                                                                     if($qtyPoints<$pointsToOut){
                                                                                                                 $newTotalPoints= $qtyPoints*$pointPrice;
                                                                                                                 $newTotal= $orderBackTotal-$newTotalPoints;
@@ -1990,7 +1990,7 @@ class modelPut{
 
                                                                                                 
                                                                                                 }
-                                                                               
+                                                                             }
                                                                 }
                                                                 if ($isPoint===false) {
                                                                    $query5 = mysqli_query($conectar, "UPDATE generalOrders 
@@ -2034,25 +2034,23 @@ class modelPut{
                             if($param=="paymentStatus"){
 
                                
-                                $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
-                                $row2 = $query->fetch_assoc();
-                                $infostatus = json_decode($row2['infoOrder'], true)[0];
-                                $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
-                                if($infoStatusOrder=="finished"){
-                                    $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.paymentStatus.status', '$value')
-                                    WHERE clientId = '$clientId' AND orderId = '$orderId'");
-                                        $generalMessage="Pago realizado exitosamente";
-                                }
-                                else{
-                                   
-                                        $generalMessage="No se ha finalizado la orden";
-                                }
+                                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
+                                                    $row2 = $query->fetch_assoc();
+                                                    $infostatus = json_decode($row2['infoOrder'], true)[0];
+                                                    $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
+                                                    if($infoStatusOrder=="finished"){
+                                                        $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                                        SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.paymentStatus.status', '$value')
+                                                        WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                            $generalMessage="Pago realizado exitosamente";
+                                                    }
+                                                    else{
+                                                    
+                                                            $generalMessage="No se ha finalizado la orden";
+                                                    }
 
-                               
-                                
-                               
-                        }
+                                              
+                                         }
                         
 
                         
@@ -2060,8 +2058,8 @@ class modelPut{
                     
                     }
                              
-                }         
-                                
+                        
+                  
                                        // $query = mysqli_query($conectar, "UPDATE generalDelivery SET $param='$value' where clientId='$clientId' and deliveryId='$deliveryId'");
                                     
                                         if($query){
@@ -2105,7 +2103,8 @@ class modelPut{
                                                     //echo json_encode($students) ;
                                                     return json_encode(['response'=>$values]);
                                 
-                                            }
+      }
+                                        
                                         
     }
     
