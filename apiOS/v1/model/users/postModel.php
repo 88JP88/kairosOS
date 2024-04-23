@@ -1918,14 +1918,14 @@ class modelPut{
                                                                                                                     $newTotal= $orderBackTotal-$newTotalPoints;
 
                                                                                                                     $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                                                                                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.total', (float)$newTotal),
+                                                                                                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.total', $newTotal),
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isAutoDiscount', true) ,
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isPointsDiscount', true) ,
-                                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.customerPoints', (float)$qtyPoints),
-                                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.maxPointsToRedem', (float)$pointsToOut),
+                                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.customerPoints', $qtyPoints),
+                                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.maxPointsToRedem', $pointsToOut),
 
-                                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', (float)$newTotalPoints)  
-                                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.prevTotal', (float)$orderBackTotal),
+                                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints)  
+                                                                                                                    infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.prevTotal', $orderBackTotal),
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', true)    
                                                                                                                     WHERE clientId = '$clientId' AND orderId = '$orderId'");
                                                                                             
@@ -1935,14 +1935,14 @@ class modelPut{
                                                                                                                 $newTotal= $orderBackTotal-$newTotalPoints;
 
                                                                                                                 $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                                                                                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.total', (float)$orderBackTotal),
+                                                                                                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.total', $orderBackTotal),
                                                                                                                 infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isAutoDiscount', true) ,
                                                                                                                 infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isPointsDiscount', false) ,
-                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.customerPoints', (float)$qtyPoints),
-                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.maxPointsToRedem', (float)$pointsToOut),
+                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.customerPoints', $qtyPoints),
+                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.maxPointsToRedem', $pointsToOut),
 
-                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', (float)$newTotalPoints)  
-                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.withPointsTotal', (float)$newTotal),
+                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints)  
+                                                                                                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.withPointsTotal', $newTotal),
                                                                                                                 infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', true)    
                                                                                                                 WHERE clientId = '$clientId' AND orderId = '$orderId'");
                                                                                         
