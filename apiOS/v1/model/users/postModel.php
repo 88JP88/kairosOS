@@ -37,7 +37,8 @@ class modelPost {
                     $pointsValue = mysqli_real_escape_string($conectar, $dta['pointsValue']);
                     $pointsOut = mysqli_real_escape_string($conectar, $dta['pointsOut']);
                     $pointsAutoDiscount = mysqli_real_escape_string($conectar, $dta['pointsAutoDiscount']);
-                    $poinsDiscountTotal = mysqli_real_escape_string($conectar, $dta['poinsDiscountTotal']);
+                    $poinsDiscountTotal = mysqli_real_escape_string($conectar, $dta['pointsDiscountTotal']);
+                    $pointPrice = mysqli_real_escape_string($conectar, $dta['pointsPrice']);
 
                     //$dato_encriptado = $keyword;
                     
@@ -59,7 +60,8 @@ class modelPost {
                                 "pointsOut" => floatval($pointsOut),// cantidad minima de puntos para poder redimir
                                 "pointsAutoDiscount" => filter_var($pointsAutoDiscount, FILTER_VALIDATE_BOOLEAN),// auto descontar puntos al momento de pagar
                                 "poinsDiscountTotal" => filter_var($poinsDiscountTotal, FILTER_VALIDATE_BOOLEAN)//descontar el total de puntos al momento de pagar si es true descuenta todo si es false descuenta solo la cantidad de puntos minima pára redimir
-                           
+                                "pointPrice" => floatval($pointPrice),// valor de cada punto
+
                             ]
                         ]
                     ];
@@ -1058,7 +1060,7 @@ class modelPut{
             $apiMessage="¡Repartidor removido con éxito!";
         }  if($param!="del"){
 
-            if($param=="isPoint" || $param=="points" || $param=="pointsValue" || $param=="pointsOut"|| $param=="pointsAutoDiscount" || $param=="poinsDiscountTotal"){
+            if($param=="isPoint" || $param=="points" || $param=="pointsValue" || $param=="pointsOut"|| $param=="pointsAutoDiscount" || $param=="poinsDiscountTotal" || $param=="pointPrice"){
                 if($param=="isPoint" || $param=="pointsAutoDiscount" || $param=="poinsDiscountTotal" ){
                         $value=filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
                         $value = (bool)$value;
