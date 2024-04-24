@@ -1920,7 +1920,7 @@ class modelPut{
                                                                                                                     if($newTotalPoints>$orderBackTotal){
                                                                                                                         $pointsResult=$newTotalPoints-$orderBackTotal;//precio menos puntos
                                                                                                                         $newTotalPoints=$pointsResult;// precio de puntos acumulados totales
-                                                                                                                        $newCusPoints=$qtyPoints-(($orderBackTotal/$pointPrice)*$qtyPoints);
+                                                                                                                        $newCusPoints=$qtyPoints-$qtyPoints*($orderBackTotal/$pointPrice);
 
 
                                                                                                                         $newTotal=$newTotal+$pointsResult;
