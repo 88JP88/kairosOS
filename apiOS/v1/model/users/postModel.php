@@ -1914,16 +1914,27 @@ class modelPut{
                                                                                                     $qtyPoints = $customerInfo['info']['points'];
                                                               
                                                                                                                 
-                                                                                                                    $query1 = mysqli_query($conectar, "UPDATE generalCustomers 
-                                                                                                                    SET infoCustomer = JSON_SET(infoCustomer, '$[0].info.points',0)
-                                                                                                                    WHERE clientId = '$clientId' AND customerId = '$customerIdInfo'");
+                                       
                                                                                                                     $newTotalPoints= $qtyPoints*$pointPrice;
                                                                                                                     $newTotal= $orderBackTotal-$newTotalPoints;
                                                                                                                     if($newTotalPoints>$orderBackTotal){
-                                                                                                                        $pointsResult=$newTotalPoints-$orderBackTotal;
-                                                                                                                        $newTotalPoints=$pointsResult;
+                                                                                                                        $pointsResult=$newTotalPoints-$orderBackTotal;//precio menos puntos
+                                                                                                                        $newTotalPoints=$pointsResult;// precio de puntos acumulados totales
+                                                                                                                        $newCusPoints=$qtyPoints-(($orderBackTotal/$pointPrice)*$qtyPoints);
+
 
                                                                                                                         $newTotal=$newTotal+$pointsResult;
+                                                                                                                        $query1 = mysqli_query($conectar, "UPDATE generalCustomers 
+                                                                                                                        SET infoCustomer = JSON_SET(infoCustomer, '$[0].info.points',$newCusPoints)
+                                                                                                                        WHERE clientId = '$clientId' AND customerId = '$customerIdInfo'");
+    
+                                                                                                                    }
+                                                                                                                    if($newTotalPoints<=$orderBackTotal){
+                                                                                                                        $query1 = mysqli_query($conectar, "UPDATE generalCustomers 
+                                                                                                                        SET infoCustomer = JSON_SET(infoCustomer, '$[0].info.points',0)
+                                                                                                                        WHERE clientId = '$clientId' AND customerId = '$customerIdInfo'");
+    
+                          
                                                                                                                     }
 
                                                                                                                     $query5 = mysqli_query($conectar, "UPDATE generalOrders 
