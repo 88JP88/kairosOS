@@ -744,6 +744,7 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                     ];
                     $infoPlaces = [
                         "placeStatus"=>[
+                            "placeId" => ""
                         ]
                     ];
                     
