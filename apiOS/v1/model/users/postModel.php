@@ -1874,13 +1874,13 @@ class modelPut{
                                 $totalpointsAutoDiscount = $infoplace['params']['poinsDiscountTotal'];
 
                                 $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.isPoint', $infoplaceispoint),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsValue', $pointsValue) ,
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsAutoDiscount', $pointsAutoDiscount) ,
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.poinsDiscountTotal', $totalpointsAutoDiscount),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointPrice', $pointPrice),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsOut', $pointsToOut),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.points', $pointsTotal)
+                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.isPoint', '$infoplaceispoint'),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsValue', '$pointsValue') ,
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsAutoDiscount', '$pointsAutoDiscount') ,
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.poinsDiscountTotal', '$totalpointsAutoDiscount'),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointPrice', '$pointPrice'),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsOut', '$pointsToOut'),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.points', '$pointsTotal')
                                 WHERE clientId = '$clientId' AND orderId = '$orderId'");
                             
                      
