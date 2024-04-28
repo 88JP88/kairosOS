@@ -1859,7 +1859,7 @@ class modelPut{
                                 $infostatus = json_decode($row2['infoOrder'], true)[0];
                                 $infoplace = json_decode($row2['infoPlace'], true)[0];
                                 $infoplaceispoint = $infoplace['params']['isPoint'];
-                                $infoStatusOrder = $infostatus['info']['infoPlace']['orderStatus']['status'];
+                                $pointsTotal = $infoplace['params']['points'];
 
                                 $pointsValue = $infoplace['params']['pointsValue'];
                                 $pointsAutoDiscount = $infoplace['params']['pointsAutoDiscount'];
@@ -1870,13 +1870,11 @@ class modelPut{
                                 $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                 SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.isPoint', $infoplaceispoint),
                                 infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.pointsValue', $pointsValue) ,
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.pointsAutoDiscount', $) ,
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.poinsDiscountTotal', $qtyPoints),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.pointPrice', $pointsToOut),
-
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints) , 
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.prevTotal', $orderBackTotal),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', true)    
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.pointsAutoDiscount', $pointsAutoDiscount) ,
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.poinsDiscountTotal', $poinsDiscountTotal),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.pointPrice', $pointPrice),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.pointsOut', $pointsToOut),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.points', $pointsTotal)
                                 WHERE clientId = '$clientId' AND orderId = '$orderId'");
                             
                      
