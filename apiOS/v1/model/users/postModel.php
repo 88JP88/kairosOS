@@ -742,6 +742,7 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                         "paymentCompany" => "",
                         "transactionCode"=>""]
                     ];
+
                     $infoPlaces = [
                         "placeStatus"=>[
                             "placeId" => ""
@@ -762,7 +763,6 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                                 "backPayload"=>$backPayload,
                                 "infoAccount"=>$accouuntStatus,
                                 "infoPlace"=>$infoplaces,
-
                                 "infoOrder" => json_decode(stripslashes($infoOrders), true)
                             ],
                             "params" => [
