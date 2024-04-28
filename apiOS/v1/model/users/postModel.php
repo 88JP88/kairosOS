@@ -742,6 +742,10 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                         "paymentCompany" => "",
                         "transactionCode"=>""]
                     ];
+                    $infoPlace = [
+                        "placeStatus"=>[
+                        ]
+                    ];
                     
                     date_default_timezone_set('America/Bogota');
 
@@ -756,6 +760,8 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
                                 "infoPayload" => json_decode(stripslashes($infoPayload), true),
                                 "backPayload"=>$backPayload,
                                 "infoAccount"=>$accouuntStatus,
+                                "infoPlace"=>$infoplace,
+
                                 "infoOrder" => json_decode(stripslashes($infoOrders), true)
                             ],
                             "params" => [
