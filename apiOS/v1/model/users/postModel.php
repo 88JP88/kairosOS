@@ -1844,6 +1844,49 @@ class modelPut{
                         break;
 
 
+                        case "delivered":
+
+                            $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
+                            $row2 = $query->fetch_assoc();
+                            $infostatus = json_decode($row2['infoOrder'], true)[0];
+                            $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
+                           
+                           
+                            if($infoStatusOrder=="ready"){
+                                
+                                $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder,p.placeId,p.infoPlace FROM generalOrders o JOIN generalSites s ON s.siteId=o.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
+                                $row2 = $query->fetch_assoc();
+                                $infostatus = json_decode($row2['infoOrder'], true)[0];
+                                $infoplace = json_decode($row2['infoPlace'], true)[0];
+                                $infoplaceispoint = $infoplace['params']['isPoint'];
+                                $infoStatusOrder = $infostatus['info']['infoPlace']['orderStatus']['status'];
+
+                                $pointsValue = $infoplace['params']['pointsValue'];
+                                $pointsAutoDiscount = $infoplace['params']['pointsAutoDiscount'];
+                                $pointsToOut = $infoplace['params']['pointsOut'];
+                                $pointPrice = $infoplace['params']['pointPrice'];
+                                $totalpointsAutoDiscount = $infoplace['params']['poinsDiscountTotal'];
+
+                                $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.isPoint', $infoplaceispoint),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.pointsValue', $pointsValue) ,
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.pointsAutoDiscount', $) ,
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.poinsDiscountTotal', $qtyPoints),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.params.pointPrice', $pointsToOut),
+
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints) , 
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.prevTotal', $orderBackTotal),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', true)    
+                                WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                            
+                     
+
+
+
+                                                            }
+                        break;
+
+
                         case "cancelled":
 
                             $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
