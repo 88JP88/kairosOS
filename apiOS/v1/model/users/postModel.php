@@ -745,8 +745,7 @@ if($infototal['infoPayment']['subTotal']==$totalCatalogPrice ){
 
                     $infoPlaces1 = [
                         "placeStatus"=>[
-                            "placeId" => ""
-                        ]
+                            "placeId" => ""]
                     ];
                     
                     date_default_timezone_set('America/Bogota');
