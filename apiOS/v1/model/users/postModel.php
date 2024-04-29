@@ -1864,23 +1864,24 @@ class modelPut{
                                 $row2 = $query->fetch_assoc();
                                 $infostatus = json_decode($row2['infoOrder'], true)[0];
                                 $infoplace = json_decode($row2['infoPlace'], true)[0];
-                                $infoplaceispoint = $infoplace['params']['isPoint'];
+                                
+                                (bool)$infoplaceispoint = $infoplace['params']['isPoint'];
                                 $pointsTotal = $infoplace['params']['points'];
 
                                 $pointsValue = $infoplace['params']['pointsValue'];
-                                $pointsAutoDiscount = $infoplace['params']['pointsAutoDiscount'];
+                                (bool)$pointsAutoDiscount = $infoplace['params']['pointsAutoDiscount'];
                                 $pointsToOut = $infoplace['params']['pointsOut'];
                                 $pointPrice = $infoplace['params']['pointPrice'];
-                                $totalpointsAutoDiscount = $infoplace['params']['poinsDiscountTotal'];
+                                (bool)$totalpointsAutoDiscount = $infoplace['params']['poinsDiscountTotal'];
 
                                 $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.isPoint', '$infoplaceispoint'),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsValue', '$pointsValue') ,
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsAutoDiscount', '$pointsAutoDiscount') ,
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.poinsDiscountTotal', '$totalpointsAutoDiscount'),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointPrice', '$pointPrice'),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsOut', '$pointsToOut'),
-                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.points', '$pointsTotal')
+                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.isPoint', $infoplaceispoint),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsValue', $pointsValue) ,
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsAutoDiscount', $pointsAutoDiscount) ,
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.poinsDiscountTotal', $totalpointsAutoDiscount),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointPrice', $pointPrice),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.pointsOut', $pointsToOut),
+                                infoOrder = JSON_SET(infoOrder, '$[0].info.infoPlace.placeStatus.points', $pointsTotal)
                                 WHERE clientId = '$clientId' AND orderId = '$orderId'");
                             
                      
