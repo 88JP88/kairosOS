@@ -1,4 +1,5 @@
 <?php
+session_start();
     require_once 'database/db_users.php';
     require_once 'model/modelSecurity/uuid/uuidd.php';
     require_once 'model/users/sendMail.php';
@@ -2075,28 +2076,28 @@ class modelPut{
 
                                     $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
 
-if ($query) {
-    // Iterar sobre los resultados de la consulta
-    while ($row2 = mysqli_fetch_assoc($query)) {
-        session_start();
-       $_SESSION["oid"] = $row2['orderId'];
-       $oid1= $_SESSION["oid"];
-        $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                           SET infoOrder1 = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
-                                           WHERE clientId = '$clientId' AND orderId = '$oid1'");
-    }
+                                            if ($query) {
+                                                // Iterar sobre los resultados de la consulta
+                                                while ($row2 = mysqli_fetch_assoc($query)) {
+                                                    
+                                                $_SESSION["oid"] = $row2['orderId'];
+                                                $oid1= $_SESSION["oid"];
+                                                    $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                                                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
+                                                                                    WHERE clientId = '$clientId' AND orderId = '$oid1'");
+                                                }
 
-    $generalMessage = $_SESSION["oid"];
+                                                $generalMessage = $_SESSION["oid"];
 
-} else {
-    // Manejar el caso de error en la consulta
-    echo "Error en la consulta SQL: " . mysqli_error($conectar);
+                                            } else {
+                                                // Manejar el caso de error en la consulta
+                                                echo "Error en la consulta SQL: " . mysqli_error($conectar);
 
-    $generalMessage = mysqli_error($conectar);
-}
+                                                $generalMessage = mysqli_error($conectar);
+                                            }
 
-                                    
-                                     break;
+                                                                                
+                                                 break;
                         
                                 default:
                                                 }
