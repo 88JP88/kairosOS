@@ -2074,7 +2074,7 @@ class modelPut{
                                                
                                         
 
-                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = 'CD0dGBms'");
+                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
 
                                     $values = [];
                                     
