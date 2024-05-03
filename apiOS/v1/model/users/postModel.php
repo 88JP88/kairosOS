@@ -2078,7 +2078,7 @@ class modelPut{
 
                                             if ($query) {
                                                 // Iterar sobre los resultados de la consulta
-                                                while ($row2 = mysqli_fetch_assoc($query)) {
+                                                foreach ($query as $row2)
                                                     $orderId=$row2['orderId'];
                                                     $infostatus = json_decode($row2['infoOrder'], true)[0];
                                                     $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
