@@ -2214,7 +2214,7 @@ class modelPut{
                                                     $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                     SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished') 
                                                     WHERE clientId = '$clientId' AND orderId = '$orderIds'");
-                                                    $value="finished";
+                                                    $value="finished123";
                                                 }
 
                                                 
