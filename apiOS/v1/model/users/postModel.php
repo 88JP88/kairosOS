@@ -2076,29 +2076,27 @@ class modelPut{
 
                                     $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
 
-                                    $values = [];
-                                    
-                                    while ($row = $query->fetch_assoc()) {
-                                        $valuex = [
-                                            'orderId' => $row['orderId'],
-                                            'siteId' => $row['siteId'],
-                                            'clientId' => $row['clientId'],
-                                            'infoOrder' => json_decode($row['infoOrder'], true)[0]
-                                        ];
-                                    
-                                        array_push($values, $valuex);
-                                    }
-                                    
-                                    // Eliminar la línea que causaba el error
-                                    // $row = $query->fetch_assoc();
-                                    $row = $query->fetch_assoc();
-                                    $responseData = [
-                                        'orders' => $values
-                                    ];
-                                    
-                                    $generalMessage = json_encode($responseData);
-                                    
+                                            if ($query) {
+                                                // Iterar sobre los resultados de la consulta
+                                                while ($row2 = mysqli_fetch_assoc($query)) {
+                                                    
+                                                $_SESSION['oid'] = $row2['orderId'];
+                                                $oid1= $_SESSION['oid'];
+                                                    $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                                                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
+                                                                                    WHERE clientId = '$clientId' AND orderId = '$oid1'");
+                                                }
 
+                                                $generalMessage = $_SESSION['oid'];
+
+                                            } else {
+                                                // Manejar el caso de error en la consulta
+                                                echo "Error en la consulta SQL: " . mysqli_error($conectar);
+
+                                                $generalMessage = mysqli_error($conectar);
+                                            }
+
+                                                                                
                                                  break;
                         
                                 default:
