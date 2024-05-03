@@ -2078,6 +2078,7 @@ class modelPut{
 if ($query) {
     // Iterar sobre los resultados de la consulta
     while ($row2 = mysqli_fetch_assoc($query)) {
+        session_start();
        $_SESSION['oid'] = $row2['orderId'];
        $oid1= $_SESSION['oid'];
         $query5 = mysqli_query($conectar, "UPDATE generalOrders 
