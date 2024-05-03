@@ -2098,7 +2098,7 @@ class modelPut{
                                         'orders' => $values
                                     ];
                                     
-                                    $generalMessage = json_encode($responseData);
+                                    $generalMessage = json_encode($orderId);
                                     
 
                                                  break;
