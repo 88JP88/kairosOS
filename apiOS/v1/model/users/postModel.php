@@ -2085,7 +2085,7 @@ class modelPut{
                                     
                                    // $row = $query->fetch_assoc();
                                    
-                                    $row2 = $query->fetch_assoc();
+                                    
                                     $infostatus = json_decode($row2['infoOrder'], true)[0];
                                     $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
                                     $orderBackTotal = $infostatus['info']['backPayload']['infoPayment']['total'];
