@@ -2091,12 +2091,12 @@ class modelPut{
                                     
                                     // Eliminar la línea que causaba el error
                                     // $row = $query->fetch_assoc();
-                                    
+                                    $row = $query->fetch_assoc();
                                     $responseData = [
                                         'orders' => $values
                                     ];
                                     
-                                    $generalMessage = json_encode($values);
+                                    $generalMessage = json_encode($responseData);
                                     
 
                                                  break;
