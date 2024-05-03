@@ -2083,12 +2083,16 @@ if ($query) {
                                            SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
                                            WHERE clientId = '$clientId' AND orderId = '$orderId'");
     }
+
+    $generalMessage = "Orden actualizada exitosamente2345";
+
 } else {
     // Manejar el caso de error en la consulta
     echo "Error en la consulta SQL: " . mysqli_error($conectar);
+
+    $generalMessage = mysqli_error($conectar);
 }
 
-                                    $generalMessage = "Orden actualizada exitosamente2345";
                                     
                                      break;
                         
