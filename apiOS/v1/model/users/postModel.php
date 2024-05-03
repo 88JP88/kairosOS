@@ -2080,14 +2080,14 @@ class modelPut{
                                                 // Iterar sobre los resultados de la consulta
                                                 while ($row2 = mysqli_fetch_assoc($query)) {
                                                     
-                                                $_SESSION["oid"] = $row2['orderId'];
-                                                $oid1= $_SESSION["oid"];
+                                                $_SESSION['oid'] = $row2['orderId'];
+                                                $oid1= $_SESSION['oid'];
                                                     $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                                                     SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
                                                                                     WHERE clientId = '$clientId' AND orderId = '$oid1'");
                                                 }
 
-                                                $generalMessage = $_SESSION["oid"];
+                                                $generalMessage = $_SESSION['oid'];
 
                                             } else {
                                                 // Manejar el caso de error en la consulta
