@@ -2076,35 +2076,30 @@ class modelPut{
 
                                     $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
 
-                                    if ($query) {
-                                        // Iterar sobre los resultados de la consulta
-                                        while ($row2 = mysqli_fetch_assoc($query)) {
-                                            // Guardar el orderId en una variable de sesión
-                                            $_SESSION['oid'] = $row2['orderId'];
-                                            
-                                            // Actualizar el estado de la orden
-                                            $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                                                               SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
-                                                                               WHERE clientId = '$clientId'");
-                                    
-                                            // Guardar el orderId en una variable
-                                            $oid1 = $_SESSION['oid'];
+                                            $values=[];
+
+                                        while ($row = $query->fetch_assoc()) {
+                                            $value=[
+                                                'orderId' => $row['orderId'],
+                                                'siteId' => $row['siteId'],
+                                                'clientId' => $row['clientId'],
+                                                'siteName'=>json_decode($row['siteName']),
+                                                'placeName'=>json_decode($row['placeName']),
+                                                'infoOrder' => json_decode($row['infoOrder'], true)[0]
+                                            ];
+                                        
+                                            array_push($values, $value);
                                         }
-                                    
-                                        // Asignar el orderId a la variable $generalMessage
-                                        $generalMessage = $_SESSION['oid'];
-                                    } else {
-                                        // Manejar el caso de error en la consulta
-                                        echo "Error en la consulta SQL: " . mysqli_error($conectar);
-                                    
-                                        // Asignar el mensaje de error a la variable $generalMessage
-                                        $generalMessage = mysqli_error($conectar);
-                                    }
-                                    
-                                    // Devolver el mensaje general (puede ser el orderId o el mensaje de error)
-                                  
-                                    
-                                                                                
+                                        
+                                        $row = $query->fetch_assoc();
+                                        $responseData = [
+                                            
+                                            'orders' => $values
+                                        ];                  
+                                        
+                                                                                                       // $generalMessage="Orden actualizada exitosamente";
+            $generalMessage=json_encode($responseData);
+
                                                  break;
                         
                                 default:
