@@ -2085,14 +2085,14 @@ class modelPut{
                                     }
                                     $generalMessage = "Orden actualizada exitosamente2345";
                                     
-                    break;
+                                     break;
                         
                                 default:
                                                 }
                                                 $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                 SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', '$value') 
                                                 WHERE clientId = '$clientId' AND orderId = '$orderId'");
-                                                                $generalMessage="Orden actualizada exitosamente";
+                                                               // $generalMessage="Orden actualizada exitosamente";
 
           
                             } 
