@@ -2079,7 +2079,7 @@ class modelPut{
                                             if ($query) {
                                                 // Iterar sobre los resultados de la consulta
                                                 while ($row2 = mysqli_fetch_assoc($query)) {
-                                                    $orderId=$row2['orderId'];
+                                                    $orderIds=$row2['orderId'];
                                                     $infostatus = json_decode($row2['infoOrder'], true)[0];
                                                     $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
                                                     $orderBackTotal = $infostatus['info']['backPayload']['infoPayment']['total'];
@@ -2213,7 +2213,7 @@ class modelPut{
                                                     }
                                                     $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                     SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished') 
-                                                    WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                    WHERE clientId = '$clientId' AND orderId = '$orderIds'");
                                                     $value="finished";
                                                 }
 
