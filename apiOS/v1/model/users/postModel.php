@@ -2087,7 +2087,7 @@ class modelPut{
     
                                                 
                                      if($infoStatusOrder=="delivered"){
-                                                        $query = mysqli_query($conectar, "SELECT p.infoPlace FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
+                                                        $query = mysqli_query($conectar, "SELECT p.infoPlace FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND o.orderId = '$orderIds'");
                                                         $row3 = $query->fetch_assoc();
                                                         $placeInfo = json_decode($row3['infoPlace'], true)[0];
     
@@ -2145,7 +2145,7 @@ class modelPut{
                                                                                                                         infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints) , 
                                                                                                                         infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.prevTotal', $orderBackTotal),
                                                                                                                         infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', true)    
-                                                                                                                        WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                                                                                        WHERE clientId = '$clientId' AND orderId = '$orderIds'");
                                                                                                                     
                                                                                                 
                                                                                                         
@@ -2163,7 +2163,7 @@ class modelPut{
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints),  
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.withPointsTotal', $newTotal),
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', true)    
-                                                                                                                    WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                                                                                    WHERE clientId = '$clientId' AND orderId = '$orderIds'");
                                                                                             
                                                                                                                     $cusQtyPoints=($orderBackTotal/$pointsValue)*$points;
                                                                                                                 $query1 = mysqli_query($conectar, "UPDATE generalCustomers 
@@ -2188,7 +2188,7 @@ class modelPut{
                                                                                                         infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.pointsValue', $newTotalPoints),  
                                                                                                         infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.withPointsTotal', $newTotal),
                                                                                                         infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isTotalPointsDiscount', false)    
-                                                                                                        WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                                                                        WHERE clientId = '$clientId' AND orderId = '$orderIds'");
                                                                                 
                                                                                                         $cusQtyPoints=($orderBackTotal/$pointsValue)*$points;
                                                                                                     $query1 = mysqli_query($conectar, "UPDATE generalCustomers 
@@ -2205,7 +2205,7 @@ class modelPut{
                                                                        $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                                                                                     SET infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.total', $orderBackTotal),
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isPointsDiscount', false)
-                                                                                                                    WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                                                                                    WHERE clientId = '$clientId' AND orderId = '$orderIds'");
                                                                                             
                                                                     }
                                                                  
