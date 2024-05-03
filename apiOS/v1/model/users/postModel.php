@@ -2076,29 +2076,30 @@ class modelPut{
 
                                     $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
 
-                                            $values=[];
-
-                                        while ($row = $query->fetch_assoc()) {
-                                            $value=[
-                                                'orderId' => $row['orderId'],
-                                                'siteId' => $row['siteId'],
-                                                'clientId' => $row['clientId'],
-                                                'siteName'=>json_decode($row['siteName']),
-                                                'placeName'=>json_decode($row['placeName']),
-                                                'infoOrder' => json_decode($row['infoOrder'], true)[0]
-                                            ];
-                                        
-                                            array_push($values, $value);
-                                        }
-                                        
-                                        $row = $query->fetch_assoc();
-                                        $responseData = [
-                                            
-                                            'orders' => $values
-                                        ];                  
-                                        
-                                                                                                       // $generalMessage="Orden actualizada exitosamente";
-            $generalMessage=json_encode($responseData);
+                                    $values = [];
+                                    
+                                    while ($row = $query->fetch_assoc()) {
+                                        $value = [
+                                            'orderId' => $row['orderId'],
+                                            'siteId' => $row['siteId'],
+                                            'clientId' => $row['clientId'],
+                                            'siteName' => json_decode($row['siteName']),
+                                            'placeName' => json_decode($row['placeName']),
+                                            'infoOrder' => json_decode($row['infoOrder'], true)[0]
+                                        ];
+                                    
+                                        array_push($values, $value);
+                                    }
+                                    
+                                    // Eliminar la línea que causaba el error
+                                    // $row = $query->fetch_assoc();
+                                    
+                                    $responseData = [
+                                        'orders' => $values
+                                    ];
+                                    
+                                    $generalMessage = json_encode($responseData);
+                                    
 
                                                  break;
                         
