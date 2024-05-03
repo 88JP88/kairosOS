@@ -2087,10 +2087,7 @@ class modelPut{
     
                                                 
                                      if($infoStatusOrder=="delivered"){
-                                        $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished') 
-                                                    WHERE clientId = '$clientId' AND orderId = '$orderIds'");
-                                                    $value="finished123";
+   
                                                         $query = mysqli_query($conectar, "SELECT p.infoPlace FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' AND o.orderId = '$orderIds'");
                                                         $row3 = $query->fetch_assoc();
                                                         $placeInfo = json_decode($row3['infoPlace'], true)[0];
@@ -2215,14 +2212,15 @@ class modelPut{
                                                                  
                                                         
                                                     }
-                                                    $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                                    SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished') 
-                                                    WHERE clientId = '$clientId' AND orderId = '$orderIds'");
-                                                    $value="finished123";
+                                                    
                                                 }
 
                                                 
-
+                                                $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished') 
+                                                WHERE clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
+                                                $value="finished123";
+                                                
                                             } else {
                                                 // Manejar el caso de error en la consulta
                                                 echo "Error en la consulta SQL: " . mysqli_error($conectar);
