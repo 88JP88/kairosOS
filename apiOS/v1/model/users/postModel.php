@@ -2076,12 +2076,12 @@ class modelPut{
                                     $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
                                     while ($row2 = $query->fetch_assoc()) {
                                         
-                                          $orderId= $row2['orderId'];
+                                         
                                           $clientId= $row2['clientId'];
                                             
                                           $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                           SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
-                                          WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                          WHERE clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
                                                           $generalMessage="Orden actualizada exitosamente";
 
                                   
