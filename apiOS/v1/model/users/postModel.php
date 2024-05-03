@@ -2084,7 +2084,7 @@ if ($query) {
                                            WHERE clientId = '$clientId' AND orderId = '$orderId'");
     }
 
-    $generalMessage = "Orden actualizada exitosamente2345";
+    $generalMessage = $orderId;
 
 } else {
     // Manejar el caso de error en la consulta
