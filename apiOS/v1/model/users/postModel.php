@@ -2077,6 +2077,7 @@ class modelPut{
                                     while ($row2 = $query->fetch_assoc()) {
                                         
                                           $orderId= $row2['orderId'];
+                                          $clientId= $row2['clientId'];
                                             
                                           $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                           SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
