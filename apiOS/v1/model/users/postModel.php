@@ -2075,14 +2075,19 @@ class modelPut{
 
                                     $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
 
-                                    foreach ($query as $row2) {
-                                        $orderId = $row2['orderId'];
-                                    
-                                        $query5 = mysqli_query($conectar, "UPDATE generalOrders 
-                                                                           SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
-                                                                           WHERE clientId = '$clientId' AND orderId= '$orderId'");
-                                        
-                                    }
+if ($query) {
+    // Iterar sobre los resultados de la consulta
+    while ($row2 = mysqli_fetch_assoc($query)) {
+        $orderId = $row2['orderId'];
+        $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                           SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
+                                           WHERE clientId = '$clientId' AND orderId = '$orderId'");
+    }
+} else {
+    // Manejar el caso de error en la consulta
+    echo "Error en la consulta SQL: " . mysqli_error($conectar);
+}
+
                                     $generalMessage = "Orden actualizada exitosamente2345";
                                     
                                      break;
