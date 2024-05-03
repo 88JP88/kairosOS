@@ -2079,14 +2079,14 @@ class modelPut{
                                     $values = [];
                                     
                                     while ($row = $query->fetch_assoc()) {
-                                        $value = [
+                                        $valuex = [
                                             'orderId' => $row['orderId'],
                                             'siteId' => $row['siteId'],
                                             'clientId' => $row['clientId'],
                                             'infoOrder' => json_decode($row['infoOrder'], true)[0]
                                         ];
                                     
-                                        array_push($values, $value);
+                                        array_push($values, $valuex);
                                     }
                                     
                                     // Eliminar la línea que causaba el error
