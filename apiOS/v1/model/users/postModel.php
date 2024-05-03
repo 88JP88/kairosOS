@@ -2084,7 +2084,7 @@ class modelPut{
                                                 $oid1= $_SESSION['oid'];
                                                     $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                                                     SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished111') 
-                                                                                    WHERE clientId = '$clientId' AND orderId = '$oid1'");
+                                                                                    WHERE clientId = '$clientId' ");
                                                 }
 
                                                 $generalMessage = $_SESSION['oid'];
