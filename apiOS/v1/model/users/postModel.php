@@ -2213,7 +2213,7 @@ class modelPut{
                                                     }
                                                 }
 
-                                                $generalMessage = $_SESSION['oid'];
+                                              
 
                                             } else {
                                                 // Manejar el caso de error en la consulta
@@ -2222,7 +2222,10 @@ class modelPut{
                                                 $generalMessage = mysqli_error($conectar);
                                             }
 
-                                                                                
+                                            $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                            SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'delivered') 
+                                            WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                              
                                                  break;
                         
                                 default:
