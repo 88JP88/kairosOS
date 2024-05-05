@@ -2209,8 +2209,8 @@ class modelPut{
                                                                                                                     SET infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.total', $orderBackTotal),
                                                                                                                     infoOrder = JSON_SET(infoOrder, '$[0].info.backPayload.infoPayment.isPointsDiscount', false)
                                                                                                                     WHERE clientId = '$clientId' AND orderId = '$orderIds'");
-                                                                                            
-                                                                    }$totalPaydView=$totalPaydView+$orderBackTotal;
+                                                                          $totalPaydView=$totalPaydView+$orderBackTotal;                  
+                                                                    }
                                                                  
                                                         
                                                     }
@@ -2221,7 +2221,7 @@ class modelPut{
                                                 $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                 SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.orderStatus.status', 'finished') 
                                                 WHERE clientId = '$clientId' AND JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
-                                                $value="finished123";
+                                              
                                                 
                                             } else {
                                                 // Manejar el caso de error en la consulta
