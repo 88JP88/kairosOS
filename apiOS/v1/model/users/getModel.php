@@ -1207,6 +1207,13 @@ if ($numRows > 0) {
             $apiMessage="¡Repartidores seleccionados ($numRows)!";
             $values=[];
 
+            $orderBackTotal = 0;
+            $orderBackSubTotal = 0;
+            $orderBackSaver = 0;
+            $orderBackProductCounter = 0;
+            $orderBackSelectCounter = 0;
+            $orderBackPointsValue = 0;
+
             while ($row = $query->fetch_assoc()) {
               
 
@@ -1218,7 +1225,12 @@ if ($numRows > 0) {
             $orderBackProductCounter = $infostatus['info']['infoPayload']['infoPayment']['productCounter'];
             $orderBackSelectCounter = $infostatus['info']['infoPayload']['infoPayment']['selectCounter'];
 
-            if (isset($array['info']['backPayload']['infoPayment']['isPointsDiscount'])) {
+            if (isset($infostatus['info']['backPayload']['infoPayment']['isPointsDiscount'])) {
+
+                if($infostatus['info']['backPayload']['infoPayment']['isPointsDiscount']===true){
+                    
+                }
+
                 $value=[
                     
                     'orderId' => $row['orderId'],
@@ -1233,6 +1245,7 @@ if ($numRows > 0) {
 
             } else {
                 
+
             }
             
                
