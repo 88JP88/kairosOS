@@ -2244,7 +2244,7 @@ class modelPut{
           
                             } 
                        
-                            if($param=="paymentType" || $param=="paymentMethod" || $param=="paymentCompany" || $param=="transactionCode"){
+                            if($param=="paymentType" || $param=="paymentMethod" || $param=="paymentCompany" || $param=="transactionCode" || $param=="otherMethod" || $param=="methodDetails" || $param=="cryptoName" || $param=="cryptoUser" || $param=="cryptoValue" || $param=="payWith" || $param=="change"){
 
                                
                                     $query5 = mysqli_query($conectar, "UPDATE generalOrders 
