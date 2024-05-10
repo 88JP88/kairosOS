@@ -2251,7 +2251,7 @@ class modelPut{
                                     SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoAccount.accountStatus.$param', '$value')
                                     WHERE clientId = '$clientId' AND orderId = '$orderId'");
                                                     $generalMessage=$param." actualizado exitosamente";
-
+                                                    $totalPaydView=0;
                                     
                                    
                             }
