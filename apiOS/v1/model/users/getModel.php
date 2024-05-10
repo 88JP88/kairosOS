@@ -1205,7 +1205,7 @@ if ($numRows > 0) {
             $message="Consulta exitosa";
             $status="202";
             $apiMessage="¡Repartidores seleccionados ($numRows)!";
-            $values=[];
+           
 
             $orderBackTotal = 0;
             $orderBackSubTotal = 0;
@@ -1250,6 +1250,7 @@ if ($numRows > 0) {
             } else {
                 
                 $orderBackPointsValue = 0+$orderBackPointsValue;
+                $orderBackTotalPrev=$orderBackTotalPrev+$infostatus['info']['backPayload']['infoPayment']['total'];
                 $orderBackPointsValueTotalNotApply++;
             }
             
