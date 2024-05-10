@@ -2258,22 +2258,28 @@ class modelPut{
                             if($param=="paymentStatus"){
 
                                
-                                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND o.orderId = '$orderId'");
+                                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' and JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
                                                     $row2 = $query->fetch_assoc();
                                                     $infostatus = json_decode($row2['infoOrder'], true)[0];
                                                     $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
-                                                    if($infoStatusOrder=="finished"){
+                                                   
+                                                    while ($row2 = $query->fetch_assoc()) {
+                                                       
+                                                       if($row['info']['infoOrder']['orderStatus']['status']=="finished"){
                                                         $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                         SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.paymentStatus.status', '$value')
-                                                        WHERE clientId = '$clientId' AND orderId = '$orderId'");
+                                                        WHERE clientId = '$clientId' and JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
                                                             $generalMessage="Pago realizado exitosamente";
                                                     }
                                                     else{
                                                     
                                                             $generalMessage="No se ha finalizado la orden";
+                                                    } 
+                                                     
                                                     }
+                                                   
 
-                                              
+                                                
                                          }
                         
 
