@@ -2271,9 +2271,11 @@ class modelPut{
                                                         SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.paymentStatus.status', '$value')
                                                         WHERE clientId = '$clientId' and JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
                                                             $generalMessage="Pago realizado exitosamente";
-                                                    }
+                                                    }                                                    $totalPaydView=0;
+
                                                     else{
-                                                    
+                                                        $totalPaydView=0;
+
                                                             $generalMessage="No se ha finalizado la orden";
                                                     } 
                                                      
