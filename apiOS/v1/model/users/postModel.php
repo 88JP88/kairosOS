@@ -2265,7 +2265,7 @@ class modelPut{
                                                    
                                                     while ($row2 = $query->fetch_assoc()) {
                                                        
-                                                       if($row['info']['infoOrder']['orderStatus']['status']=="finished"){
+                                                       if($row2['info']['infoOrder']['orderStatus']['status']=="finished"){
                                                         $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                         SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.paymentStatus.status', '$value')
                                                         WHERE clientId = '$clientId' and JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$orderId'");
