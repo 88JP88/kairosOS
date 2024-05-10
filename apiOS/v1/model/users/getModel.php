@@ -1213,39 +1213,44 @@ if ($numRows > 0) {
             $orderBackProductCounter = 0;
             $orderBackSelectCounter = 0;
             $orderBackPointsValue = 0;
+            $orderBackPointsValueTotalTrue = 0;
+            $orderBackPointsValueTotalFalse = 0;
+            $orderBackPointsValueTotalNotApply = 0;
+            $orderBackTotalPrev = 0;
+            $orderBackCustomerPoints = 0;
+            
 
             while ($row = $query->fetch_assoc()) {
               
 
                 $infostatus = json_decode($row['infoOrder'], true)[0];
             
-            $orderBackTotal = $infostatus['info']['backPayload']['infoPayment']['total'];
-            $orderBackSubTotal = $infostatus['info']['backPayload']['infoPayment']['subTotal'];
-            $orderBackSaver = $infostatus['info']['backPayload']['infoPayment']['saver'];
-            $orderBackProductCounter = $infostatus['info']['infoPayload']['infoPayment']['productCounter'];
-            $orderBackSelectCounter = $infostatus['info']['infoPayload']['infoPayment']['selectCounter'];
+            $orderBackTotal = $infostatus['info']['backPayload']['infoPayment']['total']+$orderBackTotal;
+            $orderBackSubTotal = $infostatus['info']['backPayload']['infoPayment']['subTotal']+$orderBackSubTotal;
+            $orderBackSaver = $infostatus['info']['backPayload']['infoPayment']['saver']+$orderBackSaver;
+            $orderBackProductCounter = $infostatus['info']['infoPayload']['infoPayment']['productCounter']+$orderBackProductCounter;
+            $orderBackSelectCounter = $infostatus['info']['infoPayload']['infoPayment']['selectCounter']+$orderBackSelectCounter;
 
             if (isset($infostatus['info']['backPayload']['infoPayment']['isPointsDiscount'])) {
 
                 if($infostatus['info']['backPayload']['infoPayment']['isPointsDiscount']===true){
-                    
+                    $orderBackPointsValue = $infostatus['info']['backPayload']['infoPayment']['pointsValue']+$orderBackPointsValue;
+                    $orderBackTotalPrev = $infostatus['info']['backPayload']['infoPayment']['prevTotal']+$orderBackTotalPrev;
+                    $orderBackCustomerPoints = $infostatus['info']['backPayload']['infoPayment']['customerPoints']+$orderBackCustomerPoints;
+                    $orderBackPointsValueTotalTrue++;
                 }
-
-                $value=[
-                    
-                    'orderId' => $row['orderId'],
-                    'orderTrackId' => $infostatus['info']['infoOrder']['orderStatus']['orderTrackId'],
-                    'siteId' => $row['siteId'],
-                    'clientId' => $row['clientId'],
-                    'siteName'=>json_decode($row['siteName']),
-                    'placeName'=>json_decode($row['placeName'])
-                ];
-            
-                array_push($values, $value);
+                if($infostatus['info']['backPayload']['infoPayment']['isPointsDiscount']===false){
+                    $orderBackPointsValue = 0+$orderBackPointsValue;
+                    $orderBackTotalPrev = $infostatus['info']['backPayload']['infoPayment']['prevTotal']+$orderBackTotalPrev;
+                    $orderBackCustomerPoints = $infostatus['info']['backPayload']['infoPayment']['customerPoints']+$orderBackCustomerPoints;
+                    $orderBackPointsValueTotalFalse++;
+                }
+               
 
             } else {
                 
-
+                $orderBackPointsValue = 0+$orderBackPointsValue;
+                $orderBackPointsValueTotalNotApply++;
             }
             
                
@@ -1263,7 +1268,19 @@ if ($numRows > 0) {
                     'status' => $status,
                     'sentData'=>$dta
                 ],
-                'orders' => $values
+                'ordersCalculate' =>  [
+                    'total' => $orderBackTotal,
+                    'subTotal' => $orderBackSubTotal,
+                    'saver' => $orderBackSaver,
+                    'productCounter' => $orderBackProductCounter,
+                    'selectCounter'=>$orderBackSelectCounter,
+                    'pointsValue'=>$orderBackPointsValue,
+                    'applyPointsTrue'=>$orderBackPointsValueTotalTrue,
+                    'applyPointsFalse'=>$orderBackPointsValueTotalFalse,
+                    'notApplyPoints'=>$orderBackPointsValueTotalNotApply,
+                    'previusTotal'=>$orderBackTotalPrev,
+                    'totalPoints'=>$orderBackCustomerPoints
+                ]
             ];
             
             return json_encode($responseData);
@@ -1285,7 +1302,19 @@ if ($numRows > 0) {
                     'status' => $status,
                     'sentData'=>$dta
                 ],
-                'orders' => $values
+                'ordersCalculate' =>  [
+                    'total' => $orderBackTotal,
+                    'subTotal' => $orderBackSubTotal,
+                    'saver' => $orderBackSaver,
+                    'productCounter' => $orderBackProductCounter,
+                    'selectCounter'=>$orderBackSelectCounter,
+                    'pointsValue'=>$orderBackPointsValue,
+                    'applyPointsTrue'=>$orderBackPointsValueTotalTrue,
+                    'applyPointsFalse'=>$orderBackPointsValueTotalFalse,
+                    'notApplyPoints'=>$orderBackPointsValueTotalNotApply,
+                    'previusTotal'=>$orderBackTotalPrev,
+                    'totalPoints'=>$orderBackCustomerPoints
+                ]
             ];
             array_push($values,$value);
             
@@ -1314,7 +1343,19 @@ if ($numRows > 0) {
                     'status' => $status,
                     'sentData'=>$dta
                 ],
-                'orders' => $values
+                'ordersCalculate' =>  [
+                    'total' => $orderBackTotal,
+                    'subTotal' => $orderBackSubTotal,
+                    'saver' => $orderBackSaver,
+                    'productCounter' => $orderBackProductCounter,
+                    'selectCounter'=>$orderBackSelectCounter,
+                    'pointsValue'=>$orderBackPointsValue,
+                    'applyPointsTrue'=>$orderBackPointsValueTotalTrue,
+                    'applyPointsFalse'=>$orderBackPointsValueTotalFalse,
+                    'notApplyPoints'=>$orderBackPointsValueTotalNotApply,
+                    'previusTotal'=>$orderBackTotalPrev,
+                    'totalPoints'=>$orderBackCustomerPoints
+                ]
             ];
             array_push($values,$value);
             
