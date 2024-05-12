@@ -33,6 +33,7 @@ class modelPost {
                     $placeComments = mysqli_real_escape_string($conectar, $dta['placeComments']);
                     $placeContact = mysqli_real_escape_string($conectar, $dta['placeContact']);
                     $placeMail = mysqli_real_escape_string($conectar, $dta['placeEmail']);
+                    $placeType = mysqli_real_escape_string($conectar, $dta['placeType']);
                     $isPoint = mysqli_real_escape_string($conectar, $dta['isPoint']);
                     $points = mysqli_real_escape_string($conectar, $dta['points']);
                     $pointsValue = mysqli_real_escape_string($conectar, $dta['pointsValue']);
@@ -40,7 +41,12 @@ class modelPost {
                     $pointsAutoDiscount = mysqli_real_escape_string($conectar, $dta['pointsAutoDiscount']);
                     $poinsDiscountTotal = mysqli_real_escape_string($conectar, $dta['pointsDiscountTotal']);
                     $pointPrice = mysqli_real_escape_string($conectar, $dta['pointsPrice']);
-
+if($placeType=="withSites"){
+$placeType="sites";
+}
+if($placeType=="market"){
+    $placeType="market";
+    }
                     //$dato_encriptado = $keyword;
                     
                     $infoPlace = [
@@ -61,8 +67,8 @@ class modelPost {
                                 "pointsOut" => floatval($pointsOut),// cantidad minima de puntos para poder redimir
                                 "pointsAutoDiscount" => filter_var($pointsAutoDiscount, FILTER_VALIDATE_BOOLEAN),// auto descontar puntos al momento de pagar
                                 "poinsDiscountTotal" => filter_var($poinsDiscountTotal, FILTER_VALIDATE_BOOLEAN),//descontar el total de puntos al momento de pagar si es true descuenta todo si es false descuenta solo la cantidad de puntos minima pára redimir
-                                "pointPrice" => floatval($pointPrice)// valor de cada punto
-
+                                "pointPrice" => floatval($pointPrice),// valor de cada punto
+                                "placeType" => $placeType
                             ]
                         ]
                     ];
