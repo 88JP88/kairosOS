@@ -177,8 +177,16 @@ if($filter=="filter"){
             $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId IN (SELECT placeId FROM generalPlaces WHERE clientId = '$clientId' AND JSON_EXTRACT(infoPlace, '$[0].info.name') LIKE '%$value%')");
 
         }
-        if($param=="placeIdCar"){
-            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId = '$value'");
+        if($param=="placeIdCarSites"){
+            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId = '$value' and JSON_EXTRACT(s.infoSite, '$[0].params.siteType')='place'");
+
+        }
+        if($param=="placeIdCarSitesWork"){
+            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId = '$value' and JSON_EXTRACT(s.infoSite, '$[0].params.siteType')='sitework'");
+
+        }
+        if($param=="placeIdCarMarket"){
+            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId = '$value' and JSON_EXTRACT(s.infoSite, '$[0].params.siteType')='market'");
 
         }
         else{
