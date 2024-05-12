@@ -249,6 +249,7 @@ if($placeType=="market"){
                     $siteName = mysqli_real_escape_string($conectar, $dta['siteName']);
                     $siteComments = mysqli_real_escape_string($conectar, $dta['siteComments']);
                     $sitePlace = mysqli_real_escape_string($conectar, $dta['sitePlace']);
+                    $siteType = mysqli_real_escape_string($conectar, $dta['siteType']);
                     //$dato_encriptado = $keyword;
                     
                     $infoSite = [
@@ -262,7 +263,8 @@ if($placeType=="market"){
                                 "status" => true,
                                 "isBussy" => false,
                                 "isOrder" => false,
-                                "isOutService" => false
+                                "isOutService" => false,
+                                "siteType" => $siteType
                                  ]
                         ]
                     ];
@@ -1192,6 +1194,11 @@ class modelPut{
                                           SET infoSite = JSON_SET(infoSite, '$[0].info.$param', '$value') 
                                           WHERE clientId = '$clientId' AND siteId = '$siteId'");
                     }
+                    if($param=="siteType"){
+                        $query = mysqli_query($conectar, "UPDATE generalSites 
+                                              SET infoSite = JSON_SET(infoSite, '$[0].params.$param', '$value') 
+                                              WHERE clientId = '$clientId' AND siteId = '$siteId'");
+                        }
                     else{
                         $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
                         $value = (bool)$value;
