@@ -47,6 +47,9 @@ $placeType="sites";
 if($placeType=="market"){
     $placeType="market";
     }
+    if($placeType=="withSitesWork"){
+        $placeType="siteswork";
+        }
                     //$dato_encriptado = $keyword;
                     
                     $infoPlace = [
