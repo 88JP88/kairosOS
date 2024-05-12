@@ -1073,7 +1073,7 @@ class modelPut{
             $apiMessage="¡Repartidor removido con éxito!";
         }  if($param!="del"){
 
-            if($param=="isPoint" || $param=="points" || $param=="pointsValue" || $param=="pointsOut"|| $param=="pointsAutoDiscount" || $param=="poinsDiscountTotal" || $param=="pointPrice"){
+            if($param=="isPoint" || $param=="points" || $param=="pointsValue" || $param=="pointsOut"|| $param=="pointsAutoDiscount" || $param=="poinsDiscountTotal"  || $param=="placeType" || $param=="pointPrice"){
                 if($param=="isPoint" || $param=="pointsAutoDiscount" || $param=="poinsDiscountTotal" ){
                         $value=filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
                         $value = (bool)$value;
@@ -1089,6 +1089,12 @@ class modelPut{
                             WHERE clientId = '$clientId' AND placeId = '$placeId'");
             
                         }
+                    }if($param=="placeType"){
+                      
+                        $query = mysqli_query($conectar, "UPDATE generalPlaces 
+                        SET infoPlace = JSON_SET(infoPlace, '$[0].params.$param', '$value') 
+                        WHERE clientId = '$clientId' AND placeId = '$placeId'");
+        
                     }else{
                         $value=(float)$value;
                         $query = mysqli_query($conectar, "UPDATE generalPlaces 
