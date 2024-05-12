@@ -998,6 +998,11 @@ if($filter=="bySiteOrderTrackIdStatusFinished"){
     )");
 
 }
+if($filter=="bySiteOrderTrackIdStatusAll"){
+
+    $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' and s.siteId='$value' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.orderTrackId') = '$param'");
+
+}
 if($filter=="bySiteOrderStatusExcludeOne"){
 
     $query = mysqli_query($conectar, "SELECT o.orderId,o.clientId,o.siteId,o.infoOrder,JSON_EXTRACT(s.infoSite, '$[0].info.name') AS siteName,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalOrders o JOIN generalSites s ON o.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE o.clientId = '$clientId' and s.siteId='$value' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.status') != '$param'");
