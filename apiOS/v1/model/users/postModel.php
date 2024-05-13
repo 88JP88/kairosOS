@@ -1803,7 +1803,7 @@ class modelPut{
                                                     }else{
                                                     $query = mysqli_query($conectar, "UPDATE generalCustomers 
                                                                           SET infoCustomer = JSON_SET(infoCustomer, '$[0].info.$param', '$value') 
-                                                                          WHERE clientId = '$clientId' AND employeeId = '$customerId'");
+                                                                          WHERE clientId = '$clientId' AND placeId = '$customerId'");
                                                     }
                                                   
                                                     $apiMessage="¡Actualizado con éxito!";
