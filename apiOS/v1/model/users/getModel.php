@@ -1422,7 +1422,7 @@ if($filter=="filter"){
             $query = mysqli_query($conectar, "SELECT e.employeeId, e.clientId, e.infoEmployee, e.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalEmployees e JOIN  generalPlaces p ON e.placeId=p.placeId WHERE e.clientId = '$clientId' and p.placeId='$value'");
 
         }
-        if($param=="siteId"){
+        else if($param=="siteId"){
             $query = mysqli_query($conectar, "SELECT e.employeeId, e.clientId, e.infoEmployee, e.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalEmployees e JOIN  generalPlaces p ON e.placeId=p.placeId WHERE e.clientId = '$clientId'");
 
         }
