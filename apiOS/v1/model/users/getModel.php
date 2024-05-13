@@ -189,6 +189,10 @@ if($filter=="filter"){
             $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId = '$value' and JSON_EXTRACT(s.infoSite, '$[0].params.siteType')= 'marketbox'");
 
         }
+        else if($param=="placeIdCarEcommerce"){
+            $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN generalPlaces p ON p.placeId = s.placeId WHERE s.clientId = '$clientId' AND s.placeId = '$value' and JSON_EXTRACT(s.infoSite, '$[0].params.siteType')= 'ecmoperator'");
+
+        }
         else{
     $query = mysqli_query($conectar, "SELECT s.siteId, s.clientId, s.infoSite, s.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS name FROM generalSites s JOIN  generalPlaces p ON p.placeId=s.placeId WHERE s.clientId = '$clientId' AND JSON_EXTRACT(s.infoSite, '$[0].info.$param') LIKE '%$value%'");
         }
