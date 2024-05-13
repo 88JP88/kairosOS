@@ -1797,7 +1797,7 @@ class modelPut{
                                                     $apiMessage="¡Repartidor removido con éxito!";
                                                 }  if($param!="del"){
                                                     if($param=="placeId"){
-                                                        $query = mysqli_query($conectar, "UPDATE gneralCustomers 
+                                                        $query = mysqli_query($conectar, "UPDATE generalCustomers 
                                                         SET placeId = '$value'
                                                         WHERE clientId = '$clientId' AND customerId = '$customerId'");
                                                     }else{
