@@ -1569,7 +1569,7 @@ public static function getCustomers($dta) {
                 if($filter=="filter"){
 
                         if($param=="placeId"){
-                            $query = mysqli_query($conectar, "SELECT c.customerId, c.clientId, c.infoCustomer, c.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalCustomers c JOIN  generalPlaces p ON c.placeId=p.placeId WHERE c.clientId = '$clientId'");
+                            $query = mysqli_query($conectar, "SELECT c.customerId, c.clientId, c.infoCustomer, c.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalCustomers c JOIN  generalPlaces p ON c.placeId=p.placeId WHERE c.clientId = '$clientId' and c.placeId='$value'");
 
                         }
                         else if($param=="siteId"){
