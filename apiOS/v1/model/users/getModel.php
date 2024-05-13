@@ -1565,23 +1565,23 @@ public static function getCustomers($dta) {
             $query = mysqli_query($conectar, "SELECT c.customerId, c.clientId, c.infoCustomer, c.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalCustomers c JOIN  generalPlaces p ON c.placeId=p.placeId WHERE c.clientId = '$clientId'");
         }
         
-    
-if($filter=="filter"){
+                    
+                if($filter=="filter"){
 
-        if($param=="placeId"){
-            $query = mysqli_query($conectar, "SELECT c.customerId, c.clientId, c.infoCustomer, c.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalCustomers c JOIN  generalPlaces p ON c.placeId=p.placeId WHERE c.clientId = '$clientId'");
+                        if($param=="placeId"){
+                            $query = mysqli_query($conectar, "SELECT c.customerId, c.clientId, c.infoCustomer, c.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalCustomers c JOIN  generalPlaces p ON c.placeId=p.placeId WHERE c.clientId = '$clientId'");
 
-        }
-        if($param=="siteId"){
-            $query = mysqli_query($conectar, "SELECT c.customerId, c.clientId, c.infoCustomer, c.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalCustomers c JOIN  generalPlaces p ON c.placeId=p.placeId WHERE c.clientId = '$clientId'");
+                        }
+                        else if($param=="siteId"){
+                            $query = mysqli_query($conectar, "SELECT c.customerId, c.clientId, c.infoCustomer, c.placeId, JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS placeName FROM generalCustomers c JOIN  generalPlaces p ON c.placeId=p.placeId WHERE c.clientId = '$clientId'");
 
-        }
-        else{
-            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS sname,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS pname FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE e.clientId = '$clientId' AND JSON_EXTRACT(e.infoElement, '$[0].info.$param') LIKE '%$value%'");
-        }
-          
+                        }
+                        else{
+                            $query = mysqli_query($conectar, "SELECT e.elementId, e.clientId, e.infoElement, e.siteId, JSON_EXTRACT(s.infoSite, '$[0].info.name') AS sname,JSON_EXTRACT(p.infoPlace, '$[0].info.name') AS pname FROM generalElements e JOIN  generalSites s ON e.siteId=s.siteId JOIN generalPlaces p ON p.placeId=s.placeId WHERE e.clientId = '$clientId' AND JSON_EXTRACT(e.infoElement, '$[0].info.$param') LIKE '%$value%'");
+                        }
+                        
 
-}
+                }
         if($query){
             $numRows = mysqli_num_rows($query);
 
