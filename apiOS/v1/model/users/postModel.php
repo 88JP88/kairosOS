@@ -1880,8 +1880,40 @@ class modelPut{
                                             $apiMessage="¡Repartidor removido con éxito!";
                                         }  if($param!="del"){
                                             if($param=="orderStatus"){
+                                                if($value=="fromMarketOpened"){
+                                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
+                             $row2 = $query->fetch_assoc();
+                             $orderId=$row2['orderId'];
+                             $value="opened";
+                                                }
+                                                if($value=="fromMarketInProgress"){
+                                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
+                             $row2 = $query->fetch_assoc();
+                             $orderId=$row2['orderId'];
+                             $value="inProgress";
+                                                }
+                                                if($value=="fromMarketReady"){
+                                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
+                             $row2 = $query->fetch_assoc();
+                             $orderId=$row2['orderId'];
+                             $value="ready";
+                                                }
+                                                if($value=="fromMarketDelivered"){
+                                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
+                             $row2 = $query->fetch_assoc();
+                             $orderId=$row2['orderId'];
+                             $value="delivered";
+                                                }
+                                                if($value=="fromMarketFinished"){
+                                                    $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' AND JSON_EXTRACT(o.infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
+                             $row2 = $query->fetch_assoc();
+                             $orderId=$row2['orderId'];
+                             $value="finished";
+                                                }
 
                  switch ($value) {
+
+                                               
                                           
                                                     case "ready":
                                                
