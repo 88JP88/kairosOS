@@ -2406,7 +2406,7 @@ class modelPut{
                             $param == "change_Market") {
                                
                                 
-                                $param = reset(explode('_', $param));
+                                $param = strstr($param, '_', true);
                                 $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                 SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoAccount.accountStatus.$param', '$value')
                                 WHERE clientId = '$clientId' AND JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
