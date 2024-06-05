@@ -2393,6 +2393,28 @@ class modelPut{
                                     
                                    
                             }
+                            if ($param == "paymentType_Market" || 
+                            $param == "paymentMethod_Market" || 
+                            $param == "paymentCompany_Market" || 
+                            $param == "transactionCode_Market" || 
+                            $param == "otherMethod_Market" || 
+                            $param == "methodDetails_Market" || 
+                            $param == "cryptoName_Market" || 
+                            $param == "cryptoUser_Market" || 
+                            $param == "cryptoValue_Market" || 
+                            $param == "payWith_Market" || 
+                            $param == "change_Market") {
+                               
+                                
+                                $param = reset(explode('_', $param));
+                                $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoAccount.accountStatus.$param', '$value')
+                                WHERE clientId = '$clientId' AND JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
+                                                $generalMessage=$param." actualizado exitosamente";
+                                                $totalPaydView=0;
+                                
+                               
+                        }
                             if($param=="paymentStatus"){
 
                                
@@ -2423,6 +2445,36 @@ class modelPut{
 
                                                 
                                          }
+                                         if($param=="paymentStatus_Market"){
+
+                               
+                                            $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' and JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
+                                            $row2 = $query->fetch_assoc();
+                                            $infostatus = json_decode($row2['infoOrder'], true)[0];
+                                            $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
+                                           
+                                            while ($row2 = $query->fetch_assoc()) {
+                                                $infostatus = json_decode($row2['infoOrder'], true)[0];
+                                                $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
+                                               if($infoStatusOrder=="finished"){
+                                                $query5 = mysqli_query($conectar, "UPDATE generalOrders 
+                                                SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.paymentStatus.status', '$value')
+                                                WHERE clientId = '$clientId' and JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
+                                                    $generalMessage="Pago realizado exitosamente";
+                                                    $totalPaydView=0;
+                                            }                                                 
+
+                                            else{
+                                                $totalPaydView=0;
+
+                                                    $generalMessage="No se ha finalizado la orden";
+                                            } 
+                                             
+                                            }
+                                           
+
+                                        
+                                 }
                         
 
                         
