@@ -2448,12 +2448,7 @@ class modelPut{
                                          if($param=="paymentStatus_Market"){
 
                                
-                                            $query = mysqli_query($conectar, "SELECT o.orderId, o.clientId, o.siteId, o.infoOrder FROM generalOrders o WHERE o.clientId = '$clientId' and JSON_EXTRACT(infoOrder, '$[0].info.infoOrder.orderStatus.frontId') = '$orderId'");
-                                            $row2 = $query->fetch_assoc();
-                                            $infostatus = json_decode($row2['infoOrder'], true)[0];
-                                            $infoStatusOrder = $infostatus['info']['infoOrder']['orderStatus']['status'];
-                                           
-                                            while ($row2 = $query->fetch_assoc()) {
+                                        
                                                 
                                                 $query5 = mysqli_query($conectar, "UPDATE generalOrders 
                                                 SET infoOrder = JSON_SET(infoOrder, '$[0].info.infoOrder.paymentStatus.status', '$value')
@@ -2462,7 +2457,6 @@ class modelPut{
                                                     $totalPaydView=0;
                                            
                                              
-                                            }
                                            
 
                                         
