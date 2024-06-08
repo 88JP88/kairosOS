@@ -35,9 +35,9 @@ function conn() {
 }
 if($option==2){
     $hostname = "localhost"; // o dirección IP del servidor de la base de datos remota
-    $usuariodb = "u767251687_dev_kairos_os"; // reemplazar con el usuario de la base de datos
-    $passworddb = "kD/IDYcT4"; // reemplazar con la contraseña de la base de datos
-    $dbname = "u767251687_dev_kairos_os"; // reemplazar con el nombre de la base de datos
+    $usuariodb = "u767251687_devkairosos"; // reemplazar con el usuario de la base de datos
+    $passworddb = "t7N*UtmrcV+"; // reemplazar con la contraseña de la base de datos
+    $dbname = "u767251687_devkairosos"; // reemplazar con el nombre de la base de datos
 
     try {
         // Conexión a la base de datos
